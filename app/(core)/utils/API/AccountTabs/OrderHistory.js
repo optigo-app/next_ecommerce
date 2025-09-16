@@ -1,5 +1,5 @@
 import { CommonAPI } from "../CommonAPI/CommonAPI";
-import imageNotFound from '../../../utils/DefaultImage/image-not-found.jpg';
+import imageNotFound from '../../DefaultImage/image-not-found.jpg';
 
 export const getOrderHistory = async(storeinit, loginInfo, UserEmail) => {
     try {

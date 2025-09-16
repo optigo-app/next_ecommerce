@@ -1,11 +1,11 @@
-import { WEBSITE_NAME, WEBSITE_URL } from "@/utils/env";
+import { WEBSITE_NAME, WEBSITE_URL ,NEXT_APP_WEB } from "@/app/(core)/utils/env";
 
 export function generatePageMetadata(pageData) {
     if (!pageData) return {};
 
     // Base metadata
     const baseMetadata = {
-        title: `${pageData.title} | ${WEBSITE_NAME}`,
+        title: `${pageData.title} | ${NEXT_APP_WEB}`,
         description: pageData.description || "",
         keywords: pageData.keywords || "",
         authors: [{ name: "Optigo Apps" }],

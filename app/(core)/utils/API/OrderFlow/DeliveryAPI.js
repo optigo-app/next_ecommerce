@@ -1,4 +1,4 @@
-import { CommonAPI } from '../../API/CommonAPI/CommonAPI';
+import { CommonAPI } from '../CommonAPI/CommonAPI';
 
 export const fetchAddresses = async () => {
     try {

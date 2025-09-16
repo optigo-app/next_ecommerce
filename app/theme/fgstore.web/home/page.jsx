@@ -1,7 +1,7 @@
 import React from 'react'
-import { getStoreInit } from '@/utils/GlobalFunctions/GlobalFunctions';
-import { generatePageMetadata } from '@/utils/HeadMeta';
-import { pages } from '@/utils/pages';
+import { getStoreInit } from '@/app/(core)/utils/GlobalFunctions/GlobalFunctions';
+import { generatePageMetadata } from '@/app/(core)/utils/HeadMeta';
+import { pages } from '@/app/(core)/utils/pages';
 import Header from '@/app/components/Header/Header';
 
 export const metadata = generatePageMetadata(pages['/'], 'Sonasons');
