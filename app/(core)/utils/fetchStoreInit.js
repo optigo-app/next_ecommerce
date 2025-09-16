@@ -47,7 +47,7 @@ export async function fetchStoreInitData() {
         }
 
         const jsonData = await response.json();
-        return jsonData.rd?.[0] || null;
+        return jsonData || null;
     } catch (error) {
         console.error("Error fetching StoreInit data:", error);
         return null;

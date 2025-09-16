@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 
 export function getActiveTheme() {
   const cookieStore = cookies();
-  const storeData = cookieStore.get("store-data");
+  const storeData = cookieStore.get("x-store-data");
 
   if (!storeData) return NEXT_APP_WEB;
 
