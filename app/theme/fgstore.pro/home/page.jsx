@@ -1,5 +1,5 @@
-import { generatePageMetadata } from '@/utils/HeadMeta';
-import { pages } from '@/utils/pages';
+import { generatePageMetadata } from '@/app/(core)/utils/HeadMeta';
+import { pages } from '@/app/(core)/utils/pages';
 import { headers } from 'next/headers';
 import React from 'react'
 

@@ -9,7 +9,7 @@ import {
     ListItem,
     Tooltip,
 } from "@mui/material";
-import { GetMenuAPI } from "@/utils/API/GetMenuAPI/GetMenuAPI";
+import { GetMenuAPI } from "@/app/(core)/utils/API/GetMenuAPI/GetMenuAPI";
 
 const Header = async ({ storeinit }) => {
 

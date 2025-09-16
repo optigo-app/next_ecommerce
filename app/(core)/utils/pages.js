@@ -1,4 +1,4 @@
-import { WEBSITE_NAME, WEBSITE_URL } from "@/utils/env";
+import { WEBSITE_NAME, WEBSITE_URL } from "@/app/(core)/utils/env";
 
 export const pages = {
     '/': {

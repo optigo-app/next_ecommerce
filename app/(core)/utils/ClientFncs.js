@@ -1,5 +1,5 @@
 "use client";
-import { NEXT_APP_WEB } from "@/utils/env";
+import { NEXT_APP_WEB } from "@/app/(core)/utils/env";
 
 export function storInitDataPath() {
     if (typeof window === "undefined") {
