@@ -15,11 +15,20 @@ export default async function middleware(req) {
 
     const response = NextResponse.next();
 
-    // Set the storeData in headers (for client/server use)
-    response.headers.set("x-store-data", JSON.stringify(storeData));
+    //set as a cookie
+    response.cookies.set("x-store-data", JSON.stringify(storeData?.rd[0]), {
+        httpOnly: false,
+        path: "/",
+    });
 
-    // Optional: Also set as a cookie
-    response.cookies.set("store-data", JSON.stringify(storeData), {
+    //set as a cookie
+    response.cookies.set("x-myAccountFlags-data", JSON.stringify(storeData?.rd1), {
+        httpOnly: false,
+        path: "/",
+    });
+
+    //set as a cookie
+    response.cookies.set("x-CompanyInfoData-data", JSON.stringify(storeData?.rd2[0]), {
         httpOnly: false,
         path: "/",
     });

@@ -9,13 +9,33 @@ import {
     ListItem,
     Tooltip,
 } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import StarBorderRoundedIcon from '@mui/icons-material/StarBorderRounded';
 import { GetMenuAPI } from "@/app/(core)/utils/API/GetMenuAPI/GetMenuAPI";
+import { NEXT_APP_WEB } from "@/app/(core)/utils/env";
+import { GetCountAPI } from "@/app/(core)/utils/API/GetCount/GetCountAPI";
+import Cookies from "js-cookie";
 
-const Header = async ({ storeinit }) => {
+export function storImagePath() {
+    let statiPath = `${window?.location?.protocol}//${window.location.hostname === "localhost" ||
+        window.location.hostname === "zen"
+        ? NEXT_APP_WEB
+        : window.location.hostname
+        }`;
+    return `${statiPath}/WebSiteStaticImage`;
+}
+
+const Header = ({ storeinit }) => {
 
     const [isCartOpen, setIsCartOpen] = useState(false);
     const [isHeaderFixed, setIsHeaderFixed] = useState(false);
     const [isHeaderFixedDropShow, setIsHeaderFixedDropShow] = useState(false);
+    const [htmlContent, setHtmlContent] = useState("");
+    const compnyLogo = storeinit?.companylogo;
+    const compnyLogoM = storeinit?.companyMlogo;
+    const [islogin, setislogin] = useState(true);
 
     const [menuData, setMenuData] = useState([]);
     const [menuItems, setMenuItems] = useState([]);
@@ -24,6 +44,41 @@ const Header = async ({ storeinit }) => {
     const IsB2BWebsiteChek = storeinit?.IsB2BWebsite;
     const IsCartNo = storeinit?.CartNo;
     const [serachsShowOverlay, setSerachShowOverlay] = useState(false);
+
+    const [cartCountNum, setCartCountNum] = useState(0);
+    const [wishCountNum, setWishCountNum] = useState(0);
+
+    useEffect(() => {
+        const visiterID = Cookies.get("visiterId");
+        GetCountAPI(visiterID)
+            .then((res) => {
+                if (res) {
+                    setCartCountNum(res?.cartcount);
+                    setWishCountNum(res?.wishcount);
+                }
+            })
+            .catch((err) => {
+                if (err) {
+                    console.log("getCountApiErr", err);
+                }
+            });
+    }, []);
+
+    useEffect(() => {
+        fetch(`${storImagePath()}/ExtraFlag.txt`)
+            .then((response) => response.text())
+            .then((text) => {
+                try {
+                    const jsonData = JSON.parse(text);
+                    setHtmlContent(jsonData);
+                } catch (error) {
+                    console.error("Error parsing JSON:", error);
+                }
+            })
+            .catch((error) => {
+                console.error("Error fetching the file:", error);
+            });
+    }, []);
 
     useEffect(() => {
         const uniqueMenuIds = [...new Set(menuData?.map((item) => item?.menuid))];
@@ -359,7 +414,7 @@ const Header = async ({ storeinit }) => {
                 <>
                     <div className="smr_smlingSearchoverlay">
                         <div className="smr_smlingTopSerachOver">
-                            <IoSearchOutline
+                            <SearchRoundedIcon
                                 onClick={() => clickSearch()}
                                 style={{ height: "15px", width: "15px", marginRight: "10px" }}
                             />
@@ -389,7 +444,7 @@ const Header = async ({ storeinit }) => {
                             }`}
                     >
                         <div className="smr_smlingTopSerachOver-Fixed">
-                            <IoSearchOutline
+                            <SearchRoundedIcon
                                 style={{ height: "15px", width: "15px", marginRight: "10px" }}
                             />
                             <input
@@ -487,7 +542,7 @@ const Header = async ({ storeinit }) => {
                           className="nav_li_smining_Icone"
                           onClick={() => navigate("/myWishList")}
                         >
-                          <PiStarThin
+                          <StarBorderRoundedIcon
                             style={{
                               height: "20px",
                               cursor: "pointer",
@@ -502,7 +557,7 @@ const Header = async ({ storeinit }) => {
                       onClick={toggleOverlay}
                       style={{}}
                     >
-                      <IoSearchOutline
+                      <SearchRoundedIcon
                         style={{
                           height: "20px",
                           cursor: "pointer",
@@ -566,7 +621,7 @@ const Header = async ({ storeinit }) => {
                                         className="mobileSideBarSearch"
                                         onKeyDown={searchDataFucn}
                                     />
-                                    <IoSearchOutline
+                                    <SearchRoundedIcon
                                         onClick={() => clickSearch()}
                                         style={{
                                             color: 'white',
@@ -1074,7 +1129,7 @@ const Header = async ({ storeinit }) => {
                                                 className="nav_li_smining_Icone"
                                                 onClick={() => navigate("/myWishList")}
                                             >
-                                                <PiStarThin
+                                                <StarBorderRoundedIcon
                                                     style={{
                                                         height: "20px",
                                                         cursor: "pointer",
@@ -1089,7 +1144,7 @@ const Header = async ({ storeinit }) => {
                                         onClick={toggleOverlay}
                                         style={{}}
                                     >
-                                        <IoSearchOutline
+                                        <SearchRoundedIcon
                                             style={{
                                                 height: "20px",
                                                 cursor: "pointer",
@@ -1135,7 +1190,7 @@ const Header = async ({ storeinit }) => {
                                                     className="nav_li_smining_Icone"
                                                     onClick={() => navigate("/myWishList")}
                                                 >
-                                                    <PiStarThin
+                                                    <StarBorderRoundedIcon
                                                         style={{
                                                             height: "20px",
                                                             cursor: "pointer",
@@ -1150,7 +1205,7 @@ const Header = async ({ storeinit }) => {
                                             onClick={toggleOverlay}
                                             style={{}}
                                         >
-                                            <IoSearchOutline
+                                            <SearchRoundedIcon
                                                 style={{
                                                     height: "20px",
                                                     cursor: "pointer",
@@ -1447,7 +1502,7 @@ const Header = async ({ storeinit }) => {
                                                     className="nav_li_smining_Fixed_Icone smr_mobileHideIcone"
                                                     onClick={() => navigate("/myWishList")}
                                                 >
-                                                    <PiStarThin
+                                                    <StarBorderRoundedIcon
                                                         style={{
                                                             height: "20px",
                                                             cursor: "pointer",
@@ -1462,7 +1517,7 @@ const Header = async ({ storeinit }) => {
                                             onClick={toggleOverlay}
                                             style={{}}
                                         >
-                                            <IoSearchOutline
+                                            <SearchRoundedIcon
                                                 style={{
                                                     height: "20px",
                                                     cursor: "pointer",
@@ -1508,7 +1563,7 @@ const Header = async ({ storeinit }) => {
                                                         className="nav_li_smining_Fixed_Icone smr_mobileHideIcone"
                                                         onClick={() => navigate("/myWishList")}
                                                     >
-                                                        <PiStarThin
+                                                        <StarBorderRoundedIcon
                                                             style={{
                                                                 height: "20px",
                                                                 cursor: "pointer",
@@ -1523,7 +1578,7 @@ const Header = async ({ storeinit }) => {
                                                 onClick={toggleOverlay}
                                                 style={{}}
                                             >
-                                                <IoSearchOutline
+                                                <SearchRoundedIcon
                                                     style={{
                                                         height: "20px",
                                                         cursor: "pointer",
