@@ -1,6 +1,6 @@
 import React from 'react';
 import './ProductSkelton.scss';
-import { Skeleton, Card, CardContent, Grid, CardMedia, useMediaQuery } from '@mui/material';
+import { Skeleton, Card, CardContent, Grid, CardMedia, useMediaQuery, Box } from '@mui/material';
 
 const ProductListSkeleton = ({ fromPage }) => {
     const cardsArray = Array.from({ length: 6 }, (_, index) => index + 1);
@@ -9,8 +9,8 @@ const ProductListSkeleton = ({ fromPage }) => {
 
     return (
         <div className={fromPage === "Prodlist" ? "skeltonMainDiv_prodlistPage" : 'skeltonMainDiv'}>
-            <Grid container spacing={2}>
-                {fromPage !== "Prodlist" && <Grid item xs={12}>
+            <Grid container spacing={2} width={"100% !important"}>
+                {fromPage !== "Prodlist" && <Grid items size={{ xs: 12 }}>
                     <Card className='skeltoncards' style={{ width: '100%' }}>
                         <CardContent style={{ display: 'flex', alignItems: 'center' }}>
                             <div style={{ flex: 1 }} className='topSkeletonMain'>
@@ -21,7 +21,7 @@ const ProductListSkeleton = ({ fromPage }) => {
                         </CardContent>
                     </Card>
                 </Grid>}
-                {fromPage !== "Prodlist" && <Grid sx={{ display: isDesktop ? 'none' : 'block' }} item xs={3}>
+                {fromPage !== "Prodlist" && <Grid sx={{ display: isDesktop ? 'none' : 'block' }} item size={{ xs: 3 }}>
                     <Card className='skeltoncards'>
                         <CardContent>
                             <Skeleton className="pSkelton" animation="wave" variant="text" width={'80%'} height={20} style={{ marginBottom: '20px' }} />
@@ -42,9 +42,9 @@ const ProductListSkeleton = ({ fromPage }) => {
                         </CardContent>
                     </Card>
                 </Grid>}
-                <Grid item xs={isDesktop ? 12 : (fromPage === "Prodlist" ? 12 : 9)} container spacing={2}>
+                <Grid item size={{ xs: isDesktop ? 12 : (fromPage === "Prodlist" ? 12 : 9) }} container spacing={2}>
                     {cardsArray.map((item) => (
-                        <Grid item xs={isMobile ? 6 : 4} key={item}>
+                        <Grid item size={{ xs: isMobile ? 6 : 4 }} key={item}>
                             <Card className={fromPage === "Prodlist" ? "skeltoncards_listpage" : 'skeltoncards'}>
                                 <CardMedia style={{ width: '100%', height: '40vh' }} className='cardMainSkeleton'>
                                     <Skeleton className="pSkelton" animation="wave" variant="rect" width={'100%'} height='40vh' />
