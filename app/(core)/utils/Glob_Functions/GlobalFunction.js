@@ -2,15 +2,20 @@ import { NEXT_APP_WEB } from "../env";
 
 
 export function storImagePath() {
-  let statiPath = `${window?.location?.protocol}//${window.location.hostname === "localhost" ||
-    window.location.hostname === "zen"
-    ? NEXT_APP_WEB
-    : window.location.hostname
-    }`;
+  if (typeof window === "undefined") {
+    // fallback for SSR (server render)
+    return `${NEXT_APP_WEB}/WebSiteStaticImage`;
+  }
+
+  let statiPath = `${window?.location?.protocol}//${
+    window.location.hostname === "localhost" || window.location.hostname === "zen"
+      ? NEXT_APP_WEB
+      : window.location.hostname
+  }`;
+
   return `${statiPath}/WebSiteStaticImage`;
-  // return `${statiPath}/Website_Store/WebSiteStaticImage`
-  // return `${storeinit?.UploadLogicalPath}/${storeinit?.ukey}/${storeinit?.ufcc}`
 }
+
 
 export function storImagePathNew() {
   let statiPath = `${window?.location?.protocol}//${(window.location.hostname === 'localhost'

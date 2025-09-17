@@ -1,6 +1,6 @@
 import { CommonAPI } from "../../CommonAPI/CommonAPI";
 
-export const Get_Tren_BestS_NewAr_DesigSet_Album = async (mode, customerID, filterObj = {}, currentPage = 1, itemsPerPage = 20) => {
+export const Get_Tren_BestS_NewAr_DesigSet_Album = async (storeData ,mode, customerID, filterObj = {}, currentPage = 1, itemsPerPage = 20) => {
     try {
         // Fetch data from session storage
         const storeInit = JSON.parse(sessionStorage.getItem("storeInit")) ?? {};
