@@ -14,20 +14,14 @@ export default async function middleware(req) {
     const storeData = await fetchStoreInitData(storeName);
 
     const response = NextResponse.next();
-
-    //set as a cookie
     response.cookies.set("x-store-data", JSON.stringify(storeData?.rd[0]), {
         httpOnly: false,
         path: "/",
     });
-
-    //set as a cookie
     response.cookies.set("x-myAccountFlags-data", JSON.stringify(storeData?.rd1), {
         httpOnly: false,
         path: "/",
     });
-
-    //set as a cookie
     response.cookies.set("x-CompanyInfoData-data", JSON.stringify(storeData?.rd2[0]), {
         httpOnly: false,
         path: "/",
@@ -36,7 +30,6 @@ export default async function middleware(req) {
     return response;
 }
 
-// Match all paths or specific ones
 export const config = {
     matcher: ["/((?!_next|api|favicon.ico).*)"],
 };
