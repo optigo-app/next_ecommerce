@@ -1,8 +1,8 @@
 import { NEXT_APP_WEB } from "@/app/(core)/utils/env";
 import { cookies } from "next/headers";
 
-export function getActiveTheme() {
-  const cookieStore = cookies();
+export async function getActiveTheme() {
+  const cookieStore = await cookies();
   const storeData = cookieStore.get("x-store-data");
 
   if (!storeData) return NEXT_APP_WEB;
