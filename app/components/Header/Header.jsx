@@ -9,6 +9,7 @@ import {
     ListItem,
     Tooltip,
 } from "@mui/material";
+import { useRouter } from "next/navigation";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
@@ -39,6 +40,10 @@ const Header = ({ storeinit }) => {
 
     const [menuData, setMenuData] = useState([]);
     const [menuItems, setMenuItems] = useState([]);
+    const router = useRouter()
+    const navigate = (link) => {
+        router?.push(link)
+    }
 
     const [searchText, setSearchText] = useState("");
     const IsB2BWebsiteChek = storeinit?.IsB2BWebsite;
@@ -262,7 +267,6 @@ const Header = ({ storeinit }) => {
             event?.metaKey || // Meta key (Command key on macOS)
             (event?.button && event?.button === 1) // Middle mouse button
         ) {
-            // Let the default behavior of the <a> tag handle the new tab opening
             return;
         } else {
             event?.preventDefault();
@@ -304,19 +308,10 @@ const Header = ({ storeinit }) => {
                 .filter(Boolean)
                 .join(",");
 
-            const paginationParam = [
-                `page=${finalData.page ?? 1}`,
-                `size=${finalData.size ?? 50}`,
-            ].join("&");
-
             let menuEncoded = `${queryParameters}/${otherparamUrl}`;
-            // const url = `/productlist?V=${queryParameters}/K=${otherparamUrl}`;
             const url = param?.menuname === 'Search by Stock' ? '/searchbystock' : `/p/${finalData?.menuname}/${queryParameters1}/?M=${btoa(
                 menuEncoded
             )}`;
-
-            // let d = new Date();
-            // let randomno = Math.floor(Math.random() * 1000 * d.getMilliseconds() * d.getSeconds() * d.getDate() * d.getHours() * d.getMinutes())
             handleDropdownClose();
             navigate(url);
         }
@@ -529,42 +524,6 @@ const Header = ({ storeinit }) => {
                             <div className="smr_mobileHeader_top_div3">
                                 {islogin && (
                                     <>
-                                        {/* <Badge
-                      badgeContent={wishCountNum}
-                      max={1000}
-                      overlap={"rectangular"}
-                      color="secondary"
-                      className="badgeColorFix smr_mobileHideIcone"
-                      style={{ marginInline: "15px" }}
-                    >
-                      <Tooltip title="WishList">
-                        <li
-                          className="nav_li_smining_Icone"
-                          onClick={() => navigate("/myWishList")}
-                        >
-                          <StarBorderRoundedIcon
-                            style={{
-                              height: "20px",
-                              cursor: "pointer",
-                              width: "20px",
-                            }}
-                          />
-                        </li>
-                      </Tooltip>
-                    </Badge> */}
-                                        {/* <li
-                      className="nav_li_smining_Icone smr_mobileHideIcone"
-                      onClick={toggleOverlay}
-                      style={{}}
-                    >
-                      <SearchRoundedIcon
-                        style={{
-                          height: "20px",
-                          cursor: "pointer",
-                          width: "20px",
-                        }}
-                      />
-                    </li> */}
                                         <Badge
                                             badgeContent={cartCountNum}
                                             max={1000}
