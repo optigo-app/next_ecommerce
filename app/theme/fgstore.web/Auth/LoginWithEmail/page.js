@@ -1,25 +1,22 @@
+"use client"
 import React, { useEffect, useState } from 'react';
 import { Button, CircularProgress, IconButton, InputAdornment, TextField } from '@mui/material';
-import { useLocation, useNavigate } from 'react-router-dom';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import CryptoJS from 'crypto-js';
-import { useRecoilState, useSetRecoilState } from 'recoil';
-// import { productListApiCall } from '../../../../Utils/API/ProductListAPI';
 import {  toast } from 'react-toastify';
 import './LoginWithEmail.modul.scss'
 // import { DesignSet } from '../../../../Utils/API/DesignSet';
 // import { GetCount } from '../../../../Utils/API/GetCount';
 // import { getDesignPriceList } from '../../../../Utils/API/PriceDataApi';
-import Footer from '../../Home/Footer/Footer';
-import { LoginWithEmailAPI } from '../../../../../../utils/API/Auth/LoginWithEmailAPI';
-// import { CommonAPI } from '../../../../../../utils/API/CommonAPI/CommonAPI';
-import { CartCount, WishCount, loginState, smr_loginState } from '../../../Recoil/atom';
-import { ForgotPasswordEmailAPI } from '../../../../../../utils/API/Auth/ForgotPasswordEmailAPI';
+import { LoginWithEmailAPI } from '@/app/(core)/utils/API/Auth/LoginWithEmailAPI';
+// import { CommonAPI } from '@/app/(core)/utils/API/CommonAPI/CommonAPI';
+import { ForgotPasswordEmailAPI } from '@/app/(core)/utils/API/Auth/ForgotPasswordEmailAPI';
 import Cookies from 'js-cookie';
-import { CurrencyComboAPI } from '../../../../../../utils/API/Combo/CurrencyComboAPI';
-import { MetalColorCombo } from '../../../../../../utils/API/Combo/MetalColorCombo';
-import { MetalTypeComboAPI } from '../../../../../../utils/API/Combo/MetalTypeComboAPI';
-import { GetCountAPI } from '../../../../../../utils/API/GetCount/GetCountAPI';
+import { CurrencyComboAPI } from '@/app/(core)/utils/API/Combo/CurrencyComboAPI';
+import { MetalColorCombo } from '@/app/(core)/utils/API/Combo/MetalColorCombo';
+import { MetalTypeComboAPI } from '@/app/(core)/utils/API/Combo/MetalTypeComboAPI';
+import { GetCountAPI } from '@/app/(core)/utils/API/GetCount/GetCountAPI';
+import { useNextRouterLikeRR } from '@/app/(core)/hooks/useLocationRd';
 
 export default function LoginWithEmail() {
     const [email, setEmail] = useState('');
@@ -27,20 +24,21 @@ export default function LoginWithEmail() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
-    const navigation = useNavigate();
-    const location = useLocation();
+    const {push } = useNextRouterLikeRR();
+    const navigation = push;
+    const location = useNextRouterLikeRR();
 
-    const [cartCountNum, setCartCountNum] = useRecoilState(CartCount)
-    const [wishCountNum, setWishCountNum] = useRecoilState(WishCount)
+    const [cartCountNum, setCartCountNum] = useState(0)
+    const [wishCountNum, setWishCountNum] = useState(0)
 
-    const search = location?.search
-    const updatedSearch = search.replace('?LoginRedirect=', '');
+    const search = location?.search ;
+    const updatedSearch = search?.replace('?LoginRedirect=', '');
     const redirectEmailUrl = `${decodeURIComponent(updatedSearch)}`;
     const cancelRedireactUrl = `/LoginOption/${search}`;
 
 
     // const setPdData = useSetRecoilState(productDataNew)
-    const setIsLoginState = useSetRecoilState(smr_loginState)
+    const [isLoginState,setIsLoginState] = useState(false)
     // const setDesignList = useSetRecoilState(designSet)
 
     // const setCartCount = useSetRecoilState(CartListCounts)
@@ -76,8 +74,7 @@ export default function LoginWithEmail() {
     useEffect(() => {
 
         setCSSVariable();
-
-        const storedEmail = location.state?.email;;
+        const storedEmail = sessionStorage.getItem('registerEmail') ?? '';
         if (storedEmail) setEmail(storedEmail);
     }, []);
 
@@ -155,7 +152,6 @@ export default function LoginWithEmail() {
             setIsLoading(false);
             if (response.Data.rd[0].stat === 1) {
                 const visiterID = Cookies.get('visiterId');
-
                 console.log('responseresponse', response?.Data?.rd[0]?.Token);
                 Cookies.set('userLoginCookie', response?.Data?.rd[0]?.Token);
                 sessionStorage.setItem('registerEmail', email)
@@ -198,10 +194,13 @@ export default function LoginWithEmail() {
                     }
                 }).catch((err) => console.log(err))
 
+                console.log("🚀 ~ handleSubmit ~ redirectEmailUrl:", redirectEmailUrl)
                 if (redirectEmailUrl) {
-                    navigation(redirectEmailUrl);
+                    // navigation(redirectEmailUrl);
+                    window.location.href = redirectEmailUrl
                 } else {
-                    navigation('/')
+                    // navigation('/')
+                    window.location.href = '/'
                 }
 
                 // pdDataCalling()
@@ -211,7 +210,7 @@ export default function LoginWithEmail() {
 
                 // handelCurrencyData()
                 // getAllProdData()
-                window.location.reload();
+                // window.location.reload();
             } else {
                 errors.confirmPassword = 'Password is Invalid'
             }

@@ -1222,7 +1222,7 @@ const Header = ({ storeinit }) => {
           ></div>
         </div>
       </div>
-      <TopNavBar menuItems={menuItems} handelMenu={handelMenu} />
+      <TopNavBar key={'topNavBar_' + menuItems?.length} menuItems={menuItems} handelMenu={handelMenu} />
       {IsCartNo == 2 && <CartDrawer open={isCartOpen} />}
     </div>
   );

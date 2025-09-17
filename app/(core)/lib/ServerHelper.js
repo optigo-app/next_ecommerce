@@ -17,4 +17,12 @@ function storImagePath(host) {
 
 const assetBase = storImagePath(host);
 
-export { getProtocol, storImagePath, assetBase };
+ function getLogos() {
+  const base = assetBase;
+  return {
+    web: `${base}/logoIcon/webLogo.png`,
+    mobile: `${base}/logoIcon/mobileLogo.png`,
+  };
+}
+
+export { getProtocol, storImagePath, assetBase, getLogos };

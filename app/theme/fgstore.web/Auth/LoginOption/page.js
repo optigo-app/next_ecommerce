@@ -6,8 +6,9 @@ import Link from "next/link";
 
 const LoginOption = ({ params, searchParams }) => {
   const search = searchParams?.search ?? "";
-  const redirectEmailUrl = `/ContinueWithEmail?search=${encodeURIComponent(search)}`;
-  const redirectMobileUrl = `/ContinueWithMobile?search=${encodeURIComponent(search)}`;
+  const redirectEmailUrl = `/ContinueWithEmail${search ? `?search=${encodeURIComponent(search)}` : ""}`;
+  const redirectMobileUrl = `/ContinueWithMobile${search ? `?search=${encodeURIComponent(search)}` : ""}`;
+  
 
   return (
     <div className="smr_Loginoption">
