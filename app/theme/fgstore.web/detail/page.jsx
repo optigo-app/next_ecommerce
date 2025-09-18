@@ -1,12 +1,13 @@
-import Product from "./_prodComponents/page";
+
 import { getStoreInit } from "@/app/(core)/utils/GlobalFunctions/GlobalFunctions";
+import ProductDetail from "./_detComponents/page";
 
 const ProductList = async ({ params, searchParams }) => {
     const storeinit = await getStoreInit();
 
     return (
         <>
-            <Product params={params} searchParams={searchParams} storeinit={storeinit} />
+            <ProductDetail params={params} searchParams={searchParams} storeinit={storeinit} />
         </>
     );
 };
