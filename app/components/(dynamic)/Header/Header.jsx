@@ -1056,7 +1056,7 @@ const Header = ({ storeinit ,logos }) => {
 
 export default Header;
 
-const TopNavBar = ({ menuItems = [], handelMenu = () => {} }) => {
+const TopNavBar = ({ menuItems = [], handelMenu = () => { } }) => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [expandedMenu, setExpandedMenu] = useState(null);
   const [selectedData, setSelectedData] = useState([]);
@@ -1100,7 +1100,7 @@ const TopNavBar = ({ menuItems = [], handelMenu = () => {} }) => {
         onMouseLeave={handleMouseLeaveWithDelay} // Handle mouse leave from the parent container
       >
         <div className="smr_flat_view_menu">
-          <HoverMenu handleMouseEnter={handleMouseEnter} handleMouseLeave={handleMouseLeave} expandedMenu={expandedMenu} hoveredIndex={hoveredIndex} selectedData={selectedData} handelMenu={handelMenu} />
+          <HoverMenu key={expandedMenu} handleMouseEnter={handleMouseEnter} handleMouseLeave={handleMouseLeave} expandedMenu={expandedMenu} hoveredIndex={hoveredIndex} selectedData={selectedData} handelMenu={handelMenu} />
           {menuItems?.map((menuItem, index) => (
             <div
               key={menuItem.menuid}
@@ -1109,9 +1109,9 @@ const TopNavBar = ({ menuItems = [], handelMenu = () => {} }) => {
                 handleMouseEnter(index, menuItem);
               }}
               onClick={() => handleMouseLeave()}
-              // onMouseLeave={() => {
-              //   handleMouseLeave();
-              // }}
+            // onMouseLeave={() => {
+            //   handleMouseLeave();
+            // }}
             >
               <div
                 // component="div"
@@ -1165,12 +1165,13 @@ const TopNavBar = ({ menuItems = [], handelMenu = () => {} }) => {
                           </div>
                           <>
                             <div className="smr_menu_level1">
-                              {subMenuItem.param2.map((subSubMenuItem) => {
+                              {subMenuItem.param2.map((subSubMenuItem, index) => {
                                 if (subMenuItem?.param2 && subMenuItem?.param2?.length > 0 && subMenuItem?.param2[0].param2name === "") {
                                   return;
                                 }
                                 return (
                                   <div
+                                    key={index}
                                     component="div"
                                     onClick={(e) =>
                                       handelMenu(
@@ -1328,7 +1329,7 @@ const HoverMenu = ({ selectedData, handelMenu, expandedMenu, hoveredIndex, handl
         <div className="smr_right_side_banner">
           {SliderbannerImages?.map((image, index) => {
             return (
-              <div className="image_box_s">
+              <div className="image_box_s" key={index}>
                 <img src={image} alt="image" className="image_s" draggable={true} onContextMenu={(e) => e.preventDefault()} />
               </div>
             );

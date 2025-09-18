@@ -3,7 +3,6 @@ import { useMemo } from 'react';
 
 const useLocation = () => {
   const router = useRouter();
-  console.log("TCL: useLocation -> router", router)
 
   // Ensure asPath is defined before attempting to use it
   const pathname = router.asPath ? router.asPath.split('?')[0] : '/'; // fallback to '/' if asPath is undefined

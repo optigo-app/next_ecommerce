@@ -7,13 +7,6 @@ const TheDifference = () => {
     <div className="smilingPAgeMain" style={{ paddingBlock: '8%' }}>
       <p
         className="smilingTitle"
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{
-          duration: 0.4,
-          ease: 'easeIn',
-        }}
-        viewport={{ once: true, amount: 0.2 }}
       >
         The Sonasons Difference
       </p>
@@ -22,14 +15,6 @@ const TheDifference = () => {
         {/* First Image */}
         <div
           className="smr_smilingRockBox"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{
-            duration: 0.4,
-            ease: 'easeIn',
-            delay: 0.2, // Delay for the first image
-          }}
         >
           <div className="smr_diffrence_box1_main">
             <img
@@ -46,14 +31,6 @@ const TheDifference = () => {
         {/* Second Image */}
         <div
           className="smr_smilingRockBox"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{
-            duration: 0.4,
-            ease: 'easeIn',
-            delay: 0.4, // Delay for the second image
-          }}
         >
           <div className="smr_diffrence_box1_main">
             <img
@@ -72,14 +49,6 @@ const TheDifference = () => {
         {/* Third Image */}
         <div
           className="smr_smilingRockBox"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{
-            duration: 0.4,
-            ease: 'easeIn',
-            delay: 0.6, // Delay for the third image
-          }}
         >
           <div className="smr_diffrence_box1_main">
             <img
@@ -96,14 +65,6 @@ const TheDifference = () => {
         {/* Fourth Image */}
         <div
           className="smr_smilingRockBox"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{
-            duration: 0.4,
-            ease: 'easeIn',
-            delay: 0.8, // Delay for the fourth image
-          }}
         >
           <div className="smr_diffrence_box1_main">
             <img

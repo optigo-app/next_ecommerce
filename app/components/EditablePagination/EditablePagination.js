@@ -16,7 +16,7 @@ const EditablePagination = ({
   isShowButton,
 }) => {
   const dstCount = totalItems;
-
+  console.log("jiji", totalPages)
 
   const handleOnChange = (event) => {
     const newValue = event.target.value
@@ -67,7 +67,7 @@ const EditablePagination = ({
           onKeyDown={(e) => {
             if (e.key === "Enter" && inputPage != "") {
               handlePageInputChange(e);
-            } else if(e.key === "Enter" && inputPage == "") {
+            } else if (e.key === "Enter" && inputPage == "") {
               setInputPage(currPage);
             }
           }}

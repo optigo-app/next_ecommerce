@@ -19,6 +19,7 @@ const Product_Card = ({
     metalColorType,
     maxwidth590px,
     loginUserDetail,
+    handleMoveToDetail,
     selectedMetalId,
     productIndex,
     yellowImage,
@@ -67,14 +68,12 @@ const Product_Card = ({
             setImageColor("");
         }
     }, [selectedMetalColor])
+
     const handleClick = (id) => {
         setSelectedMetalColor(selectedMetalColor === id ? null : id);
     };
 
     const titleLine = `${productData?.MetalTypePurity?.split(" ")[1]} ${metalColorTitle} ${productData?.MetalTypePurity?.split(" ")[0]} ${productData?.ShapeName} Diamond ${productData?.category} with ${productData?.style} style`;
-
-    // const getGoldType = metalType.filter((item) => item?.Metalid === selectedMetalId)?.[0]?.metaltype.toUpperCase()?.split(' ')[1]?.split('K')[0];
-
 
     const [isLoading, setIsLoading] = useState(true);
     const [isHover, setIsHover] = useState(false);
@@ -95,7 +94,6 @@ const Product_Card = ({
             {!isshowDots &&
                 productIndex === 6 && (
                     <>
-                        {/* <img src="https://png.pngtree.com/template/20240229/ourmid/pngtree-jewelry-social-media-and-instagram-post-template-vector-image_2010320.jpg" alt="" /> */}
                         {menuParams?.menuname === "Glossy" && (
                             <div className="smr_productCard_banner">
                                 <img src={`${storImagePath()}/images/HomePage/ProductListing/5.png`} loading="lazy" alt=""
@@ -178,7 +176,6 @@ const Product_Card = ({
             )}
             <div className="smr_productCard">
                 <div className="cart_and_wishlist_icon">
-                    {/* <Button className="smr_cart-icon"> */}
                     <Checkbox
                         icon={
                             <LocalMallOutlinedIcon
@@ -209,9 +206,6 @@ const Product_Card = ({
                                 : false
                         }
                     />
-                    {/* Object.values(cartArr)?.length > 0 ? cartArr[productData?.autocode] : */}
-                    {/* </Button> */}
-                    {/* <Button className="smr_wish-icon"> */}
                     <Checkbox
                         icon={
                             <StarBorderIcon
@@ -235,17 +229,13 @@ const Product_Card = ({
                         onChange={(e) =>
                             handleCartandWish(e, productData, "Wish")
                         }
-                        // checked={productData?.IsInWish}
                         checked={
                             wishArr[productData?.autocode] ??
                                 productData?.IsInWish === 1
                                 ? true
                                 : false
                         }
-                    // Object.values(wishArr)?.length > 0 ? wishArr[productData?.autocode] :
-                    // onChange={(e) => handelWishList(e, products)}
                     />
-                    {/* </Button> */}
                 </div>
                 <div className="smrWeb_app_product_label">
                     {productData?.IsInReadyStock == 1 && <span className="smrWeb_app_instock">In Stock</span>}
@@ -255,40 +245,15 @@ const Product_Card = ({
                 </div>
 
                 <div
-                    // onMouseMove={(e) => {
-                    //   handleImgRollover(productData, yellowRollImage, whiteRollImage, roseRollImage);
-                    //   if (productData?.VideoCount > 0) {
-                    //     setIsRollOverVideo({ [productData?.autocode]: true });
-                    //   } else {
-                    //     setIsRollOverVideo({ [productData?.autocode]: false });
-                    //   }
-                    // }}
-
-                    // onMouseLeave={() => {
-                    //   handleLeaveImgRolloverImg(productData, yellowImage, whiteImage, roseImage);
-                    //   setIsRollOverVideo({ [productData?.autocode]: false });
-                    // }}
                     onMouseMove={() => setIsHover(true)}
                     onMouseLeave={() => setIsHover(false)}
                     className="smr_ImgandVideoContainer"
                     onClick={() => handleMoveToDetail(productData)}
                 >
                     {isLoading === true ?
-                        // <CardMedia
-                        //   style={{ flex: 1, width: "100%", height: "100%" }}
-                        //   className="cardMainSkeleton"
-                        // >
-                        //   <Skeleton
-                        //     animation="wave"
-                        //     variant="rect"
-                        //     width="100%"
-                        //     height="100%"
-                        //     style={{ backgroundColor: "#e7e7e7" }}
-                        //   />
-                        // </CardMedia> 
                         <Card
                             sx={{
-                                height: '100%', // or '100%' if parent has a defined height
+                                height: '100%',
                                 display: 'flex',
                                 flexDirection: 'column',
                             }}
@@ -343,7 +308,7 @@ const Product_Card = ({
                                             if (productData?.ImageCount > 0) {
                                                 e.target.src = RollImageUrl;
                                             }
-e.target.src = '/image-not-found.jpg';
+                                            e.target.src = '/image-not-found.jpg';
                                         }}
                                         draggable={true}
                                         onContextMenu={(e) => e.preventDefault()}
@@ -370,7 +335,6 @@ e.target.src = '/image-not-found.jpg';
                 </div>
                 <div className="smr_prod_card_info" style={{ height: !isshowDots ? "106px" : "90px" }}>
                     <div className="smr_prodCard_1"
-                    // style={{ flex: hasNoData ? "1 100%" : "1 70%" }}
                     >
                         {!isshowDots &&
                             <div className="smr_productList_metaltype_Maindiv">
@@ -399,15 +363,9 @@ e.target.src = '/image-not-found.jpg';
                                         "smr1_prod_title_with_no_width"
                                 }
                             >
-                                {/* {productData?.TitleLine?.length > 0 &&
-            "-"}
-          {productData?.TitleLine}{" "} */}
                                 <strong style={{ color: "black" }}>{productData?.designno !== "" && productData?.designno}</strong>
                                 {formatTitleLine(productData?.TitleLine) && " - " + productData?.TitleLine}
                             </span>
-                            {/* <span className="smr_prod_designno">
-          {productData?.designno}
-        </span> */}
                         </div>
                         <div className="smr_prod_Allwt">
                             <div
@@ -420,12 +378,9 @@ e.target.src = '/image-not-found.jpg';
                                     letterSpacing: maxwidth590px
                                         ? "0px"
                                         : "1px",
-                                    // gap:maxwidth1674px ? '0px':'3px',
                                     flexWrap: "wrap",
                                 }}
                             >
-                                {/* <span className="smr_por"> */}
-
                                 {storeInit?.IsGrossWeight == 1 &&
                                     Number(productData?.Gwt) !== 0 && (
                                         <span className="smr_prod_wt">
@@ -448,8 +403,6 @@ e.target.src = '/image-not-found.jpg';
                                         </span>
                                     </>
                                 )}
-                                {/* </span> */}
-                                {/* <span className="smr_por"> */}
                                 {storeInit?.IsDiamondWeight == 1 &&
                                     Number(productData?.Dwt) !== 0 && (
                                         <>
@@ -484,7 +437,6 @@ e.target.src = '/image-not-found.jpg';
                                             </span>
                                         </>
                                     )}
-                                {/* </span> */}
                             </div>
                         </div>
                         <div className="smr_prod_mtcolr_price">
@@ -513,9 +465,6 @@ e.target.src = '/image-not-found.jpg';
                                 </span></>}
                         </div>
                     </div>
-                    {/* <div className="smr_prodCard_2" style={{ flex: hasNoData ? 0 : "1 30%" }}> */}
-
-                    {/* </div> */}
                 </div>
             </div >
         </>
