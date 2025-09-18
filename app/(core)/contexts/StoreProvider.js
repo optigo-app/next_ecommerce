@@ -1,43 +1,30 @@
 "use client";
-import React, { createContext, useContext, useEffect, useState } from "react";
+import { create } from "zustand";
 
-const StoreContext = createContext(null);
+export const useStore = create((set) => ({
+  user: null,
+  setUser: (user) => set({ user }),
 
-export function StoreProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const [cartCountNum, setCartCountNum] = useState(0);
-  const [wishCountNum, setWishCountNum] = useState(0);
-  const [loginUserDetail, setLoginUserDetail] = useState(null);
-  const [islogin, setislogin] = useState(true);
+  cartCountNum: 0,
+  setCartCountNum: (count) => set({ cartCountNum: count }),
 
-  useEffect(() => {
+  wishCountNum: 0,
+  setWishCountNum: (count) => set({ wishCountNum: count }),
+
+  loginUserDetail: null,
+  setLoginUserDetail: (detail) => {
+    sessionStorage.setItem("loginUserDetail", JSON.stringify(detail));
+    set({ loginUserDetail: detail, islogin: true });
+  },
+
+  islogin: false,
+  setislogin: (value) => set({ islogin: value }),
+
+  initLoginUserDetail: () => {
     const storedDetail = sessionStorage.getItem("loginUserDetail");
     if (storedDetail) {
       const parsed = JSON.parse(storedDetail);
-      setLoginUserDetail(parsed);
-      setislogin(true);
+      set({ loginUserDetail: parsed, islogin: true });
     }
-  }, []);
-
-
-  const value = {
-    user,
-    setUser,
-    islogin,
-    cartCountNum,
-    setCartCountNum,
-    wishCountNum,
-    setWishCountNum,
-    setislogin,
-    loginUserDetail,
-    setLoginUserDetail,
-  };
-
-  return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;
-}
-
-export function useStore() {
-  const ctx = useContext(StoreContext);
-  if (!ctx) throw new Error("useStore must be used inside StoreProvider");
-  return ctx;
-}
+  },
+}));

@@ -16,7 +16,6 @@ const EditablePagination = ({
   isShowButton,
 }) => {
   const dstCount = totalItems;
-  console.log("jiji", totalPages)
 
   const handleOnChange = (event) => {
     const newValue = event.target.value
