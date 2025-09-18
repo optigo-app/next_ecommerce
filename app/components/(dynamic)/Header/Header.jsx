@@ -12,6 +12,7 @@ import { GetCountAPI } from "@/app/(core)/utils/API/GetCount/GetCountAPI";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useStore } from "@/app/(core)/contexts/StoreProvider";
 
 export function storImagePath() {
   let statiPath = `${window?.location?.protocol}//${window.location.hostname === "localhost" || window.location.hostname === "zen" ? NEXT_APP_WEB : window.location.hostname}`;
@@ -19,25 +20,20 @@ export function storImagePath() {
 }
 
 const Header = ({ storeinit ,logos }) => {
-  console.log("🚀 ~ Header ~ logos:", logos)
+  const {islogin, setislogin , cartCountNum, setCartCountNum, wishCountNum, setWishCountNum } = useStore();
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isHeaderFixed, setIsHeaderFixed] = useState(false);
   const [isHeaderFixedDropShow, setIsHeaderFixedDropShow] = useState(false);
   const [htmlContent, setHtmlContent] = useState("");
   const compnyLogo = logos?.web;
   const compnyLogoM = logos?.mobile;
-  const [islogin, setislogin] = useState(true);
-
   const [menuData, setMenuData] = useState([]);
   const [menuItems, setMenuItems] = useState([]);
-
   const [searchText, setSearchText] = useState("");
   const IsB2BWebsiteChek = storeinit?.IsB2BWebsite;
   const IsCartNo = storeinit?.CartNo;
   const [serachsShowOverlay, setSerachShowOverlay] = useState(false);
 
-  const [cartCountNum, setCartCountNum] = useState(0);
-  const [wishCountNum, setWishCountNum] = useState(0);
   const router = useRouter();
 
   const navigate = (link) => {
@@ -191,6 +187,7 @@ const Header = ({ storeinit ,logos }) => {
   const handleLogout = () => {
     navigate("/");
     setislogin(false);
+    Cookies.remove("userLoginCookie");
     Cookies.remove("userLoginCookie");
     window.location.reload();
     sessionStorage.setItem("LoginUser", false);

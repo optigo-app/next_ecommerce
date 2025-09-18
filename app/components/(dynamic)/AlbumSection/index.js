@@ -2,7 +2,6 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import Main from "./Main";
 
-
 const Index = ({ storeData }) => {
   return (
     <Box className="smr_alubmMainDiv">
