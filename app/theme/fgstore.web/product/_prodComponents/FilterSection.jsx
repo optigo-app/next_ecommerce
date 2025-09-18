@@ -1,6 +1,6 @@
 "use client";
 
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import {
     Accordion,
     AccordionSummary,
@@ -8,7 +8,6 @@ import {
     FormControlLabel,
     Checkbox,
     Box,
-    Typography,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import RangeViewFilter from "./RangeViewFilter";
@@ -50,11 +49,16 @@ const FilterSection = memo(({
     resetRangeFilter,
     isMobile = false,
 }) => {
+    const [open, setOpen] = useState({});
     const containerStyle = isMobile
         ? { marginTop: "12px", maxHeight: "80vh", overflowY: "auto", overflowX: "hidden" }
         : { marginTop: "12px", maxHeight: "80vh", overflowY: "auto", overflowX: "hidden" };
 
     const boxWidth = isMobile ? 203 : 204;
+
+    const handleToggle = (filterKey) => {
+        setOpen({ ...open, [filterKey]: !open[filterKey] });
+    }
 
     return (
         <div style={containerStyle}>
@@ -75,8 +79,11 @@ const FilterSection = memo(({
                                         background: "none",
                                     },
                                 }}
-                                expanded={!!expandedAccordions[index]}
-                                onChange={handleAccordionChange(index)}
+                                // expanded={!!expandedAccordions[index]}
+                                // onChange={handleAccordionChange(index)}
+                                onClick={() => handleToggle(ele?.id)}
+                               expanded={!!open[ele?.id]}
+
                             >
                                 <AccordionSummary
                                     expandIcon={<ExpandMoreIcon sx={{ width: "20px" }} />}
@@ -163,8 +170,10 @@ const FilterSection = memo(({
                                     background: "none",
                                 },
                             }}
-                            expanded={!!expandedAccordions[index]}
-                            onChange={handleAccordionChange(index)}
+                            // expanded={!!expandedAccordions[index]}
+                            // onChange={handleAccordionChange(index)}
+                            onClick={() => handleToggle(ele?.id)}
+                           expanded={!!open[ele?.id]}
                         >
                             <AccordionSummary
                                 expandIcon={
@@ -263,8 +272,10 @@ const FilterSection = memo(({
                                     background: "none",
                                 },
                             }}
-                            expanded={!!expandedAccordions[index]}
-                            onChange={handleAccordionChange(index)}
+                            // expanded={!!expandedAccordions[index]}
+                            // onChange={handleAccordionChange(index)}
+                            onClick={() => handleToggle(ele?.id)}
+                           expanded={!!open[ele?.id]}
                         >
                             <AccordionSummary
                                 expandIcon={<ExpandMoreIcon sx={{ width: "20px" }} />}
@@ -326,8 +337,10 @@ const FilterSection = memo(({
                                     background: "none",
                                 },
                             }}
-                            expanded={!!expandedAccordions[index]}
-                            onChange={handleAccordionChange(index)}
+                            // expanded={!!expandedAccordions[index]}
+                            // onChange={handleAccordionChange(index)}
+                            onClick={() => handleToggle(ele?.id)}
+                           expanded={!!open[ele?.id]}
                         >
                             <AccordionSummary
                                 expandIcon={<ExpandMoreIcon sx={{ width: "20px" }} />}
@@ -389,8 +402,10 @@ const FilterSection = memo(({
                                     background: "none",
                                 },
                             }}
-                            expanded={!!expandedAccordions[index]}
-                            onChange={handleAccordionChange(index)}
+                            // expanded={!!expandedAccordions[index]}
+                            // onChange={handleAccordionChange(index)}
+                            onClick={() => handleToggle(ele?.id)}
+                           expanded={!!open[ele?.id]}
                         >
                             <AccordionSummary
                                 expandIcon={<ExpandMoreIcon sx={{ width: "20px" }} />}
