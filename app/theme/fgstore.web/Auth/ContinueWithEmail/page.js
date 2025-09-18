@@ -13,9 +13,9 @@ export default function ContinueWithEmail({ params, searchParams }) {
     const [isLoading, setIsLoading] = useState(false);
     const navigation = useRouter() ;
     const search = searchParams?.search ?? "";
-    const redirectEmailUrl = `/LoginWithEmail/${search}`;
-    const redirectSignUpUrl = `/register/${search}`;
-    const cancelRedireactUrl = `/LoginOption/${search}`;
+    const redirectEmailUrl = `/LoginWithEmail/${search}`; 
+    const redirectSignUpUrl = `/register/${search}`; 
+    const cancelRedireactUrl = `/LoginOption/${search}`; 
 
     useEffect(() => {
         setCSSVariable();
@@ -67,7 +67,7 @@ export default function ContinueWithEmail({ params, searchParams }) {
             if (response.Data.rd[0].stat == 1 && response.Data.rd[0].islead == 1) {
                 toast.error('You are not a customer, contact to admin')
             } else if (response.Data.rd[0].stat == 1 && response.Data.rd[0].islead == 0) {
-                navigation.push(redirectEmailUrl, { state: { email: trimmedEmail } });
+                navigation.push(redirectEmailUrl);
                 if (trimmedEmail) {
                     sessionStorage.setItem("registerEmail", trimmedEmail);
                 }
@@ -77,7 +77,10 @@ export default function ContinueWithEmail({ params, searchParams }) {
                 //     console.log(res, "res")
                 //     setIsLoading(false);
                 // })
-                navigation.push(redirectSignUpUrl, { state: { email: trimmedEmail } });
+                navigation.push(redirectSignUpUrl);
+                if (trimmedEmail) {
+                    sessionStorage.setItem("registerEmail", trimmedEmail);
+                }
             }
         }).catch((err) => console.log(err))
 

@@ -3,8 +3,9 @@ import "./globals.css";
 import { pages } from "@/app/(core)/utils/pages";
 import { generatePageMetadata } from "@/app/(core)/utils/HeadMeta";
 import { MasterProvider } from "@/app/(core)/contexts/MasterProvider";
-import { getCompanyInfoData, getStoreInit } from "./(core)/utils/GlobalFunctions/GlobalFunctions";
+import { getCompanyInfoData, getStoreInit, getUserData } from "./(core)/utils/GlobalFunctions/GlobalFunctions";
 import { getActiveTheme } from "./(core)/lib/getActiveTheme";
+import { StoreProvider } from "./(core)/contexts/StoreProvider";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -23,7 +24,13 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${poppins.variable}`}>
-        <MasterProvider getCompanyInfoData={companyInfo} getStoreInit={storeInit}><Layout>{children}</Layout></MasterProvider>
+        <MasterProvider getCompanyInfoData={companyInfo} getStoreInit={storeInit}>
+          <StoreProvider>
+            <Layout>
+              {children}
+            </Layout>
+          </StoreProvider>
+        </MasterProvider>
       </body>
     </html>
   );
