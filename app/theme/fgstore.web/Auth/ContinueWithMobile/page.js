@@ -1,26 +1,27 @@
+"use client";
 import React, { useState } from "react";
 import { Button, CircularProgress, TextField } from "@mui/material";
-import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import Footer from "../../Home/Footer/Footer";
 import { ContimueWithMobileAPI } from "@/app/(core)/utils/API/Auth/ContimueWithMobileAPI";
 import "./ContimueWithMobile.modul.scss";
 import { WebSignUpOTPVerify } from "@/app/(core)/utils/API/Auth/WebSignUpOTPVerify";
 import OTPContainer from "@/app/(core)/utils/Glob_Functions/Otpflow/App";
+import { useNextRouterLikeRR } from "@/app/(core)/hooks/useLocationRd";
 
-export default function ContimueWithMobile() {
+export default function ContinueWithMobile({ params, searchParams }) {
+      const location = useNextRouterLikeRR();
   const [mobileNo, setMobileNo] = useState("");
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [buttonFocused, setButtonFocused] = useState(false);
-  const navigation = useNavigate();
-  const location = useLocation();
+  const navigation = location?.push;
   const [isOpen, setIsOpen] = useState(false);
 
-  const search = location?.search;
-  const redirectMobileUrl = `/LoginWithMobileCode/${search}`;
-  const redirectSignUpUrl = `/register/${search}`;
+  const search = location?.search ;
+  const updatedSearch = search?.replace('?LoginRedirect=', '');
+  const redirectMobileUrl = `/LoginWithMobileCode/${updatedSearch}`;
+  const redirectSignUpUrl = `/register/${updatedSearch}`;
   const cancelRedireactUrl = `/LoginOption/${search}`;
 
   const handleInputChange = (e, setter, fieldName) => {
@@ -76,7 +77,7 @@ export default function ContimueWithMobile() {
           toast.error("You are not a customer, contact to admin");
         } else if (response.Data.Table1[0].stat === "1" && response.Data.Table1[0].islead === "0") {
           toast.success("OTP send Sucssessfully");
-          navigation(redirectMobileUrl, { state: { mobileNo: mobileNo } });
+          navigation(redirectMobileUrl);
           sessionStorage.setItem("registerMobile", mobileNo);
         } else {
           // setIsOpen(true)
@@ -84,7 +85,7 @@ export default function ContimueWithMobile() {
           //     console.log(res, "res")
           // })
           setIsLoading(false);
-          navigation(redirectSignUpUrl, { state: { mobileNo: mobileNo } });
+          navigation(redirectSignUpUrl);
           sessionStorage.setItem("registerMobile", mobileNo);
         }
       })

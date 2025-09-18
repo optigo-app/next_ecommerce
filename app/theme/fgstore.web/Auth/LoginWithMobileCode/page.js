@@ -1,33 +1,31 @@
+"use client"
 import React, { useEffect, useState } from 'react';
-import { Button, CircularProgress, IconButton, InputAdornment, TextField } from '@mui/material';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Button, CircularProgress, TextField } from '@mui/material';
 import './LoginWithMobileCode.modul.scss';
-import { useSetRecoilState } from 'recoil';
-import Footer from '../../Home/Footer/Footer';
-import { loginState, smr_loginState } from '../../../Recoil/atom';
-import { ContimueWithMobileAPI } from '../../../../../../utils/API/Auth/ContimueWithMobileAPI';
+import { ContimueWithMobileAPI } from '@/app/(core)/utils/API/Auth/ContimueWithMobileAPI';
 import {  toast } from 'react-toastify';
-import { LoginWithEmailAPI } from '../../../../../../utils/API/Auth/LoginWithEmailAPI';
+import { LoginWithEmailAPI } from '@/app/(core)/utils/API/Auth/LoginWithEmailAPI';
 import Cookies from 'js-cookie';
+import { useNextRouterLikeRR } from '@/app/(core)/hooks/useLocationRd';
 
 export default function LoginWithMobileCode() {
+    const location = useNextRouterLikeRR();
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
-    const navigation = useNavigate();
+    const navigation = location?.push;
     const [mobileNo, setMobileNo] = useState('');
     const [enterOTP, setEnterOTP] = useState('');
     const [resendTimer, setResendTimer] = useState(120);
-    const setIsLoginState = useSetRecoilState(smr_loginState)
-    const location = useLocation();
+    const [isLoginState, setIsLoginState] = useState(false)
 
-    const search = location?.search
-    const updatedSearch = search.replace('?LoginRedirect=', '');
+    const search = location?.search;
+    const updatedSearch = search?.replace('?LoginRedirect=', '');
     const redirectMobileUrl = `${decodeURIComponent(updatedSearch)}`;
     const cancelRedireactUrl = `/LoginOption/${search}`;
 
 
     useEffect(() => {
-        const storedMobile = sessionStorage.getItem('registerMobile');
+        const storedMobile = sessionStorage?.getItem('registerMobile')?? '';
         if (storedMobile) setMobileNo(storedMobile);
     }, []);
 
@@ -73,9 +71,11 @@ export default function LoginWithMobileCode() {
                 sessionStorage.setItem('registerMobile', mobileNo);
 
                 if(redirectMobileUrl){
-                    navigation(redirectMobileUrl);
+                    // navigation(redirectMobileUrl);
+                    window.location.href = redirectMobileUrl;
                 }else{
-                    navigation('/')
+                    // navigation('/')
+                    window.location.href = '/';
                 }
 
             } else {

@@ -10,41 +10,39 @@ const ProductListSkeleton = ({ fromPage }) => {
     return (
         <div className={fromPage === "Prodlist" ? "skeltonMainDiv_prodlistPage" : 'skeltonMainDiv'}>
             <Grid container spacing={2} width={"100% !important"}>
-                {fromPage !== "Prodlist" && (
-                    <Grid size={{ xs: 12 }}>
-                        <Card className='skeltoncards' style={{ width: '100%' }}>
-                            <CardContent style={{ display: 'flex', alignItems: 'center' }}>
-                                <div style={{ flex: 1 }} className='topSkeletonMain'>
-                                    <Skeleton className="pSkelton" animation="wave" variant="text" width={'80%'} height={20} style={{ marginBottom: '10px' }} />
-                                    <Skeleton className="pSkelton" animation="wave" variant="text" width={'60%'} height={20} />
-                                </div>
-                            </CardContent>
-                        </Card>
-                    </Grid>
-                )}
-                {fromPage !== "Prodlist" && (
-                    <Grid sx={{ display: isDesktop ? 'none' : 'block' }} size={{ xs: 3 }}>
-                        <Card className='skeltoncards'>
-                            <CardContent>
-                                <Skeleton className="pSkelton" animation="wave" variant="text" width={'80%'} height={20} style={{ marginBottom: '20px' }} />
+                {fromPage !== "Prodlist" && <Grid  size={{ xs: 12 }}>
+                    <Card className='skeltoncards' style={{ width: '100%' }}>
+                        <CardContent style={{ display: 'flex', alignItems: 'center' }}>
+                            <div style={{ flex: 1 }} className='topSkeletonMain'>
+                                <Skeleton className="pSkelton" animation="wave" variant="text" width={'80%'} height={20} style={{ marginBottom: '10px' }} />
                                 <Skeleton className="pSkelton" animation="wave" variant="text" width={'60%'} height={20} />
-                                <Skeleton className="pSkelton" animation="wave" variant="text" width={'80%'} height={20} style={{ marginBottom: '20px' }} />
-                                <Skeleton className="pSkelton" animation="wave" variant="text" width={'60%'} height={20} />
-                                <Skeleton className="pSkelton" animation="wave" variant="text" width={'80%'} height={20} style={{ marginBottom: '20px' }} />
-                                <Skeleton className="pSkelton" animation="wave" variant="text" width={'60%'} height={20} />
-                                <Skeleton className="pSkelton" animation="wave" variant="text" width={'80%'} height={20} style={{ marginBottom: '20px' }} />
-                                <Skeleton className="pSkelton" animation="wave" variant="text" width={'60%'} height={20} />
-                                <Skeleton className="pSkelton" animation="wave" variant="text" width={'80%'} height={20} style={{ marginBottom: '20px' }} />
-                                <Skeleton className="pSkelton" animation="wave" variant="text" width={'60%'} height={20} />
-                                <Skeleton className="pSkelton" animation="wave" variant="text" width={'80%'} height={20} style={{ marginBottom: '20px' }} />
-                                <Skeleton className="pSkelton" animation="wave" variant="text" width={'60%'} height={20} />
-                                <Skeleton className="pSkelton" animation="wave" variant="text" width={'80%'} height={20} style={{ marginBottom: '20px' }} />
-                                <Skeleton className="pSkelton" animation="wave" variant="text" width={'60%'} height={20} />
-                            </CardContent>
-                        </Card>
-                    </Grid>
-                )}
-                <Grid size={{ xs: isDesktop ? 12 : (fromPage === "Prodlist" ? 12 : 9) }} container spacing={2}>
+                            </div>
+                            {/* <Skeleton variant="rect" width={100} height={100} style={{ marginRight: '10px' }} /> */}
+                        </CardContent>
+                    </Card>
+                </Grid>}
+                {fromPage !== "Prodlist" && <Grid sx={{ display: isDesktop ? 'none' : 'block' }} item size={{ xs: 3 }}>
+                    <Card className='skeltoncards'>
+                        <CardContent>
+                            <Skeleton className="pSkelton" animation="wave" variant="text" width={'80%'} height={20} style={{ marginBottom: '20px' }} />
+                            <Skeleton className="pSkelton" animation="wave" variant="text" width={'60%'} height={20} />
+                            <Skeleton className="pSkelton" animation="wave" variant="text" width={'80%'} height={20} style={{ marginBottom: '20px' }} />
+                            <Skeleton className="pSkelton" animation="wave" variant="text" width={'60%'} height={20} />
+                            <Skeleton className="pSkelton" animation="wave" variant="text" width={'80%'} height={20} style={{ marginBottom: '20px' }} />
+                            <Skeleton className="pSkelton" animation="wave" variant="text" width={'60%'} height={20} />
+                            <Skeleton className="pSkelton" animation="wave" variant="text" width={'80%'} height={20} style={{ marginBottom: '20px' }} />
+                            <Skeleton className="pSkelton" animation="wave" variant="text" width={'60%'} height={20} />
+                            <Skeleton className="pSkelton" animation="wave" variant="text" width={'80%'} height={20} style={{ marginBottom: '20px' }} />
+                            <Skeleton className="pSkelton" animation="wave" variant="text" width={'60%'} height={20} />
+                            <Skeleton className="pSkelton" animation="wave" variant="text" width={'80%'} height={20} style={{ marginBottom: '20px' }} />
+                            <Skeleton className="pSkelton" animation="wave" variant="text" width={'60%'} height={20} />
+                            <Skeleton className="pSkelton" animation="wave" variant="text" width={'80%'} height={20} style={{ marginBottom: '20px' }} />
+                            <Skeleton className="pSkelton" animation="wave" variant="text" width={'60%'} height={20} />
+
+                        </CardContent>
+                    </Card>
+                </Grid>}
+                <Grid item size={{ xs: isDesktop ? 12 : (fromPage === "Prodlist" ? 12 : 9) }} container spacing={2}>
                     {cardsArray.map((item) => (
                         <Grid size={{ xs: isMobile ? 6 : 4 }} key={item}>
                             <Card className={fromPage === "Prodlist" ? "skeltoncards_listpage" : 'skeltoncards'}>

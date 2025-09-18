@@ -1,25 +1,23 @@
+"use client";
 import React, { useEffect, useState, useRef } from 'react';
 import { Button, CircularProgress, Box } from '@mui/material';
-import { useLocation, useNavigate } from 'react-router-dom';
 import {  toast } from 'react-toastify';
-import { LoginWithEmailCodeAPI } from '../../../../../../utils/API/Auth/LoginWithEmailCodeAPI';
-import Footer from '../../Home/Footer/Footer';
-import { LoginWithEmailAPI } from '../../../../../../utils/API/Auth/LoginWithEmailAPI';
-import { useSetRecoilState } from 'recoil';
-import { loginState, smr_loginState } from '../../../Recoil/atom';
+import { LoginWithEmailCodeAPI } from '@/app/(core)/utils/API/Auth/LoginWithEmailCodeAPI';
+import { LoginWithEmailAPI } from '@/app/(core)/utils/API/Auth/LoginWithEmailAPI';
 import Cookies from 'js-cookie';
 import OTP from './OTP'; // Make sure the path is correct
 import './LoginWithEmailCode.modul.scss'
+import { useNextRouterLikeRR } from '@/app/(core)/hooks/useLocationRd';
 
 export default function LoginWithEmailCode() {
+    const location = useNextRouterLikeRR();
     const [email, setEmail] = useState('');
     const [otp, setOtp] = useState('');
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const [resendTimer, setResendTimer] = useState(120);
-    const navigation = useNavigate();
-    const setIsLoginState = useSetRecoilState(smr_loginState);
-    const location = useLocation();
+    const navigation = location.push;
+    const [isLoginState, setIsLoginState] = useState(false);
     const inputsRef = useRef([]);
 
     const search = location?.search;
@@ -81,9 +79,11 @@ export default function LoginWithEmailCode() {
                 sessionStorage.setItem('loginUserDetail', JSON.stringify(response.Data.rd[0]));
 
                 if (redirectEmailUrl) {
-                    navigation(redirectEmailUrl);
+                    // navigation(redirectEmailUrl);
+                    window.location.href = redirectEmailUrl;
                 } else {
-                    navigation('/');
+                    // navigation('/');
+                    window.location.href = '/';
                 }
             } else {
                 setErrors({ otp: 'The code you entered is invalid.' });
@@ -165,9 +165,9 @@ export default function LoginWithEmailCode() {
 // import { useLocation, useNavigate } from 'react-router-dom';
 // import './LoginWithEmailCode.modul.scss';
 // import CryptoJS from 'crypto-js';
-// import { LoginWithEmailCodeAPI } from '../../../../../../utils/API/Auth/LoginWithEmailCodeAPI';
+// import { LoginWithEmailCodeAPI } from '@/utils/API/Auth/LoginWithEmailCodeAPI';
 // import Footer from '../../Home/Footer/Footer';
-// import { LoginWithEmailAPI } from '../../../../../../utils/API/Auth/LoginWithEmailAPI';
+// import { LoginWithEmailAPI } from '@/utils/API/Auth/LoginWithEmailAPI';
 // import { useSetRecoilState } from 'recoil';
 // import { loginState } from '../../../Recoil/atom';
 // import Cookies from 'js-cookie';

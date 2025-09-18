@@ -11,31 +11,29 @@ import { NEXT_APP_WEB } from "@/app/(core)/utils/env";
 import { GetCountAPI } from "@/app/(core)/utils/API/GetCount/GetCountAPI";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { useStore } from "@/app/(core)/contexts/StoreProvider";
 
 export function storImagePath() {
   let statiPath = `${window?.location?.protocol}//${window.location.hostname === "localhost" || window.location.hostname === "zen" ? NEXT_APP_WEB : window.location.hostname}`;
   return `${statiPath}/WebSiteStaticImage`;
 }
 
-const Header = ({ storeinit }) => {
+const Header = ({ storeinit ,logos }) => {
+  const {islogin, setislogin , cartCountNum, setCartCountNum, wishCountNum, setWishCountNum } = useStore();
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isHeaderFixed, setIsHeaderFixed] = useState(false);
   const [isHeaderFixedDropShow, setIsHeaderFixedDropShow] = useState(false);
   const [htmlContent, setHtmlContent] = useState("");
-  const compnyLogo = storeinit?.companylogo;
-  const compnyLogoM = storeinit?.companyMlogo;
-  const [islogin, setislogin] = useState(true);
-
+  const compnyLogo = logos?.web;
+  const compnyLogoM = logos?.mobile;
   const [menuData, setMenuData] = useState([]);
   const [menuItems, setMenuItems] = useState([]);
-
   const [searchText, setSearchText] = useState("");
   const IsB2BWebsiteChek = storeinit?.IsB2BWebsite;
   const IsCartNo = storeinit?.CartNo;
   const [serachsShowOverlay, setSerachShowOverlay] = useState(false);
 
-  const [cartCountNum, setCartCountNum] = useState(0);
-  const [wishCountNum, setWishCountNum] = useState(0);
   const router = useRouter();
 
   const navigate = (link) => {
@@ -189,6 +187,7 @@ const Header = ({ storeinit }) => {
   const handleLogout = () => {
     navigate("/");
     setislogin(false);
+    Cookies.remove("userLoginCookie");
     Cookies.remove("userLoginCookie");
     window.location.reload();
     sessionStorage.setItem("LoginUser", false);
@@ -421,15 +420,15 @@ const Header = ({ storeinit }) => {
                   />
                 </div>
                 <div className="smr_mobileHeader_top_div2_web" draggable={false} onContextMenu={(e) => e.preventDefault()}>
-                  <a href="/" draggable={false} onContextMenu={(e) => e.preventDefault()}>
+                  <Link href="/" draggable={false} onContextMenu={(e) => e.preventDefault()}>
                     <img src={compnyLogo} loading="lazy" className="smr_logo_header" draggable={false} onContextMenu={(e) => e.preventDefault()} />
-                  </a>
+                  </Link>
                 </div>
 
                 <div className="smr_mobileHeader_top_div2_mobile" draggable={false} onContextMenu={(e) => e.preventDefault()}>
-                  <a href="/" draggable={false} onContextMenu={(e) => e.preventDefault()}>
+                  <Link href="/" draggable={false} onContextMenu={(e) => e.preventDefault()}>
                     <img src={compnyLogoM} loading="lazy" className="smr_logo_header" draggable={false} onContextMenu={(e) => e.preventDefault()} />
-                  </a>
+                  </Link>
                 </div>
 
                 <div className="smr_mobileHeader_top_div3">
@@ -738,21 +737,21 @@ const Header = ({ storeinit }) => {
               </ul>
             </div>
             <div className="smiling_Top_header_div2_web" draggable={false} onContextMenu={(e) => e.preventDefault()}>
-              <a href="/" draggable={false} onContextMenu={(e) => e.preventDefault()}>
+              <Link href="/" draggable={false} onContextMenu={(e) => e.preventDefault()}>
                 <img src={compnyLogo} loading="lazy" className="smr_logo_header" draggable={false} onContextMenu={(e) => e.preventDefault()} />
-              </a>
+              </Link>
             </div>
             <div className="smiling_Top_header_div2_Mobile" draggable={false} onContextMenu={(e) => e.preventDefault()}>
-              <a href="/" draggable={false} onContextMenu={(e) => e.preventDefault()}>
+              <Link href="/" draggable={false} onContextMenu={(e) => e.preventDefault()}>
                 <img src={compnyLogoM} loading="lazy" className="smr_logo_header" draggable={false} onContextMenu={(e) => e.preventDefault()} />
-              </a>
+              </Link>
             </div>
             <div className="smiling_Top_header_div3">
               <ul className="nav_ul_shop">
                 <li className="nav_li_smining nav_li_smining_Mobile" style={{ cursor: "pointer" }} onClick={(event) => hanldeStaticPageNavigation(event, "/aboutUs")}>
-                  <a href="/aboutUs" className="smr_A_link">
+                  <Link href="/aboutUs" className="smr_A_link">
                     ABOUT US
-                  </a>
+                  </Link>
                 </li>
                 {IsB2BWebsiteChek == 0 ? (
                   storeinit?.IsPLW ? (
@@ -870,10 +869,10 @@ const Header = ({ storeinit }) => {
                       <>
                         {storeinit?.IsDesignSetInMenu == 1 && (
                           <li className="nav_li_smining_Fixed nav_li_smining_Mobile" style={{ cursor: "pointer" }} onClick={(event) => hanldeStaticPageNavigation(event, "/Lookbook")}>
-                            <a href="/Lookbook" className="smr_A_linkFixed">
+                            <Link href="/Lookbook" className="smr_A_linkFixed">
                               {storeinit?.DesignSetInMenu}
                               {/* LOOKBOOK */}
-                            </a>
+                            </Link>
                           </li>
                         )}
                       </>
@@ -884,10 +883,10 @@ const Header = ({ storeinit }) => {
                     <>
                       {storeinit?.IsDesignSetInMenu == 1 && (
                         <li className="nav_li_smining_Fixed nav_li_smining_Mobile" style={{ cursor: "pointer" }} onClick={(event) => hanldeStaticPageNavigation(event, "/Lookbook")}>
-                          <a href="/Lookbook" className="smr_A_linkFixed">
+                          <Link href="/Lookbook" className="smr_A_linkFixed">
                             {storeinit?.DesignSetInMenu}
                             {/* LOOKBOOK */}
-                          </a>
+                          </Link>
                         </li>
                       )}
                     </>
@@ -900,22 +899,22 @@ const Header = ({ storeinit }) => {
                 </ul>
               </div>
               <div className="smiling_Top_header_div2_web" draggable={false} onContextMenu={(e) => e.preventDefault()}>
-                <a href="/" draggable={false} onContextMenu={(e) => e.preventDefault()}>
+                <Link href="/" draggable={false} onContextMenu={(e) => e.preventDefault()}>
                   <img src={compnyLogo} loading="lazy" className="smr_logo_header_Fixed" draggable={false} onContextMenu={(e) => e.preventDefault()} />
-                </a>
+                </Link>
               </div>
 
               <div className="smiling_Top_header_div2_Mobile" draggable={false} onContextMenu={(e) => e.preventDefault()}>
-                <a href="/" draggable={false} onContextMenu={(e) => e.preventDefault()}>
+                <Link href="/" draggable={false} onContextMenu={(e) => e.preventDefault()}>
                   <img src={compnyLogoM} loading="lazy" className="smr_logo_header_Fixed" draggable={false} onContextMenu={(e) => e.preventDefault()} />
-                </a>
+                </Link>
               </div>
               <div className="smiling_Top_header_div3">
                 <ul className="nav_ul_shop">
                   <li className="nav_li_smining_Fixed nav_li_smining_Mobile" style={{ cursor: "pointer" }} onClick={(event) => hanldeStaticPageNavigation(event, "/aboutUs")}>
-                    <a href="/aboutUs" className="smr_A_linkFixed">
+                    <Link href="/aboutUs" className="smr_A_linkFixed">
                       ABOUT US
-                    </a>
+                    </Link>
                   </li>
 
                   {storeinit?.IsPLW == 0 && IsB2BWebsiteChek == 0 ? (
@@ -1129,12 +1128,11 @@ const TopNavBar = ({ menuItems = [], handelMenu = () => { } }) => {
                   )
                 }
               >
-                <a className="menu_list_Smr_0_title" href={`/p/${menuItem?.menuname}/?M=${btoa(`${menuItem?.param0dataname}/${menuItem?.param0name}`)}`}>
+                <Link className="menu_list_Smr_0_title" href={`/p/${menuItem?.menuname}/?M=${btoa(`${menuItem?.param0dataname}/${menuItem?.param0name}`)}`}>
                   {menuItem.menuname}
-                </a>
+                </Link>
               </div>
-
-              {menuItem?.param1[0].param1dataname !== "" && (
+              {/* {menuItem?.param1[0].param1dataname !== "" && (
                 <div className="child_menu_hover" hidden>
                   <div className="smr_menu_menu">
                     {menuItem.param1.map((subMenuItem) => {
@@ -1194,9 +1192,9 @@ const TopNavBar = ({ menuItems = [], handelMenu = () => { } }) => {
                                       )
                                     }
                                   >
-                                    <a className="smr_menu_title_2" href={`/p/${menuItem?.menuname}/${menuItem?.param0dataname}/${subMenuItem.param1dataname}/${subSubMenuItem.param2dataname}/?M=${btoa(`${menuItem?.param0dataname},${subMenuItem.param1dataname},${subSubMenuItem.param2dataname}/${menuItem?.param0name},${subMenuItem.param1name},${subSubMenuItem.param2name}`)}`}>
+                                    <Link className="smr_menu_title_2" href={`/p/${menuItem?.menuname}/${menuItem?.param0dataname}/${subMenuItem.param1dataname}/${subSubMenuItem.param2dataname}/?M=${btoa(`${menuItem?.param0dataname},${subMenuItem.param1dataname},${subSubMenuItem.param2dataname}/${menuItem?.param0name},${subMenuItem.param1name},${subSubMenuItem.param2name}`)}`}>
                                       {subSubMenuItem.param2dataname}
-                                    </a>
+                                    </Link>
                                   </div>
                                 );
                               })}
@@ -1221,7 +1219,7 @@ const TopNavBar = ({ menuItems = [], handelMenu = () => { } }) => {
                     )}
                   </div>
                 </div>
-              )}
+              )} */}
             </div>
           ))}
         </div>
@@ -1265,9 +1263,9 @@ const HoverMenu = ({ selectedData, handelMenu, expandedMenu, hoveredIndex, handl
                       handleMouseLeave();
                     }}
                   >
-                    <a href={`/p/${selectedData?.param0dataname}/${param1Item.param1dataname}/?M=${btoa(`${selectedData?.param0dataname},${param1Item?.param1dataname}/${selectedData?.param0name},${param1Item?.param1name}`)}`} style={{ color: "black", textDecoration: "none" }}>
+                    <Link href={`/p/${selectedData?.param0dataname}/${param1Item.param1dataname}/?M=${btoa(`${selectedData?.param0dataname},${param1Item?.param1dataname}/${selectedData?.param0name},${param1Item?.param1name}`)}`} style={{ color: "black", textDecoration: "none" }}>
                       {param1Item?.param1dataname}
-                    </a>
+                    </Link>
                   </span>
                   <div
                     className="level2menudata"
@@ -1315,9 +1313,9 @@ const HoverMenu = ({ selectedData, handelMenu, expandedMenu, hoveredIndex, handl
                             whiteSpace: "nowrap",
                           }}
                         >
-                          <a href={`/p/${selectedData?.param0dataname}/${param1Item.param1dataname}/${param2Item.param2dataname}/?M=${btoa(`${selectedData?.param0dataname},${param1Item.param1dataname},${param2Item.param2dataname}/${selectedData?.param0name},${param1Item.param1name},${param2Item.param2name}`)}`} style={{ color: "black", textDecoration: "none" }}>
+                          <Link href={`/p/${selectedData?.param0dataname}/${param1Item.param1dataname}/${param2Item.param2dataname}/?M=${btoa(`${selectedData?.param0dataname},${param1Item.param1dataname},${param2Item.param2dataname}/${selectedData?.param0name},${param1Item.param1name},${param2Item.param2name}`)}`} style={{ color: "black", textDecoration: "none" }}>
                             {param2Item?.param2dataname}
-                          </a>
+                          </Link>
                         </p>
                       );
                     })}
