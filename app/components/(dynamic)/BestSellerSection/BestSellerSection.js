@@ -116,7 +116,7 @@ const BestSellerSection = ({data, storeData}) => {
     };
     let encodeObj = compressAndEncode(JSON.stringify(obj));
     // navigation(`/d/${titleLine.replace(/\s+/g, `_`)}${titleLine?.length > 0 ? "_" : ""}${designNo}?p=${encodeObj}`)
-    navigation(`/d/${formatRedirectTitleLine(titleLine)}${designNo}?p=${encodeObj}`);
+    navigation(`/d/${formatRedirectTitleLine(titleLine)}${designNo}?p=${encodeURIComponent(encodeObj)}`);
   };
 
   const handleMouseEnterRing1 = (data) => {

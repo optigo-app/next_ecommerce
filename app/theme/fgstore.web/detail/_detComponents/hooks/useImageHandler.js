@@ -128,9 +128,7 @@ export const useImageHandler = (singleProd, singleProd1, selectMtColor, storeIni
             }
         }
 
-        if (Object?.entries(finalprodListimg)?.length > 0) {
-            setImagePromise(false);
-        }
+        setImagePromise(false);
 
         // Set thumbnail images
         if (pdImgList.length) {

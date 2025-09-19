@@ -20,7 +20,9 @@ const ProductDetail = ({ params, searchParams, storeInit }) => {
     const productData = useProductDetail(searchParams, storeInit);
     const {
         singleProd,
+        setSingleProd,
         singleProd1,
+        setSingleProd1,
         prodLoading,
         isPriceloading,
         isDataFound,
@@ -107,9 +109,8 @@ const ProductDetail = ({ params, searchParams, storeInit }) => {
     } = customizationData;
 
     const navigationData = useNavigation(
-        productData.setSingleProd1,
-        productData.setSingleProd,
-        productData.setProdLoading,
+        setSingleProd,
+        setSingleProd1,
         setImagePromise,
         setWishListFlag
     );

@@ -10,21 +10,22 @@ import Pako from "pako";
 import Cookies from "js-cookie";
 import gradientColors from "./color.json";
 import {
+  formatRedirectTitleLine,
   formatter,
 } from "@/app/(core)/utils/Glob_Functions/GlobalFunction";
 import { useNextRouterLikeRR } from "@/app/(core)/hooks/useLocationRd";
 import { useStore } from "@/app/(core)/contexts/StoreProvider";
 
-const DesignSet2 = ({ data ,storeInit }) => {
+const DesignSet2 = ({ data, storeInit }) => {
   const location = useNextRouterLikeRR();
-  const {islogin ,loginUserDetail} = useStore()
+  const { islogin, loginUserDetail } = useStore()
   const designSetRef = useRef(null);
   const navigate = location.push;
   const [imageUrl, setImageUrl] = useState();
   const [designSetList, setDesignSetList] = useState([]);
   const [swiper, setSwiper] = useState(null);
   const [imageUrlDesignSet, setImageUrlDesignSet] = useState();
-  const [loadingHome , setLoadingHome] = useState(true);
+  const [loadingHome, setLoadingHome] = useState(true);
   const productRefs = useRef({});
   const scrollRetries = useRef(0);
   const maxRetries = 10;
@@ -43,7 +44,7 @@ const DesignSet2 = ({ data ,storeInit }) => {
     setImageUrl(storeInit?.CDNDesignImageFol);
     setImageUrlDesignSet(storeInit?.CDNDesignImageFolThumb);
 
-    Get_Tren_BestS_NewAr_DesigSet_Album(storeInit , "GETDesignSet_List", finalID)
+    Get_Tren_BestS_NewAr_DesigSet_Album(storeInit, "GETDesignSet_List", finalID)
       .then((response) => {
         setLoadingHome(false);
         if (response?.Data?.rd) {
@@ -105,10 +106,7 @@ const DesignSet2 = ({ data ,storeInit }) => {
     };
     sessionStorage.setItem('scrollToProduct4', `product-${index}`);
     let encodeObj = compressAndEncode(JSON.stringify(obj));
-    navigate(
-      `/d/${titleLine?.replace(/\s+/g, `_`)}${titleLine?.length > 0 ? "_" : ""
-      }${designNo}?p=${encodeObj}`
-    );
+    navigate(`/d/${formatRedirectTitleLine(titleLine)}${designNo}?p=${encodeURIComponent(encodeObj)}`);
   };
 
   useEffect(() => {
@@ -220,7 +218,7 @@ const DesignSet2 = ({ data ,storeInit }) => {
             {designSetList?.slice(0, 1)?.map((slide, index) => (
               // <SwiperSlide key={`slide-${index}`}>
               <div
-              key={index}
+                key={index}
                 style={{
                   position: "relative",
                 }}
