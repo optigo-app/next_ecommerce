@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { assetBase } from "../../lib/ServerHelper";
 
 export const getStoreInit = async () => {
   const cookieStore = await cookies();
@@ -29,3 +30,26 @@ export const GetUserLoginCookie = async () => {
   const userToken = cookieStore.get("userLoginCookie")?.value ?? null;
   return userToken;
 };
+
+export const getAboutUsContent = async () => {
+  try {
+    const res = await fetch(`${assetBase}/html/sonasonsAbout.html`, { cache: "no-store" });
+    const htmlContent = await res.text();
+    return htmlContent;
+  } catch (error) {
+    console.error("Error loading AboutUs HTML file:", error);
+    return null;
+  }
+}
+
+export const getContactUsContent = async () => {
+try {
+  const res = await fetch(`${assetBase}/html/SonasonsContactPage.html`, {
+    cache: "no-store",
+  });
+  const htmlContent = await res.text();
+  return htmlContent;
+} catch (error) {
+  console.error("Error fetching contact HTML:", error);
+}
+}

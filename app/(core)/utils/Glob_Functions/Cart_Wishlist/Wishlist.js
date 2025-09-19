@@ -2,20 +2,16 @@ import { useState, useEffect } from 'react';
 import { fetchWishlistDetails } from '../../API/WishlistAPI/WishlistAPI';
 import { removeFromCartList } from '../../API/RemoveCartAPI/RemoveCartAPI';
 import { handleWishlistToCartAPI } from '../../API/WishList_Cart/WishlistToCart';
-import imageNotFound from "../../../AllTheme/SmilingRock/Components/Assets/image-not-found.jpg"
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { CartCount, WishCount, loginState } from "../../../AllTheme/SmilingRock/Components/Recoil/atom";
 import { GetCountAPI } from '../../API/GetCount/GetCountAPI';
 import pako from 'pako';
-import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Cookies from "js-cookie";
 import { DiamondListData } from '../../API/DiamondStore/DiamondList';
-import { for_MatchDiamonds, for_filterDiamond } from '../../../AllTheme/Forevery/Components/Recoil/atom';
 import { formatRedirectTitleLine } from '../GlobalFunction';
+import { useNextRouterLikeRR } from '@/app/(core)/hooks/useLocationRd';
 
 const Usewishlist = () => {
-  const navigate = useNavigate();
+  const navigate = useNextRouterLikeRR().push;
   const [isWLLoading, setIsWlLoading] = useState(false);
   const [updateCount, setUpdateCount] = useState();
   const [itemInCart, setItemInCart] = useState();
@@ -29,10 +25,13 @@ const Usewishlist = () => {
   const [countDataUpdted, setCountDataUpdated] = useState();
   const [isProcessing, setIsProcessing] = useState(false);
   const [metalColorCombo, setMetalColorCombo] = useState([]);
-  const matchDataSet = useRecoilValue(for_MatchDiamonds)
-  const filterDia = useRecoilValue(for_filterDiamond)
+  // const matchDataSet = useRecoilValue(for_MatchDiamonds)
+  // const filterDia = useRecoilValue(for_filterDiamond)
+  const [matchDataSet, setMatchDataSet] = useState([])
+  const [filterDia, setFilterDia] = useState([])
   const [finalWishData, setFinalWishData] = useState([]);
   const [loadingIndex, setLoadingIndex] = useState(0)
+  const imageNotFound = '/assets/image-not-found.jpg'
 
   const validThemenos = [3, 4, 11, 12, 10, 7, 1, 2];
 
