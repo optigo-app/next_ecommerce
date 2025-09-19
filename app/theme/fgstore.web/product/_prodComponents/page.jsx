@@ -27,7 +27,7 @@ import { useProductFilter } from './useProdFilterHook';
 import FilterSection from './FilterSection';
 import MobileFilter from './MobileFilter';
 import BreadCrumbs from './BreadCrums';
-import { usePageHook } from './usePageHook';
+import { useStore } from '@/app/(core)/contexts/StoreProvider';
 
 const Product = ({ params, searchParams, storeinit }) => {
 
@@ -50,9 +50,10 @@ const Product = ({ params, searchParams, storeinit }) => {
 
     let navigate = useRouter();
     let minwidth1201px = useMediaQuery('(min-width:1201px)')
-    let maxwidth1674px = useMediaQuery('(max-width:1674px)')
     let maxwidth590px = useMediaQuery('(max-width:590px)')
     let maxwidth464px = useMediaQuery('(max-width:464px)')
+
+    const { islogin, setCartCountNum, setWishCountNum } = useStore();
 
     const [productListData, setProductListData] = useState([]);
     const [isProductListData, setIsProductListData] = useState(false);
@@ -64,7 +65,6 @@ const Product = ({ params, searchParams, storeinit }) => {
     const [expandedAccordions, setExpandedAccordions] = useState({});
     const [cartArr, setCartArr] = useState({})
     const [wishArr, setWishArr] = useState({})
-    const [islogin, setIslogin] = useState(false);
     const [menuParams, setMenuParams] = useState({})
     const [filterProdListEmpty, setFilterProdListEmpty] = useState(false)
     const [metalTypeCombo, setMetalTypeCombo] = useState([]);
@@ -79,8 +79,6 @@ const Product = ({ params, searchParams, storeinit }) => {
     const [rollOverImgPd, setRolloverImgPd] = useState({})
     const [prodListType, setprodListType] = useState();
     const [sortBySelect, setSortBySelect] = useState();
-    const setCartCountVal = 10;
-    const setWishCountVal = 10;
     const [isRollOverVideo, setIsRollOverVideo] = useState({});
     let cookie = Cookies.get('visiterId')
     const [menuDecode, setMenuDecode] = useState('');
@@ -637,15 +635,15 @@ const Product = ({ params, searchParams, storeinit }) => {
             CartAndWishListAPI(type, prodObj, cookie).then((res) => {
                 let cartC = res?.Data?.rd[0]?.Cartlistcount
                 let wishC = res?.Data?.rd[0]?.Wishlistcount
-                setWishCountVal(wishC)
-                setCartCountVal(cartC);
+                setWishCountNum(wishC)
+                setCartCountNum(cartC);
             }).catch((err) => console.log("err", err))
         } else {
             RemoveCartAndWishAPI(type, ele?.autocode, cookie).then((res) => {
                 let cartC = res?.Data?.rd[0]?.Cartlistcount
                 let wishC = res?.Data?.rd[0]?.Wishlistcount
-                setWishCountVal(wishC)
-                setCartCountVal(cartC);
+                setWishCountNum(wishC)
+                setCartCountNum(cartC);
             }).catch((err) => console.log("err", err))
         }
 

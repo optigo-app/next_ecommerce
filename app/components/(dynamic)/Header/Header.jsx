@@ -10,6 +10,7 @@ import { GetMenuAPI } from "@/app/(core)/utils/API/GetMenuAPI/GetMenuAPI";
 import { NEXT_APP_WEB } from "@/app/(core)/utils/env";
 import { GetCountAPI } from "@/app/(core)/utils/API/GetCount/GetCountAPI";
 import Cookies from "js-cookie";
+import { IoClose } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useStore } from "@/app/(core)/contexts/StoreProvider";
@@ -19,8 +20,8 @@ export function storImagePath() {
   return `${statiPath}/WebSiteStaticImage`;
 }
 
-const Header = ({ storeinit ,logos }) => {
-  const {islogin, setislogin , cartCountNum, setCartCountNum, wishCountNum, setWishCountNum } = useStore();
+const Header = ({ storeinit, logos }) => {
+  const { islogin, setislogin, cartCountNum, setCartCountNum, wishCountNum, setWishCountNum } = useStore();
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isHeaderFixed, setIsHeaderFixed] = useState(false);
   const [isHeaderFixedDropShow, setIsHeaderFixedDropShow] = useState(false);
