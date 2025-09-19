@@ -167,10 +167,6 @@ const BestSellerSection1 = ({ data ,storeData }) => {
 
   return (
     <div
-      // ref={bestSallerRef}
-      // onContextMenu={(e) => {
-      //   e.preventDefault();
-      // }}
     >
       <div>
         {bestSellerData?.length != 0 && (

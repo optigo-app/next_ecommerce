@@ -25,4 +25,5 @@ const assetBase = storImagePath(host);
   };
 }
 
+
 export { getProtocol, storImagePath, assetBase, getLogos };

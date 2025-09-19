@@ -14,6 +14,7 @@ import { IoClose } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useStore } from "@/app/(core)/contexts/StoreProvider";
+import { IoClose } from "react-icons/io5";
 
 export function storImagePath() {
   let statiPath = `${window?.location?.protocol}//${window.location.hostname === "localhost" || window.location.hostname === "zen" ? NEXT_APP_WEB : window.location.hostname}`;
@@ -1057,7 +1058,7 @@ const Header = ({ storeinit, logos }) => {
 
 export default Header;
 
-const TopNavBar = ({ menuItems = [], handelMenu = () => { } }) => {
+const TopNavBar = ({ menuItems = [], handelMenu = () => {} }) => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [expandedMenu, setExpandedMenu] = useState(null);
   const [selectedData, setSelectedData] = useState([]);
@@ -1110,9 +1111,9 @@ const TopNavBar = ({ menuItems = [], handelMenu = () => { } }) => {
                 handleMouseEnter(index, menuItem);
               }}
               onClick={() => handleMouseLeave()}
-            // onMouseLeave={() => {
-            //   handleMouseLeave();
-            // }}
+              // onMouseLeave={() => {
+              //   handleMouseLeave();
+              // }}
             >
               <div
                 // component="div"
