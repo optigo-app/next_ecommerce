@@ -7,7 +7,7 @@ const ProductList = async ({ params, searchParams }) => {
 
     return (
         <>
-            <ProductDetail params={params} searchParams={searchParams} storeinit={storeinit} />
+            <ProductDetail params={params} searchParams={searchParams} storeInit={storeinit} />
         </>
     );
 };
