@@ -15,7 +15,20 @@ const Main = ({ storeData }) => {
   const cookieStore = cookies;
   const visiterCookie = cookieStore.get("visitorId");
   const visiterID = visiterCookie ?? "0";
-  const loginUserDetail = JSON.parse(sessionStorage.getItem("loginUserDetail"));
+  const [loginUserDetail, setLoginUserDetail] = useState({});
+
+  
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const stored = sessionStorage.getItem("loginUserDetail");
+        setLoginUserDetail(stored ? JSON.parse(stored) : {});
+      } catch (err) {
+        console.error("Failed to parse loginUserDetail:", err);
+      }
+    }
+  }, []);
+
   const { IsB2BWebsite } = data;
   let finalID;
   if (IsB2BWebsite == 0) {
