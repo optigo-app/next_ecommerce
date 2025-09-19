@@ -10,27 +10,29 @@ import { StockItemApi } from "@/app/(core)/utils/API/StockItemAPI/StockItemApi";
 import { DesignSetListAPI } from "@/app/(core)/utils/API/DesignSetListAPI/DesignSetListAPI";
 import { SaveLastViewDesign } from "@/app/(core)/utils/API/SaveLastViewDesign/SaveLastViewDesign";
 import Cookies from "js-cookie";
+import { useSearchParams } from "next/navigation";
 
 export const useProductDetail = (searchParams, storeInit) => {
+    const search = useSearchParams();
     // Product states
     const [singleProd, setSingleProd] = useState({});
     const [singleProd1, setSingleProd1] = useState({});
     const [prodLoading, setProdLoading] = useState(true);
     const [isPriceloading, setisPriceLoading] = useState(false);
     const [isDataFound, setIsDataFound] = useState(false);
-    
+
     // Combo data states
     const [metalTypeCombo, setMetalTypeCombo] = useState([]);
     const [diaQcCombo, setDiaQcCombo] = useState([]);
     const [csQcCombo, setCsQcCombo] = useState([]);
     const [metalColorCombo, setMetalColorCombo] = useState([]);
-    
+
     // Selection states
     const [selectMtType, setSelectMtType] = useState();
     const [selectDiaQc, setSelectDiaQc] = useState();
     const [selectCsQc, setSelectCsQc] = useState();
     const [selectMtColor, setSelectMtColor] = useState();
-    
+
     // Additional data states
     const [sizeData, setSizeData] = useState();
     const [SizeCombo, setSizeCombo] = useState();
@@ -41,6 +43,7 @@ export const useProductDetail = (searchParams, storeInit) => {
     const [designSetList, setDesignSetList] = useState();
     const [saveLastView, setSaveLastView] = useState();
     const [decodeUrl, setDecodeUrl] = useState({});
+    console.log("TCL: useProductDetail -> decodeUrl", decodeUrl)
     const [loginInfo, setLoginInfo] = useState();
 
     const cookie = Cookies.get("visiterId");
@@ -51,7 +54,9 @@ export const useProductDetail = (searchParams, storeInit) => {
             if (!encodedString) return null;
 
             const base64 = encodedString.replace(/-/g, '+').replace(/_/g, '/');
+
             const padded = base64.padEnd(base64.length + (4 - (base64.length % 4)) % 4, '=');
+
             const binaryString = atob(padded);
 
             const uint8Array = new Uint8Array(binaryString.length);
@@ -60,6 +65,7 @@ export const useProductDetail = (searchParams, storeInit) => {
             }
 
             const decompressed = Pako.inflate(uint8Array, { to: 'string' });
+
             const jsonObject = JSON.parse(decompressed);
 
             return jsonObject;
@@ -161,10 +167,10 @@ export const useProductDetail = (searchParams, storeInit) => {
 
         try {
             const res = await SingleProdListAPI(decodeobj, sizeData, obj, cookie);
-            
+
             if (res) {
                 setSingleProd(res?.pdList[0]);
-                
+
                 if (res?.pdList?.length > 0) {
                     setisPriceLoading(false);
                     setProdLoading(false);
@@ -330,13 +336,13 @@ export const useProductDetail = (searchParams, storeInit) => {
         const result = parseSearchParams();
         let navVal = result[0]?.split("=")[1];
         let decodeobj = decodeAndDecompress(navVal);
-        
+
         if (decodeobj) {
             setDecodeUrl(decodeobj);
-            
+
             let storeinitInside = JSON.parse(sessionStorage.getItem("storeInit"));
             let logininfoInside = JSON.parse(sessionStorage.getItem("loginUserDetail"));
-            
+
             let mtTypeLocal = JSON.parse(sessionStorage.getItem("metalTypeCombo"));
             let diaQcLocal = JSON.parse(sessionStorage.getItem("diamondQualityColorCombo"));
             let csQcLocal = JSON.parse(sessionStorage.getItem("ColorStoneQualityColorCombo"));
@@ -433,20 +439,22 @@ export const useProductDetail = (searchParams, storeInit) => {
         prodLoading,
         isPriceloading,
         isDataFound,
-        
+        setSingleProd,
+        setSingleProd1,
+
         // Combo data
         metalTypeCombo,
         diaQcCombo,
         csQcCombo,
         metalColorCombo,
-        
+
         // Selections
         selectMtType,
         selectDiaQc,
         selectCsQc,
         selectMtColor,
         setSelectMtColor,
-        
+
         // Additional data
         sizeData,
         setSizeData,
@@ -459,7 +467,7 @@ export const useProductDetail = (searchParams, storeInit) => {
         saveLastView,
         decodeUrl,
         loginInfo,
-        
+
         // Functions
         handleCustomChange,
         fetchProductData,

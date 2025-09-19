@@ -14,7 +14,6 @@ import { IoClose } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useStore } from "@/app/(core)/contexts/StoreProvider";
-import { IoClose } from "react-icons/io5";
 
 export function storImagePath() {
   let statiPath = `${window?.location?.protocol}//${window.location.hostname === "localhost" || window.location.hostname === "zen" ? NEXT_APP_WEB : window.location.hostname}`;
