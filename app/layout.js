@@ -23,15 +23,13 @@ export default async function RootLayout({ children }) {
   const storeInit = await getStoreInit();
   const VistitorId = await GetVistitorId();
   const UserLoginCookie = await GetUserLoginCookie();
-  
+
   return (
     <html lang="en">
       <body className={`${poppins.variable}`}>
         <MasterProvider getCompanyInfoData={companyInfo} getStoreInit={storeInit}>
           <StoreProvider>
-          <Layout>
-            {children}
-          </Layout>
+            <Layout>{children}</Layout>
           </StoreProvider>
         </MasterProvider>
       </body>
