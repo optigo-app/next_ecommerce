@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from 'react';
 // import { toast } from 'react-toastify';
 import { fetchAddresses, addAddress, editAddress, deleteAddress, setDefaultAddress } from '../../API/OrderFlow/DeliveryAPI';
@@ -32,15 +34,14 @@ export const useAddress = () => {
     };
 
     useEffect(() => {
-        if(window.location.pathname === "/Delivery"){
+        if (window.location.pathname === "/delivery") {
             fetchInitialData();
-        }else{
-            return ;
+        } else {
+            return;
         }
     }, []);
 
     const handleOpen = (addressId) => {
-        console.log('addressId', addressData);
         if (addressId) {
             const address = addressData?.find(addr => addr?.id === addressId);
             setFormData({

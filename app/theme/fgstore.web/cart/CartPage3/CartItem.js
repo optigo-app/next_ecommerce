@@ -28,7 +28,7 @@ const CartItem = ({
   handleSave,
   handleCancel,
   openHandleUpdateCartModal,
-  storeinit,
+  storeInit,
   visiterId,
 }) => {
 
@@ -40,7 +40,7 @@ const CartItem = ({
   const [remark, setRemark] = useState(item?.Remarks || '');
   const [isSelectedItems, setIsSelectedItems] = useState();
   const setCartCountVal = setCartCountNum;
-  const storeInitData = storeinit;
+  const storeInitData = storeInit;
 
   useEffect(() => {
     const delay = (index + 1) * 200;
@@ -119,26 +119,6 @@ const CartItem = ({
   };
 
 
-  function truncateText(text, maxLength) {
-    if (text.length <= maxLength) {
-      return text;
-    }
-    return text.substring(0, maxLength) + '...';
-  }
-
-  // useEffect(() => {
-  //   if (item?.ImageCount > 0) {
-  //     CartCardImageFunc(item).then((src) => {
-  //       setImageSrc(src);
-  //     });
-  //   } else {
-  //     setImageSrc(noImageFound);
-  //   }
-  // }, [item]);
-
-  const diamondData = diamondValue?.find((dia) => dia?.stockno == item?.Sol_StockNo);
-
-
   return (
     <>
       <div className="smr3_cartMain-item" onClick={() => onSelect(item)}
@@ -153,10 +133,10 @@ const CartItem = ({
             {isLoading === true ? (
               <CardMedia
                 width="85%"
-                height={150}
+                height={196}
                 sx={{
                   width: "85%",
-                  height: "150px !important",
+                  height: "196px !important",
                   '@media (max-width: 1000px)': {
                     width: "100%",
                     height: "100px !important",

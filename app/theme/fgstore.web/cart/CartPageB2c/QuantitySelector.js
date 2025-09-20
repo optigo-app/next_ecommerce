@@ -12,7 +12,6 @@ const QuantitySelector = ({ cartData, qtyCount, handleIncrement, handleDecrement
         type="number"
         className="input"
         id="input"
-        defaultValue={cartData?.Quantity}
         value={cartData?.Quantity}
         readOnly
       />

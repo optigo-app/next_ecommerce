@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import { assetBase } from "../../lib/ServerHelper";
+import { fetchAddresses } from "@/app/(core)/utils/API/OrderFlow/DeliveryAPI";
 
 export const getStoreInit = async () => {
   const cookieStore = await cookies();
@@ -43,13 +44,13 @@ export const getAboutUsContent = async () => {
 }
 
 export const getContactUsContent = async () => {
-try {
-  const res = await fetch(`${assetBase}/html/SonasonsContactPage.html`, {
-    cache: "no-store",
-  });
-  const htmlContent = await res.text();
-  return htmlContent;
-} catch (error) {
-  console.error("Error fetching contact HTML:", error);
-}
+  try {
+    const res = await fetch(`${assetBase}/html/SonasonsContactPage.html`, {
+      cache: "no-store",
+    });
+    const htmlContent = await res.text();
+    return htmlContent;
+  } catch (error) {
+    console.error("Error fetching contact HTML:", error);
+  }
 }

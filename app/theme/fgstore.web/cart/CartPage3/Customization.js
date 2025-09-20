@@ -19,8 +19,7 @@ const Customization = ({
   handleColorStoneChange,
   handleSizeChange,
   onUpdateCart,
-  storeinit,
-  visiterId
+  storeInit,
 }) => {
 
   const { loginUserDetail } = useStore();
@@ -29,7 +28,7 @@ const Customization = ({
   const [metalColorCombo, setMetalColorCombo] = useState([]);
   const [ColorStoneCombo, setColorStoneCombo] = useState([]);
   const [diamondQualityColorCombo, setDiamondQualityColorCombo] = useState([]);
-  const storeInitData = storeinit;
+  const storeInitData = storeInit;
   const [diadata, setDiaData] = useState({});
   const [loading, setLoading] = useState(false);
 

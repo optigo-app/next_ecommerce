@@ -66,7 +66,7 @@ const CartPage = ({ storeinit, visiterId }) => {
   const isLargeScreen = useMediaQuery('(min-width:1000px)');
   const isMobileScreen = useMediaQuery('(max-width:768px)');
 
-  const redirectUrl = `/loginOption/?LoginRedirect=/Delivery`;
+  const redirectUrl = `/loginOption/?LoginRedirect=/delivery`;
   const handlePlaceOrder = () => {
     let priceData = finalCartData?.reduce(
       (total, item) => total + item?.FinalCost,
@@ -76,7 +76,7 @@ const CartPage = ({ storeinit, visiterId }) => {
     if (storeInit?.IsB2BWebsite == 0 && islogin == false || islogin == null) {
       navigate(redirectUrl);
     } else {
-      navigate("/Delivery", { replace: true });
+      navigate("/delivery", { replace: true });
     }
     window.scrollTo(0, 0);
   };
@@ -173,7 +173,7 @@ const CartPage = ({ storeinit, visiterId }) => {
                     handleSave={handleSave}
                     handleCancel={handleCancel}
                     openHandleUpdateCartModal={handleOpenModal}
-                    storeinit={storeinit}
+                    storeInit={storeInit}
                     visiterId={visiterId}
                   />
                 </div>
@@ -200,7 +200,7 @@ const CartPage = ({ storeinit, visiterId }) => {
                           decodeEntities={decodeEntities}
                           onUpdateCart={handleUpdateCart}
                           handleMoveToDetail={handleMoveToDetail}
-                          storeinit={storeinit}
+                          storeInit={storeInit}
                           visiterId={visiterId}
                         />
                       )}
@@ -228,7 +228,7 @@ const CartPage = ({ storeinit, visiterId }) => {
                         decodeEntities={decodeEntities}
                         onUpdateCart={handleUpdateCart}
                         handleMoveToDetail={handleMoveToDetail}
-                        storeinit={storeinit}
+                        storeInit={storeInit}
                         visiterId={visiterId}
                       />
                     </div>

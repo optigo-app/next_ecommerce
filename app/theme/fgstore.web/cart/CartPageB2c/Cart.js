@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Basket from './Drawer';
 import useCart from '@/app/(core)/utils/Glob_Functions/Cart_Wishlist/Cart';
 import { useStore } from '@/app/(core)/contexts/StoreProvider';

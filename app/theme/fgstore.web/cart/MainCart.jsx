@@ -11,8 +11,8 @@ const MainCart = ({ storeinit, visiterId }) => {
 
     useEffect(() => {
         const storeInit = storeinit;
-        // const cartNo = storeInit?.CartNo ?? 1;
-        const cartNo = 2;
+        const cartNo = storeInit?.CartNo ?? 1;
+        // const cartNo = 2;
 
         switch (cartNo) {
             case 1:
