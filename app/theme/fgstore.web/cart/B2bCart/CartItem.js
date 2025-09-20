@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';  
+import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
@@ -102,27 +102,6 @@ const CartItem = ({
     }
   };
 
-  const [pressing, setPressing] = useState(false);
-  const pressTimer = useRef(null);
-
-  const handlePress = (action) => {
-    return () => {
-      // if (!multiSelect && selectedItemsLength === 0) return;
-      // else if (multiSelect && selectedItemsLength === 0) return;
-      pressTimer.current = setTimeout(() => {
-        // openHandleUpdateCartModal();
-        // console.log('selectedItemsssssss', selectedItemsLength);
-        alert('Long Pressed Detected...')
-      }, 5000);
-      setPressing(action === 'start');
-    };
-  }
-
-  const cancelPress = () => {
-    clearTimeout(pressTimer.current);
-    setPressing(false);
-  };
-
   function truncateText(text, maxLength) {
     if (text.length <= maxLength) {
       return text;
@@ -133,11 +112,7 @@ const CartItem = ({
   return (
     <Grid
       item
-      xs={6}
-      sm={itemLength <= 2 ? 6 : 6}
-      md={itemLength <= 2 ? 6 : 6}
-      lg={itemLength <= 2 ? 6 : 4}
-      xxl={itemLength <= 2 ? 6 : 3}
+      size={{ xs: 6, sm: itemLength <= 2 ? 6 : 6, md: itemLength <= 2 ? 6 : 6, lg: itemLength <= 2 ? 6 : 4, xxl: itemLength <= 2 ? 6 : 3 }}
       className='smr_cartListCardGrid'>
       <Card className={itemLength <= 3 ? 'smr_cartListCard' : 'smr_cartListCard'}
         key={item?.id}
