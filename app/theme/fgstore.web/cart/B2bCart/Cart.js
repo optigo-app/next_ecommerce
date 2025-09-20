@@ -60,7 +60,7 @@ const CartPage = ({ storeinit, visiterId, islogin, setCartCountNum }) => {
     decodeEntities,
     handleMoveToDetail,
     handelMenu
-  } = useCart();
+  } = useCart()
 
   const location = useNextRouterLikeRR();
   const navigate = location.push;

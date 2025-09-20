@@ -38,13 +38,14 @@ const CartDetails = ({
   const fullImagePath1 = `${CDNDesignImageFol}${selectedItem?.designno}~1.${selectedItem?.ImageExtension}`;
 
   const isLoading = selectedItem?.loading;
+  console.log("TCL: selectedItem", selectedItem)
 
   const defaultUrl = selectedItem?.images?.replace("/Design_Thumb", "");
   const firstPart = defaultUrl?.split(".")[0]
   const secondPart = selectedItem?.ImageExtension;
   const finalSelectedUrl = `${firstPart}.${secondPart}`;
 
-  const [imgSrc, setImgSrc] = useState('');
+  const [imgSrc, setImgSrc] = useState(null);
 
   useEffect(() => {
     let imageURL = selectedItem?.images
@@ -69,53 +70,44 @@ const CartDetails = ({
     <div className="smr_cart-container">
       <div className="smr_Cart-imageDiv">
         {isLoading === true ? (
-          <CardMedia
-            width="100%"
-            height={400}
-            sx={{
-              width: "100%",
-              height: "400px !important",
-              '@media (max-width: 1750px)': {
-                width: "100%",
-                height: "350px !important",
-              },
-              '@media (max-width: 1500px)': {
-                width: "100%",
-                height: "300px !important",
-              },
-              '@media (max-width: 1100px)': {
-                width: "100%",
-                height: "250px !important",
-              },
+          <div
+            style={{
+              width: "410px",
+              height: "400px",
             }}
           >
             <Skeleton
               animation="wave"
-              variant="rect"
+              variant="rectangular"
               width="100%"
               height="100%"
+              sx={{
+                '@media (max-width: 1750px)': {
+                  width: "360px",
+                  height: "350px",
+                },
+                '@media (max-width: 1500px)': {
+                  width: "310px",
+                  height: "300px",
+                },
+                '@media (max-width: 1100px)': {
+                  width: "260px",
+                  height: "250px",
+                },
+              }}
             />
-          </CardMedia>
+          </div>
         ) : (
           <img
             src={imgSrc}
             alt=" "
-            style={{
-              border: 'none',
-              outline: 'none',
-              boxShadow: 'none',
-              '&:focus': { outline: 'none' },
-              '&:active': { outline: 'none' },
-            }}
+            className="smr_cartDetailImage"
+            onClick={() => handleMoveToDetail(selectedItem)}
             draggable={true}
             onContextMenu={(e) => e.preventDefault()}
-            className='smr_cartDetailImage'
-            onClick={() => handleMoveToDetail(selectedItem)}
             loading="eager"
             onError={(e) => {
               const imgEl = e.target;
-
-              // Prevent infinite loop
               if (!imgEl.dataset.triedFullImage && fullImagePath1) {
                 imgEl.src = fullImagePath1;
                 imgEl.dataset.triedFullImage = "true";

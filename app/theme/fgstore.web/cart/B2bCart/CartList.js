@@ -4,7 +4,6 @@ import CartItem from './CartItem';
 
 const CartList = ({
   items,
-  setOpenMobileModal,
   openHandleUpdateCartModal,
   CartCardImageFunc,
   onSelect,
