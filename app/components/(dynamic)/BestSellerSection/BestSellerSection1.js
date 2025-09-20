@@ -118,7 +118,7 @@ const BestSellerSection1 = ({ data ,storeData }) => {
     sessionStorage.setItem("scrollToProduct1", `product-${index}`);
     let encodeObj = compressAndEncode(JSON.stringify(obj));
     // navigation(`/d/${titleLine.replace(/\s+/g, `_`)}${titleLine?.length > 0 ? "_" : ""}${designNo}?p=${encodeObj}`);
-    navigation(`/d/${formatRedirectTitleLine(titleLine)}${designNo}?p=${encodeObj}`);
+    navigation(`/d/${formatRedirectTitleLine(titleLine)}${designNo}?p=${encodeURIComponent(encodeObj)}`);
   };
 
   useEffect(() => {

@@ -806,7 +806,7 @@ const Product = ({ params, searchParams, storeinit }) => {
 
         let encodeObj = compressAndEncode(JSON.stringify(obj))
 
-        navigate.push(`/d/${formatRedirectTitleLine(productData?.TitleLine)}${productData?.designno}?p=${encodeObj}`);
+        navigate.push(`/d/${formatRedirectTitleLine(productData?.TitleLine)}${productData?.designno}?p=${encodeURIComponent(encodeObj)}`);
     }
 
     const handleSortby = async (e) => {

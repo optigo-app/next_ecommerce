@@ -1,23 +1,20 @@
 import { useState, useEffect } from 'react';
-import { fetchCartDetails } from '../../API/CartAPI/CartApi';
-import { handleProductRemark } from '../../API/CartAPI/ProductRemarkAPIData';
-import { removeFromCartList } from '../../API/RemoveCartAPI/RemoveCartAPI';
-import { updateQuantity } from '../../API/CartAPI/QuantityAPI';
-import { getSizeData } from '../../API/CartAPI/GetCategorySizeAPI';
-import imageNotFound from "../../../AllTheme/SmilingRock/Components/Assets/image-not-found.jpg"
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { CartCount, WishCount, loginState } from '../../../AllTheme/SmilingRock/Components/Recoil/atom';
-import { updateCartAPI } from '../../API/CartAPI/UpdateCartAPI';
+import { fetchCartDetails } from '@/app/(core)/utils/API/CartAPI/CartApi';
+import { handleProductRemark } from '@/app/(core)/utils/API/CartAPI/ProductRemarkAPIData';
+import { removeFromCartList } from '@/app/(core)/utils/API/RemoveCartAPI/RemoveCartAPI';
+import { updateQuantity } from '@/app/(core)/utils/API/CartAPI/QuantityAPI';
+import { getSizeData } from '@/app/(core)/utils/API/CartAPI/GetCategorySizeAPI';
+import { updateCartAPI } from '@/app/(core)/utils/API/CartAPI/UpdateCartAPI';
 import pako from 'pako';
-import { useNavigate } from 'react-router-dom';
 import { useMediaQuery } from '@mui/material';
-import { toast } from 'react-toastify';
 import Cookies from "js-cookie";
-import { fetchSingleProdDT } from '../../API/CartAPI/SingleProdDtAPI';
-import { formatRedirectTitleLine } from '../GlobalFunction';
+import { fetchSingleProdDT } from '@/app/(core)/utils/API/CartAPI/SingleProdDtAPI';
+import { formatRedirectTitleLine } from '@/app/(core)/utils/Glob_Functions/GlobalFunction';
+import { useNextRouterLikeRR } from '@/app/(core)/hooks/useLocationRd';
 
 const useCart = () => {
-  const navigate = useNavigate();
+  const location = useNextRouterLikeRR();
+  const navigate = location.push;
   const [isloding, setIsLoading] = useState(false);
   const [ispriceloding, setIsPriceLoding] = useState(false);
   const [countData, setCountData] = useState();
@@ -36,28 +33,14 @@ const useCart = () => {
   const [metalID, setMetalID] = useState();
   const [metalCOLORID, setMetalCOLORID] = useState();
   const [colorStoneID, setColorStoneID] = useState();
-  const [getSinglePriceData, setGetSinglePriceData] = useState([]);
-  const [diamondPriceData, setDiamondPriceData] = useState();
-  const [metalPriceData, setMetalPriceData] = useState();
-  const [colorStonePriceData, setColorStonePriceData] = useState();
   const [metalTypeCombo, setMetalTypeCombo] = useState([]);
   const [metalColorCombo, setMetalColorCombo] = useState([]);
   const [ColorStoneCombo, setColorStoneCombo] = useState([]);
   const [diamondQualityColorCombo, setDiamondQualityColorCombo] = useState([]);
   const [sizeCombo, setSizeCombo] = useState([]);
   const [sizeId, setSizeId] = useState();
-  const [selectedMetalData, setSelectedMetalData] = useState()
-  const [selectedDiaData, setSelectedDiaData] = useState()
-  const [selectedCSData, setSelectedCSData] = useState()
-  const [mtprice, setMtPrice] = useState();
-  const [diaprice, setDiaPrice] = useState();
-  const [csprice, setCSPrice] = useState();
-  const [mtSizeprice, setMtSizePrice] = useState();
-  const [diaSizeprice, setDiaSizePrice] = useState();
-  const [csSizeprice, setCsSizePrice] = useState();
   const [sizeChangeData, setSizeChangeData] = useState();
   const [markupData, setMarkUpData] = useState();
-  const [filterMetalPriceData, setFilterMetalPriceData] = useState();
   const [mrpbasedPriceFlag, setmrpbasedPriceFlag] = useState(0);
   const [finalPrice, setFinalPrice] = useState();
   const [finalPriceWithMarkup, setFinalPriceWithMarkup] = useState();
@@ -69,6 +52,8 @@ const useCart = () => {
   const [diaQua, setDiaQua] = useState();
   const [csColor, setCsColor] = useState();
   const [csQua, setCsQua] = useState();
+
+  const imageNotFound = "/image-not-found.jpg";
 
   const [finalCartData, setFinalCartData] = useState([]);
   const [loadingIndex, setLoadingIndex] = useState(0)

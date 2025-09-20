@@ -94,7 +94,7 @@ const NewArrival = ({ data, storeInit }) => {
     };
     sessionStorage.setItem("scrollToProduct2", `product-${index}`);
     let encodeObj = compressAndEncode(JSON.stringify(obj));
-    navigation(`/d/${formatRedirectTitleLine(titleLine)}${designNo}?p=${encodeObj}`);
+    navigation(`/d/${formatRedirectTitleLine(titleLine)}${designNo}?p=${encodeURIComponent(encodeObj)}`);
   };
 
   useEffect(() => {

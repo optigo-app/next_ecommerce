@@ -20,6 +20,7 @@ export function StoreProvider({ children }) {
   const [wishCountNum, setWishCountNum] = useState(0);
   const [loginUserDetail, setLoginUserDetail] = useState(null);
   const [islogin, setislogin] = useState(true);
+  const [cartOpenStateB2C, setCartOpenStateB2C] = useState(false);
 
   useEffect(() => {
     const storedDetail = sessionStorage.getItem("loginUserDetail");
@@ -41,6 +42,8 @@ export function StoreProvider({ children }) {
     setislogin,
     loginUserDetail,
     setLoginUserDetail,
+    cartOpenStateB2C,
+    setCartOpenStateB2C,
   };
 
   return (

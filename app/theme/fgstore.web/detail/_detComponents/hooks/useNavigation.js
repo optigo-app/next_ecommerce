@@ -32,14 +32,12 @@ export const useNavigation = (setSingleProd1, setSingleProd, setProdLoading, set
 
         let encodeObj = compressAndEncode(JSON.stringify(obj));
 
-        navigate.push(`/d/${formatRedirectTitleLine(productData?.TitleLine)}${productData?.designno}?p=${encodeObj}`);
+        navigate.push(`/d/${formatRedirectTitleLine(productData?.TitleLine)}${productData?.designno}?p=${encodeURIComponent(encodeObj)}`);
 
         // Reset states
         setSingleProd1({});
         setSingleProd({});
-        setProdLoading(true);
         setImagePromise(true);
-        setWishListFlag(null);
     };
 
     return {

@@ -70,7 +70,7 @@ const DesignSet = ({ data, storeInit }) => {
             f: {},
         };
         let encodeObj = compressAndEncode(JSON.stringify(obj));
-        navigate(`/d/${titleLine?.replace(/\s+/g, `_`)}${titleLine?.length > 0 ? '_' : ''}${designNo}?p=${encodeObj}`);
+        navigate(`/d/${titleLine?.replace(/\s+/g, `_`)}${titleLine?.length > 0 ? '_' : ''}${designNo}?p=${encodeURIComponent(encodeObj)}`);
     };
 
     const decodeEntities = (html) => {
