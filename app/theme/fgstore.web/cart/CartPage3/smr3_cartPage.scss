@@ -1,10 +1,10 @@
-@import '../../../scss/variable.scss';
+@import '/app/theme/fgstore.web/style/variable.scss';
 
 $borderColor: rgba(232, 232, 232, 1);
 
 .smr3_MainBGDiv {
   font-family: $primaryFontFamily;
-  // margin-top: 140px;
+  margin-top: 50px;
 
 
   .smr3_cart-title {
@@ -48,8 +48,8 @@ $borderColor: rgba(232, 232, 232, 1);
 
         button {
           font-family: $primaryFontFamily !important;
-          background-color: $btn1hoverColor;
-          color: $btn1hoverFontColor;
+          background: $btnBg !important;
+          color: $btncolor !important;
           font-size: $fontSize2;
           border: none;
           outline: none;
@@ -354,7 +354,6 @@ $borderColor: rgba(232, 232, 232, 1);
         height: 80vh;
         justify-content: start;
         margin-bottom: 190px;
-        position: -webkit-sticky;
         position: sticky;
         top: 125px;
 
@@ -380,7 +379,23 @@ $borderColor: rgba(232, 232, 232, 1);
                 border-radius: 0px;
                 padding: 2px;
                 width: 100%;
+                min-height: 400px;
                 object-fit: contain;
+
+                @media (max-width: 1750px) {
+                  min-height: 350px;
+                  width: 100%;
+                }
+
+                @media (max-width: 1500px) {
+                  width: 100%;
+                  min-height: 300px;
+                }
+
+                @media (max-width: 1100px) {
+                  width: 100%;
+                  min-height: 250px;
+                }
               }
             }
 
@@ -534,8 +549,8 @@ $borderColor: rgba(232, 232, 232, 1);
 
                 button {
                   font-family: $primaryFontFamily !important;
-                  background-color: $btn1hoverColor;
-                  color: $btn1hoverFontColor;
+                  background: $btnBg !important;
+                  color: $btncolor !important;
                   font-size: $fontSize2;
                   border: none;
                   outline: none;
@@ -896,6 +911,7 @@ $borderColor: rgba(232, 232, 232, 1);
                 .smr3_cart-item__details {
                   padding-left: 0;
                   text-align: center;
+
                   h3 {
                     font-size: $fontSize2;
                   }
@@ -903,7 +919,9 @@ $borderColor: rgba(232, 232, 232, 1);
                   p {
                     font-size: $fontSize1;
                   }
-                  .smr3_weightsContainer, .smr3_qtyDiv{
+
+                  .smr3_weightsContainer,
+                  .smr3_qtyDiv {
                     justify-content: center;
                     align-items: center;
                   }

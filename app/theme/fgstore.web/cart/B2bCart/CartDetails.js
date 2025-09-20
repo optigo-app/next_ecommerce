@@ -38,7 +38,6 @@ const CartDetails = ({
   const fullImagePath1 = `${CDNDesignImageFol}${selectedItem?.designno}~1.${selectedItem?.ImageExtension}`;
 
   const isLoading = selectedItem?.loading;
-  console.log("TCL: selectedItem", selectedItem)
 
   const defaultUrl = selectedItem?.images?.replace("/Design_Thumb", "");
   const firstPart = defaultUrl?.split(".")[0]
@@ -69,7 +68,7 @@ const CartDetails = ({
   return (
     <div className="smr_cart-container">
       <div className="smr_Cart-imageDiv">
-        {isLoading === true ? (
+        {isLoading === true ? ( 
           <div
             style={{
               width: "410px",

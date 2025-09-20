@@ -8,6 +8,7 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import StarBorderRoundedIcon from "@mui/icons-material/StarBorderRounded";
 import { GetMenuAPI } from "@/app/(core)/utils/API/GetMenuAPI/GetMenuAPI";
 import { NEXT_APP_WEB } from "@/app/(core)/utils/env";
+import CartDrawer from "@/app/theme/fgstore.web/cart/CartPageB2c/Cart";
 import { GetCountAPI } from "@/app/(core)/utils/API/GetCount/GetCountAPI";
 import Cookies from "js-cookie";
 import { IoClose } from "react-icons/io5";
@@ -21,7 +22,7 @@ export function storImagePath() {
 }
 
 const Header = ({ storeinit, logos }) => {
-  const { islogin, setislogin, cartCountNum, setCartCountNum, wishCountNum, setWishCountNum } = useStore();
+  const { islogin, setislogin, cartCountNum, setCartCountNum, wishCountNum, setWishCountNum, setCartOpenStateB2C } = useStore();
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isHeaderFixed, setIsHeaderFixed] = useState(false);
   const [isHeaderFixedDropShow, setIsHeaderFixedDropShow] = useState(false);
@@ -30,9 +31,11 @@ const Header = ({ storeinit, logos }) => {
   const compnyLogoM = logos?.mobile;
   const [menuData, setMenuData] = useState([]);
   const [menuItems, setMenuItems] = useState([]);
+  const setCartOpenState = setCartOpenStateB2C;
   const [searchText, setSearchText] = useState("");
   const IsB2BWebsiteChek = storeinit?.IsB2BWebsite;
   const IsCartNo = storeinit?.CartNo;
+  // const IsCartNo = 2;
   const [serachsShowOverlay, setSerachShowOverlay] = useState(false);
 
   const router = useRouter();
@@ -1057,7 +1060,7 @@ const Header = ({ storeinit, logos }) => {
 
 export default Header;
 
-const TopNavBar = ({ menuItems = [], handelMenu = () => {} }) => {
+const TopNavBar = ({ menuItems = [], handelMenu = () => { } }) => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [expandedMenu, setExpandedMenu] = useState(null);
   const [selectedData, setSelectedData] = useState([]);
@@ -1110,9 +1113,9 @@ const TopNavBar = ({ menuItems = [], handelMenu = () => {} }) => {
                 handleMouseEnter(index, menuItem);
               }}
               onClick={() => handleMouseLeave()}
-              // onMouseLeave={() => {
-              //   handleMouseLeave();
-              // }}
+            // onMouseLeave={() => {
+            //   handleMouseLeave();
+            // }}
             >
               <div
                 // component="div"
