@@ -1,4 +1,4 @@
-@import '../../../scss/variable.scss';
+@import '/app/theme/fgstore.web/style/variable.scss';
 
 .smr_B2cCart {
   display: flex;
@@ -181,7 +181,7 @@
     font-family: $primaryFontFamily;
     color: $titleColor;
 
-    @media (max-width: 375px){
+    @media (max-width: 375px) {
       width: 30px !important;
     }
   }

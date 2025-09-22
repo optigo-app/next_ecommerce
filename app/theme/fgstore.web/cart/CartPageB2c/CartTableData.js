@@ -31,7 +31,7 @@ const ExampleComponent = ({
     const secondPart = cartData?.ImageExtension;
     const finalSelectedUrl = `${firstPart}.${secondPart}`;
 
-    const [imgSrc, setImgSrc] = useState('');
+    const [imgSrc, setImgSrc] = useState(null);
 
     useEffect(() => {
         let imageURL = cartData?.images

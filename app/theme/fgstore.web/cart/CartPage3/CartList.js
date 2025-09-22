@@ -17,6 +17,7 @@ const CartList = ({
   handleAddReamrk,
   handleRemarkChange,
   handleSave,
+  storeInit,
   handleCancel,
 }) => {
 
@@ -52,6 +53,7 @@ const CartList = ({
               handleAddReamrk={handleAddReamrk}
               handleRemarkChange={handleRemarkChange}
               handleSave={handleSave}
+              storeInit={storeInit}
               handleCancel={handleCancel}
               openHandleUpdateCartModal={openHandleUpdateCartModal}
             />

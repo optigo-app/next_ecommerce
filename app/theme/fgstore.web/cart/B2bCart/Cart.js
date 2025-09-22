@@ -60,17 +60,18 @@ const CartPage = ({ storeinit, visiterId, islogin, setCartCountNum }) => {
     decodeEntities,
     handleMoveToDetail,
     handelMenu
-  } = useCart();
+  } = useCart()
 
   const location = useNextRouterLikeRR();
   const navigate = location.push;
+
   const storeInit = storeinit;
   const [dialogOpen, setDialogOpen] = useState(false);
   const setCartCountVal = setCartCountNum;
   const isLargeScreen = useMediaQuery('(min-width:1000px)');
   const isMobileScreen = useMediaQuery('(max-width:768px)');
 
-  const redirectUrl = `/loginOption/?LoginRedirect=/Delivery`;
+  const redirectUrl = `/loginOption/?LoginRedirect=/delivery`;
   const handlePlaceOrder = () => {
     if (storeInit?.IsPLW == 0) {
       let priceData = finalCartData?.reduce(
@@ -81,7 +82,7 @@ const CartPage = ({ storeinit, visiterId, islogin, setCartCountNum }) => {
       if (storeInit?.IsB2BWebsite == 0 && islogin == false || islogin == null) {
         navigate(redirectUrl);
       } else {
-        navigate("/Delivery", { replace: true });
+        navigate("/delivery", { replace: true });
       }
     } else {
       handlePay();
@@ -113,7 +114,7 @@ const CartPage = ({ storeinit, visiterId, islogin, setCartCountNum }) => {
     if (paymentResponse?.Data?.rd[0]?.stat == 1) {
       let num = paymentResponse.Data?.rd[0]?.orderno
       sessionStorage.setItem('orderNumber', num);
-      navigate('/Confirmation');
+      navigate('/confirmation');
       GetCountAPI().then((res) => {
         setCartCountVal(res?.cartcount)
       })

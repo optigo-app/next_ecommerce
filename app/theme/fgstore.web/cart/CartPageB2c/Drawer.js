@@ -41,14 +41,14 @@ const Cart = ({
     }, 300);
   }, [items])
 
-  const redirectUrl = `/loginOption/?LoginRedirect=/Delivery`;
+  const redirectUrl = `/loginOption/?LoginRedirect=/delivery`;
   const handlePlaceOrder = () => {
     let storeInit = storeinit;
     if (storeInit?.IsB2BWebsite == 0 && islogin == false || islogin == null) {
       navigate(redirectUrl);
       closeDrawer();
     } else {
-      navigate("/Delivery")
+      navigate("/delivery")
       let priceData = items?.reduce((total, item) => total + item?.FinalCost, 0);
       sessionStorage.setItem('TotalPriceData', priceData)
       closeDrawer();

@@ -6,13 +6,12 @@ const QuantitySelector = ({ selectedItem, qtyCount, handleIncrement, handleDecre
   return (
     <div className="smr_cart-quantity">
       <button className="bttn bttn-left" onClick={() => handleDecrement(selectedItem)}>
-        <span>-</span> 
+        <span>-</span>
       </button>
       <input
         type="number"
         className="input"
         id="input"
-        defaultValue={selectedItem?.Quantity}
         value={selectedItem?.Quantity}
         readOnly
       />
