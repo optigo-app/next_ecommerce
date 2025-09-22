@@ -2,7 +2,7 @@ import Lookbook from './Lookbook'
 
 const page = ({storeInit}) => {
   return (
-    <Lookbook storeInit={storeInit}/>
+    <Lookbook key={`lookbook-${storeInit?.token}`} storeInit={storeInit}/>
   )
 }
 
