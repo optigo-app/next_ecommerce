@@ -12,10 +12,10 @@ export default function ContinueWithEmail({ params, searchParams }) {
     const [emailError, setEmailError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const navigation = useRouter() ;
-    const search = searchParams?.search ?? "";
-    const redirectEmailUrl = `/LoginWithEmail/${search}`; 
-    const redirectSignUpUrl = `/register/${search}`; 
-    const cancelRedireactUrl = `/LoginOption/${search}`; 
+    const search = JSON.parse(searchParams?.value)?.LoginRedirect ?? "";
+    const redirectEmailUrl = `/LoginWithEmail/?LoginRedirect=${search}`; 
+    const redirectSignUpUrl = `/register/?LoginRedirect=${search}`; 
+    const cancelRedireactUrl = `/LoginOption/?LoginRedirect=${search}`; 
 
     useEffect(() => {
         setCSSVariable();

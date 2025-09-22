@@ -18,7 +18,7 @@ export default function ContinueWithMobile({ params, searchParams }) {
   const navigation = location?.push;
   const [isOpen, setIsOpen] = useState(false);
 
-  const search = location?.search ;
+  const search = JSON.parse(searchParams?.value)?.LoginRedirect ?? "";
   const updatedSearch = search?.replace('?LoginRedirect=', '');
   const redirectMobileUrl = `/LoginWithMobileCode/${updatedSearch}`;
   const redirectSignUpUrl = `/register/${updatedSearch}`;

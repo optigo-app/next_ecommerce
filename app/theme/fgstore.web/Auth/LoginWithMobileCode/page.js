@@ -8,7 +8,7 @@ import { LoginWithEmailAPI } from '@/app/(core)/utils/API/Auth/LoginWithEmailAPI
 import Cookies from 'js-cookie';
 import { useNextRouterLikeRR } from '@/app/(core)/hooks/useLocationRd';
 
-export default function LoginWithMobileCode() {
+export default function LoginWithMobileCode({ params, searchParams }) {
     const location = useNextRouterLikeRR();
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
@@ -18,7 +18,7 @@ export default function LoginWithMobileCode() {
     const [resendTimer, setResendTimer] = useState(120);
     const [isLoginState, setIsLoginState] = useState(false)
 
-    const search = location?.search;
+    const search = JSON.parse(searchParams?.value)?.LoginRedirect ?? "";
     const updatedSearch = search?.replace('?LoginRedirect=', '');
     const redirectMobileUrl = `${decodeURIComponent(updatedSearch)}`;
     const cancelRedireactUrl = `/LoginOption/${search}`;
@@ -65,6 +65,7 @@ export default function LoginWithMobileCode() {
         }
         LoginWithEmailAPI('', mobileNo, enterOTP, 'otp_mobile_login', '',visiterId).then((response) => {
             if (response.Data.rd[0].stat === 1) {
+                Cookies.set('LoginUser', true)
                 sessionStorage.setItem('LoginUser', true)
                 setIsLoginState(true)
                 sessionStorage.setItem('loginUserDetail', JSON.stringify(response.Data.rd[0]));
