@@ -15,6 +15,7 @@ import { IoClose } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useStore } from "@/app/(core)/contexts/StoreProvider";
+import { useSmartNavigation } from "@/app/(core)/hooks/useSmartNavigation";
 
 export function storImagePath() {
   let statiPath = `${window?.location?.protocol}//${window.location.hostname === "localhost" || window.location.hostname === "zen" ? NEXT_APP_WEB : window.location.hostname}`;
@@ -38,10 +39,10 @@ const Header = ({ storeinit, logos }) => {
   // const IsCartNo = 2;
   const [serachsShowOverlay, setSerachShowOverlay] = useState(false);
 
-  const router = useRouter();
+  const navigation = useSmartNavigation();
 
   const navigate = (link) => {
-    router.push(link);
+    navigation.push(link);
   };
 
   useEffect(() => {
