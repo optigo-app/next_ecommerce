@@ -6,6 +6,7 @@ import { MasterProvider } from "@/app/(core)/contexts/MasterProvider";
 import { getCompanyInfoData, getStoreInit, GetUserLoginCookie, GetVistitorId } from "./(core)/utils/GlobalFunctions/GlobalFunctions";
 import { getActiveTheme } from "./(core)/lib/getActiveTheme";
 import { StoreProvider } from "./(core)/contexts/StoreProvider";
+import { themeMap } from "./page";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -18,7 +19,8 @@ export const metadata = generatePageMetadata(pages["/"]);
 
 export default async function RootLayout({ children }) {
   const theme = await getActiveTheme();
-  const Layout = (await import(`@/app/theme/${theme}/layout.jsx`)).default;
+  const themeData = themeMap[theme];
+  const Layout = (await import(`@/app/theme/${themeData.page}/layout.jsx`)).default;
   const companyInfo = await getCompanyInfoData();
   const storeInit = await getStoreInit();
   const VistitorId = await GetVistitorId();
