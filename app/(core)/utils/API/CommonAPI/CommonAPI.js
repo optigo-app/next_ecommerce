@@ -1,4 +1,3 @@
-
 import { fetchAPIUrlFromStoreInit } from "../../Glob_Functions/GlobalFunction";
 import axios from "axios";
 let APIURL = '';

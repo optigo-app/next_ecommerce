@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "build:dev": "cross-env NEXT_PUBLIC_APP_ENV=development next build",
+    "start:dev": "cross-env NEXT_PUBLIC_APP_ENV=development NODE_ENV=development next start"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -15,6 +17,7 @@
     "@mui/material": "^7.3.2",
     "@mui/x-date-pickers": "^8.11.3",
     "axios": "^1.12.2",
+    "cross-env": "^10.0.0",
     "crypto-js": "^4.2.0",
     "date-fns": "^4.1.0",
     "dayjs": "^1.11.18",
