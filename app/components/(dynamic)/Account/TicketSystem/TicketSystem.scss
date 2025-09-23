@@ -1,4 +1,4 @@
-@import "@/app/theme/scss/variable.scss";
+@use '../../../theme/fgstore.web/style/variable.scss' as *;
 
 .smr_ticketSys_mainDiv {
     display: flex;

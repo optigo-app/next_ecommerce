@@ -12,6 +12,10 @@ const nextConfig = {
         },
       ],
     },
+    webpack: (config) => {
+      config.infrastructureLogging = { level: "error" }; // hides warnings
+      return config;
+    },
     eslint: {
       ignoreDuringBuilds: true, // Skip ESLint errors/warnings on build
     },

@@ -1,4 +1,4 @@
-@import '@/app/theme/fgstore.web/style/variable.scss';
+@use '../../../theme/fgstore.web/style/variable.scss' as *;
 
 .smr_headerMain_div {
 
@@ -65,7 +65,7 @@
                             text-decoration: underline;
                             margin-bottom: 10px;
                             color: black;
-                            text-align: start;
+                            text-align: flex-start;
                             letter-spacing: 1;
                             font-weight: 500;
                             cursor: pointer;
@@ -647,8 +647,8 @@
                 .smr_menu_level_0 {
                     display: flex;
                     flex-direction: column;
-                    align-items: start;
-                    text-align: start;
+                    align-items: flex-start;
+                    text-align: flex-start;
                     border-right: 1px solid #9b978f;
 
                     //   break-inside: avoid;

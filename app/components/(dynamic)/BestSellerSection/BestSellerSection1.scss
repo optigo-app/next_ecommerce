@@ -1,4 +1,4 @@
-@import '../../../theme/fgstore.web/style/variable.scss';
+@use '../../../theme/fgstore.web/style/variable.scss' as *;
 
 .smr_mainBestSeler1Div {
     .smr_bestseler1TitleDiv {
@@ -6,9 +6,6 @@
         padding-block: 2%;
 
         .smr_bestseler1Title {
-            // font-size: $fontSize6;
-            // color: $homePageFontColor;
-            // font-family: $homePageFontFamily;
             color: $textColor;
             font-size: 27px;
             font-family: $Pratafonts;
