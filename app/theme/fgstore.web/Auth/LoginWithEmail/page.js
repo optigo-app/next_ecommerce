@@ -19,7 +19,7 @@ import { GetCountAPI } from "@/app/(core)/utils/API/GetCount/GetCountAPI";
 import { useNextRouterLikeRR } from "@/app/(core)/hooks/useLocationRd";
 import { useStore } from "@/app/(core)/contexts/StoreProvider";
 
-export default function LoginWithEmail() {
+export default function LoginWithEmail({params ,  searchParams}) {
   const { islogin, setislogin, setCartCountNum, setWishCountNum } = useStore();
   const [email, setEmail] = useState("");
 
@@ -31,7 +31,7 @@ export default function LoginWithEmail() {
   const navigation = push;
   const location = useNextRouterLikeRR();
 
-  const search = location?.search;
+  const search = JSON.parse(searchParams?.value)?.LoginRedirect ?? "";
   const updatedSearch = search?.replace("?LoginRedirect=", "");
   const redirectEmailUrl = `${decodeURIComponent(updatedSearch)}`;
   const cancelRedireactUrl = `/LoginOption/${search}`;
@@ -142,8 +142,8 @@ export default function LoginWithEmail() {
         setIsLoading(false);
         if (response.Data.rd[0].stat === 1) {
           const visiterID = Cookies.get("visiterId");
-          console.log("responseresponse", response?.Data?.rd[0]?.Token);
           Cookies.set("userLoginCookie", response?.Data?.rd[0]?.Token);
+          Cookies.set('LoginUser', true)
           sessionStorage.setItem("registerEmail", email);
           setislogin(true);
           sessionStorage.setItem("LoginUser", true);
@@ -189,7 +189,6 @@ export default function LoginWithEmail() {
             })
             .catch((err) => console.log(err));
 
-          console.log("🚀 ~ handleSubmit ~ redirectEmailUrl:", redirectEmailUrl);
           if (redirectEmailUrl) {
             // navigation(redirectEmailUrl);
             window.location.href = redirectEmailUrl;

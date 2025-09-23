@@ -166,6 +166,9 @@ const fetchWithRetry = (url, retries = 3, delay = 1000) => {
 };
 
 export const fetchAPIUrlFromStoreInit = async () => {
+  if (typeof window === "undefined") {
+    return null; // or return a default object for SSR
+  }
   let getStoreInitData = JSON?.parse(sessionStorage?.getItem("storeInit"));
 
   if (getStoreInitData?.ApiUrl) {

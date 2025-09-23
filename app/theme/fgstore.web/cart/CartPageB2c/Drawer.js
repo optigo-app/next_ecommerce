@@ -41,7 +41,7 @@ const Cart = ({
     }, 300);
   }, [items])
 
-  const redirectUrl = `/loginOption/?LoginRedirect=/delivery`;
+  const redirectUrl = `/LoginOption/?LoginRedirect=/delivery`;
   const handlePlaceOrder = () => {
     let storeInit = storeinit;
     if (storeInit?.IsB2BWebsite == 0 && islogin == false || islogin == null) {
