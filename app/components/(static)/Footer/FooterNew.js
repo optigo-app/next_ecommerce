@@ -2,8 +2,11 @@ import Link from "next/link";
 import "./FooterNew.scss";
 
 const FooterNew = ({ companyInfoData, storeData, extraFlag, logos }) => {
+  console.log("TCL: FooterNew -> companyInfoData", companyInfoData)
   const htmlContent = extraFlag;
-  const parsedSocialLinks = JSON?.parse(companyInfoData?.SocialLinkObj) ?? [];
+  // const parsedSocialLinks = JSON?.parse(companyInfoData?.SocialLinkObj);
+  const parsedSocialLinks = [];
+
 
   return (
     <footer className="fg-footer">

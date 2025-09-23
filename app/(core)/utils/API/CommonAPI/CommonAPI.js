@@ -4,9 +4,9 @@ let APIURL = '';
 
 const setApiUrl = async () => {
     try {
-        const getApi = await fetchAPIUrlFromStoreInit();
+        const getApi = { ApiUrl: "https://api.optigoapps.com/ReactStoreV3/ReactStore.aspx" };
         if (getApi?.ApiUrl) {
-            APIURL = getApi.ApiUrl ?? "https://api.optigoapps.com/ReactStore/ReactStore.aspx";
+            APIURL = getApi.ApiUrl;
         } else {
             throw new Error("API URL not found");
         }
