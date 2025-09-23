@@ -1,6 +1,6 @@
 
 import { getStoreInit, GetVistitorId } from "@/app/(core)/utils/GlobalFunctions/GlobalFunctions";
-import MainCart from "./mainCart";
+import MainCart from "./MainCart";
 
 const Cart = async ({ params, searchParams }) => {
     const storeinit = await getStoreInit();
