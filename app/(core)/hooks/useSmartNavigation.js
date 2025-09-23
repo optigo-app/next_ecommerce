@@ -12,10 +12,10 @@ export const useSmartNavigation = () => {
     return useMemo(() => {
         return {
             push: (href) => {
-                <PrefetchLink href={href} />
+                PrefetchLink(href);
             },
             replace: (href) => {
-                <PrefetchLink href={href} />
+                PrefetchLink(href);
             },
         };
     }, []);

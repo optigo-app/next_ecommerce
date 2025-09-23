@@ -5,17 +5,17 @@ import { Button, CircularProgress, TextField } from '@mui/material';
 import { toast } from 'react-toastify';
 import { ContinueWithEmailAPI } from '@/app/(core)/utils/API/Auth/ContinueWithEmailAPI';
 import OTPContainer from '@/app/(core)/utils/Glob_Functions/Otpflow/App';
-import { useRouter } from 'next/navigation';
+import { useNextRouterLikeRR } from '@/app/(core)/hooks/useLocationRd';
 
 export default function ContinueWithEmail({ params, searchParams }) {
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const navigation = useRouter() ;
+    const navigation = useNextRouterLikeRR();
     const search = JSON.parse(searchParams?.value)?.LoginRedirect ?? "";
-    const redirectEmailUrl = `/LoginWithEmail/?LoginRedirect=${search}`; 
-    const redirectSignUpUrl = `/register/?LoginRedirect=${search}`; 
-    const cancelRedireactUrl = `/LoginOption/?LoginRedirect=${search}`; 
+    const redirectEmailUrl = `/LoginWithEmail/?LoginRedirect=${search}`;
+    const redirectSignUpUrl = `/register/?LoginRedirect=${search}`;
+    const cancelRedireactUrl = `/LoginOption/?LoginRedirect=${search}`;
 
     useEffect(() => {
         setCSSVariable();
@@ -62,8 +62,8 @@ export default function ContinueWithEmail({ params, searchParams }) {
         setIsLoading(true);
         ContinueWithEmailAPI(trimmedEmail).then((response) => {
             setIsLoading(false);
-            console.log(response,"email")
-           
+            console.log(response, "email")
+
             if (response.Data.rd[0].stat == 1 && response.Data.rd[0].islead == 1) {
                 toast.error('You are not a customer, contact to admin')
             } else if (response.Data.rd[0].stat == 1 && response.Data.rd[0].islead == 0) {
@@ -121,7 +121,7 @@ export default function ContinueWithEmail({ params, searchParams }) {
                 </div>
             )}
             <div >
-            {/* <OTPContainer emailId={email.trim()} isOpen={isOpen} type='email' setIsOpen={()=>setIsOpen(!isOpen)} onClose={()=>setIsOpen(false)} 
+                {/* <OTPContainer emailId={email.trim()} isOpen={isOpen} type='email' setIsOpen={()=>setIsOpen(!isOpen)} onClose={()=>setIsOpen(false)} 
             navigation={navigation}
             location={location}
             bgcolor={'blue'}
@@ -133,7 +133,7 @@ export default function ContinueWithEmail({ params, searchParams }) {
                         marginTop: '0px',
                         fontSize: '40px',
                         color: '#7d7f85',
-                                          }}
+                    }}
                         className='AuthScreenMainTitle'
                     >Continue With Email</p>
                     <p style={{
@@ -141,7 +141,7 @@ export default function ContinueWithEmail({ params, searchParams }) {
                         marginTop: '-60px',
                         fontSize: '15px',
                         color: '#7d7f85',
-                                          }}
+                    }}
 
                         className='AuthScreenSubTitle'
                     >We'll check if you have an account, and help create one if you don't.</p>
@@ -176,7 +176,7 @@ export default function ContinueWithEmail({ params, searchParams }) {
                         </button> */}
 
                         <button type='submit' className='submitBtnForgot' onClick={handleSubmit}>SUBMIT</button>
-                        <Button style={{ marginTop: '10px', color: 'gray' }} onClick={() => navigation(cancelRedireactUrl)}>CANCEL</Button>
+                        <Button style={{ marginTop: '10px', color: 'gray' }} onClick={() => navigation.push(cancelRedireactUrl)}>CANCEL</Button>
                     </div>
                     {/* <Footer /> */}
                 </div>

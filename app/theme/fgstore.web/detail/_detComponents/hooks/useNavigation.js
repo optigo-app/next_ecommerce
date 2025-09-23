@@ -1,9 +1,9 @@
-import { useRouter } from "next/navigation";
 import Pako from "pako";
 import { formatRedirectTitleLine } from "@/app/(core)/utils/Glob_Functions/GlobalFunction";
+import { useNextRouterLikeRR } from "@/app/(core)/hooks/useLocationRd";
 
 export const useNavigation = (setSingleProd1, setSingleProd, setProdLoading, setImagePromise, setWishListFlag) => {
-    const navigate = useRouter();
+    const navigate = useNextRouterLikeRR();
 
     // Compress and encode function for URL
     const compressAndEncode = (inputString) => {

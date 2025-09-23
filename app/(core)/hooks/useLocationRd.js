@@ -1,10 +1,15 @@
 "use client";
+import Link from "next/link";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
 export function useNextRouterLikeRR() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+
+  const PrefetchLink = (href) => (
+    <Link href={href} prefetch={true} style={{ display: "none" }} />
+  );
 
   const decodedObject = () => {
     const obj = {};
@@ -15,8 +20,8 @@ export function useNextRouterLikeRR() {
   };
 
   return {
-    push: (url) => router.push(url),
-    replace: (url) => router.replace(url),
+    push: (url) => PrefetchLink(url),
+    replace: (url) => PrefetchLink(url),
     back: () => router.back(),
     pathname,
     search: searchParams.toString() ? `?${searchParams.toString()}` : "",
