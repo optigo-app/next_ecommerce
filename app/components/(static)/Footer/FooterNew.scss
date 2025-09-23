@@ -1,4 +1,5 @@
-@import "@/app/theme/fgstore.web/style/variable.scss";
+@use "../../../theme/fgstore.web/style/variable.scss" as *;
+
 
 .fg-footer {
   position: relative;
