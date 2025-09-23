@@ -195,6 +195,7 @@ const Header = ({ storeinit, logos }) => {
     setislogin(false);
     Cookies.remove("userLoginCookie");
     Cookies.remove("userLoginCookie");
+    Cookies.remove('LoginUser')
     window.location.reload();
     sessionStorage.setItem("LoginUser", false);
     sessionStorage.removeItem("storeInit");

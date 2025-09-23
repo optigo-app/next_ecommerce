@@ -11,7 +11,7 @@ import { CountryCode } from "@/app/(core)/utils/assets/Countrylist";
 import CountryDropDown from "@/app/(core)/utils/Glob_Functions/CountryDropDown/CountryDropDown";
 import { useNextRouterLikeRR } from "@/app/(core)/hooks/useLocationRd";
 
-export default function Register() {
+export default function Register({searchParams }) {
   const { push } = useNextRouterLikeRR();
   const navigation = push;
   const location = useNextRouterLikeRR();
@@ -35,7 +35,7 @@ export default function Register() {
   const confirmPasswordRef = useRef(null);
   const [open, setOpen] = useState(false); // Track dropdown open/close
 
-  const search = location?.searchParams;
+  const search = JSON.parse(searchParams?.value)?.LoginRedirect ?? "";
   console.log("🚀 ~ Register ~ search:", search);
   // const updatedSearch = search.replace('?LoginRedirect=', '');
   // const redirectEmailUrl = `${decodeURIComponent(updatedSearch)}`;

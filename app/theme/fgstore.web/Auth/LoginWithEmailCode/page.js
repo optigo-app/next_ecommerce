@@ -9,7 +9,7 @@ import OTP from './OTP'; // Make sure the path is correct
 import './LoginWithEmailCode.modul.scss'
 import { useNextRouterLikeRR } from '@/app/(core)/hooks/useLocationRd';
 
-export default function LoginWithEmailCode() {
+export default function LoginWithEmailCode({ params, searchParams }) {
     const location = useNextRouterLikeRR();
     const [email, setEmail] = useState('');
     const [otp, setOtp] = useState('');
@@ -20,7 +20,7 @@ export default function LoginWithEmailCode() {
     const [isLoginState, setIsLoginState] = useState(false);
     const inputsRef = useRef([]);
 
-    const search = location?.search;
+    const search = JSON.parse(searchParams?.value)?.LoginRedirect ?? "";
     const updatedSearch = search.replace('?LoginRedirect=', '');
     const redirectEmailUrl = `${decodeURIComponent(updatedSearch)}`;
     const cancelRedireactUrl = `/LoginOption/${search}`;
@@ -75,6 +75,7 @@ export default function LoginWithEmailCode() {
             setIsLoading(false);
             if (response?.Data?.rd[0]?.stat === 1) {
                 setIsLoginState(true);
+                Cookies.set('LoginUser', true)
                 sessionStorage.setItem('LoginUser', true);
                 sessionStorage.setItem('loginUserDetail', JSON.stringify(response.Data.rd[0]));
 

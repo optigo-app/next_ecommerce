@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 import "./BespokeBanner.scss";
-import { storImagePath } from "../../../../../../../utils/Glob_Functions/GlobalFunction";
+import { storImagePath } from "../@/app/(core)/utils/Glob_Functions/GlobalFunction";
 import { useNavigate } from "react-router-dom";
 
 const BespokeBanner = () => {
