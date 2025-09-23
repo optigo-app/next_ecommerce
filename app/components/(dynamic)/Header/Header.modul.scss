@@ -344,6 +344,7 @@
         position: relative;
         display: inline-block;
         font-family: $primaryFontFamily;
+        text-decoration: none;
     }
 
     .nav_li_smining::before {
@@ -378,6 +379,7 @@
         font-weight: 500;
         position: relative;
         display: inline-block;
+        text-decoration: none;
     }
 
     .nav_li_smining_Fixed::before {

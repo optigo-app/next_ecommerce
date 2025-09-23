@@ -12,10 +12,10 @@ import CartDrawer from "@/app/theme/fgstore.web/cart/CartPageB2c/Cart";
 import { GetCountAPI } from "@/app/(core)/utils/API/GetCount/GetCountAPI";
 import Cookies from "js-cookie";
 import { IoClose } from "react-icons/io5";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useStore } from "@/app/(core)/contexts/StoreProvider";
-import { useSmartNavigation } from "@/app/(core)/hooks/useSmartNavigation";
+import { useNextRouterLikeRR } from "@/app/(core)/hooks/useLocationRd";
+import { useRouter } from "next/navigation";
 
 export function storImagePath() {
   let statiPath = `${window?.location?.protocol}//${window.location.hostname === "localhost" || window.location.hostname === "zen" ? NEXT_APP_WEB : window.location.hostname}`;
@@ -36,10 +36,11 @@ const Header = ({ storeinit, logos }) => {
   const [searchText, setSearchText] = useState("");
   const IsB2BWebsiteChek = storeinit?.IsB2BWebsite;
   const IsCartNo = storeinit?.CartNo;
+  const router = useRouter();
   // const IsCartNo = 2;
   const [serachsShowOverlay, setSerachShowOverlay] = useState(false);
 
-  const navigation = useSmartNavigation();
+  const navigation = useNextRouterLikeRR();
 
   const navigate = (link) => {
     navigation.push(link);
@@ -287,6 +288,38 @@ const Header = ({ storeinit, logos }) => {
   //mobileMenu.................
   const [selectedMenu, setSelectedMenu] = useState(null);
 
+  const handleMenuClick = async (
+    menuItem,
+    param1Item = null,
+    param2Item = null
+  ) => {
+    const { param1, param2, ...cleanedMenuItem } = menuItem;
+    let menuDataObj = { ...cleanedMenuItem };
+
+    if (param1Item) {
+      const { param1, param2, ...cleanedParam1Item } = param1Item;
+      menuDataObj = { ...menuDataObj, ...cleanedParam1Item };
+      if (param2Item) {
+        menuDataObj = { ...menuDataObj, ...param2Item };
+      }
+    } else {
+      // console.log("Menu Item:", cleanedMenuItem);
+    }
+    let finalData = {
+      menuname: menuDataObj?.menuname ?? "",
+      FilterKey: menuDataObj.param0name ?? "",
+      FilterVal: menuDataObj.param0dataname ?? "",
+      FilterKey1: menuDataObj?.param1name ?? "",
+      FilterVal1: menuDataObj?.param1dataname ?? "",
+      FilterKey2: menuDataObj?.param2name ?? "",
+      FilterVal2: menuDataObj?.param2dataname ?? "",
+    };
+    navigate(`/productpage`, {
+      state: { menuFlag: finalData?.menuname, filtervalue: finalData },
+    });
+    sessionStorage.setItem("menuparams", JSON.stringify(finalData));
+  };
+
   const handleLoginMenuClick = (menuName, menuItem, iconclicked) => {
     if (iconclicked == "iconclicked") {
       setSelectedMenu((prevMenu) => (prevMenu === menuName ? null : menuName));
@@ -300,7 +333,7 @@ const Header = ({ storeinit, logos }) => {
     if (e.key === "Enter") {
       if (searchText) {
         let loginInfo = JSON.parse(sessionStorage.getItem("loginUserDetail"));
-        let storeInit = JSON.parse(sessionStorage.getItem("storeInit"));
+        let storeInit = storeinit;
         let obj = {
           a: "",
           b: searchText,
@@ -311,7 +344,7 @@ const Header = ({ storeinit, logos }) => {
         };
 
         let encodeObj = btoa(JSON.stringify(obj));
-        navigate(`/p/${searchText}?S=${encodeObj}`);
+        router.push(`/p/${searchText}?S=${encodeObj}`);
         toggleOverlay();
         setSearchText("");
         setSerachShowOverlay(false);
@@ -323,7 +356,7 @@ const Header = ({ storeinit, logos }) => {
   const clickSearch = () => {
     if (searchText) {
       let loginInfo = JSON.parse(sessionStorage.getItem("loginUserDetail"));
-      let storeInit = JSON.parse(sessionStorage.getItem("storeInit"));
+      let storeInit = storeinit;
       let obj = {
         a: "",
         b: searchText,
@@ -335,7 +368,7 @@ const Header = ({ storeinit, logos }) => {
 
       let encodeObj = btoa(JSON.stringify(obj));
       setDrawerShowOverlay(false);
-      navigate(`/p/${searchText}?S=${encodeObj}`);
+      router.push(`/p/${searchText}?S=${encodeObj}`);
       setSearchText("");
       setSerachShowOverlay(false);
     }
@@ -348,24 +381,11 @@ const Header = ({ storeinit, logos }) => {
     setCartOpenState((prevState) => !prevState);
   };
 
-  const hanldeStaticPageNavigation = (event, path) => {
-    if (event?.ctrlKey || event?.shiftKey || event?.metaKey || (event?.button && event?.button === 1)) {
-      return;
-    } else {
-      event?.preventDefault();
-      navigate(path);
-      window.scrollTo(0, 0);
-    }
-  };
 
   return (
     <>
       <div
         className="smr_headerMain_div"
-        draggable={true}
-        onContextMenu={(e) => {
-          e.preventDefault();
-        }}
       >
         {serachsShowOverlay && (
           <>
@@ -441,9 +461,15 @@ const Header = ({ storeinit, logos }) => {
                     <>
                       <Badge badgeContent={cartCountNum} max={1000} overlap={"rectangular"} color="secondary" className="badgeColorFix" style={{ marginInline: "15px" }}>
                         <Tooltip title="Cart">
-                          <li onClick={IsCartNo == 2 ? toggleCartDrawer : () => navigate("/cartPage")} className="nav_li_smining_Icone">
-                            <ShoppingCartOutlinedIcon sx={{ height: "30px", width: "30px" }} />
-                          </li>
+                          {IsCartNo == 2 ? (
+                            <div className="nav_li_smining_Icone" onClick={toggleCartDrawer} style={{ cursor: "pointer" }}>
+                              <ShoppingCartOutlinedIcon sx={{ height: "30px", width: "30px" }} />
+                            </div>
+                          ) : (
+                            <Link href="/cartPage" className="nav_li_smining_Icone">
+                              <ShoppingCartOutlinedIcon sx={{ height: "30px", width: "30px" }} />
+                            </Link>
+                          )}
                         </Tooltip>
                       </Badge>
                     </>
@@ -613,7 +639,8 @@ const Header = ({ storeinit, logos }) => {
                 </List>
               </div>
               <div>
-                <p
+                <Link
+                  href="/aboutUs"
                   className="smr_menuStaicMobilePage"
                   onClick={() => {
                     setDrawerShowOverlay(false);
@@ -621,11 +648,12 @@ const Header = ({ storeinit, logos }) => {
                   }}
                 >
                   About us
-                </p>
+                </Link>
               </div>
               {islogin && (
                 <div>
-                  <p
+                  <Link
+                    href="/myWishList"
                     className="smr_menuStaicMobilePageLink"
                     onClick={() => {
                       setDrawerShowOverlay(false);
@@ -633,7 +661,7 @@ const Header = ({ storeinit, logos }) => {
                     }}
                   >
                     WishList
-                  </p>
+                  </Link>
                 </div>
               )}
 
@@ -641,7 +669,8 @@ const Header = ({ storeinit, logos }) => {
                 islogin ? (
                   <>
                     {storeinit?.IsDesignSetInMenu == 1 && (
-                      <p
+                      <Link
+                        href="/Lookbook"
                         className="smr_menuStaicMobilePageLink"
                         onClick={() => {
                           setDrawerShowOverlay(false);
@@ -650,7 +679,7 @@ const Header = ({ storeinit, logos }) => {
                       >
                         {storeinit?.DesignSetInMenu}
                         {/* LOOKBOOK */}
-                      </p>
+                      </Link>
                     )}
                   </>
                 ) : (
@@ -659,7 +688,8 @@ const Header = ({ storeinit, logos }) => {
               ) : (
                 <>
                   {storeinit?.IsDesignSetInMenu == 1 && (
-                    <p
+                    <Link
+                      href="/Lookbook"
                       className="smr_menuStaicMobilePageLink"
                       onClick={() => {
                         setDrawerShowOverlay(false);
@@ -668,14 +698,15 @@ const Header = ({ storeinit, logos }) => {
                     >
                       {storeinit?.DesignSetInMenu}
                       {/* LOOKBOOK */}
-                    </p>
+                    </Link>
                   )}
                 </>
               )}
 
               {islogin && (
                 <div>
-                  <p
+                  <Link
+                    href="/account"
                     className="smr_menuStaicMobilePageLink"
                     onClick={() => {
                       setDrawerShowOverlay(false);
@@ -683,21 +714,21 @@ const Header = ({ storeinit, logos }) => {
                     }}
                   >
                     Account
-                  </p>
+                  </Link>
                 </div>
               )}
 
               {islogin && (
                 <div>
-                  <p
-                    className="smr_menuStaicMobilePageLink"
-                    onClick={() => {
+                  <Link href="/" className="smr_menuStaicMobilePageLink" style={{ cursor: "pointer" }}>
+                    <span onClick={() => {
                       setDrawerShowOverlay(false);
                       handleLogout();
                     }}
-                  >
-                    Log Out
-                  </p>
+                    >
+                      LOG OUT
+                    </span>
+                  </Link>
                 </div>
               )}
             </div>
@@ -713,12 +744,10 @@ const Header = ({ storeinit, logos }) => {
                   islogin === true ? (
                     <>
                       {storeinit?.IsDesignSetInMenu == 1 && (
-                        <li className="nav_li_smining nav_li_smining_Mobile" style={{ cursor: "pointer" }} onClick={(event) => hanldeStaticPageNavigation(event, "/Lookbook")}>
-                          {/* <a href="/Lookbook" className="smr_A_link"> */}
+                        <Link href="/Lookbook" className="nav_li_smining nav_li_smining_Mobile" style={{ cursor: "pointer" }}
+                        >
                           {storeinit?.DesignSetInMenu}
-                          {/* LOOKBOOK */}
-                          {/* </a> */}
-                        </li>
+                        </Link>
                       )}
                     </>
                   ) : (
@@ -727,12 +756,9 @@ const Header = ({ storeinit, logos }) => {
                 ) : (
                   <>
                     {storeinit?.IsDesignSetInMenu == 1 && (
-                      <li className="nav_li_smining nav_li_smining_Mobile" style={{ cursor: "pointer" }} onClick={(event) => hanldeStaticPageNavigation(event, "/Lookbook")}>
-                        {/* <a href="/Lookbook" className="smr_A_link"> */}
+                      <Link href="/Lookbook" className="nav_li_smining nav_li_smining_Mobile" style={{ cursor: "pointer" }} >
                         {storeinit?.DesignSetInMenu}
-                        {/* LOOKBOOK */}
-                        {/* </a> */}
-                      </li>
+                      </Link>
                     )}
                   </>
                 )}
@@ -753,22 +779,18 @@ const Header = ({ storeinit, logos }) => {
             </div>
             <div className="smiling_Top_header_div3">
               <ul className="nav_ul_shop">
-                <li className="nav_li_smining nav_li_smining_Mobile" style={{ cursor: "pointer" }} onClick={(event) => hanldeStaticPageNavigation(event, "/aboutUs")}>
-                  <Link href="/aboutUs" className="smr_A_link">
-                    ABOUT US
-                  </Link>
-                </li>
+                <Link href="/aboutUs" className="nav_li_smining nav_li_smining_Mobile" style={{ cursor: "pointer" }} >
+                  ABOUT US
+                </Link>
                 {IsB2BWebsiteChek == 0 ? (
                   storeinit?.IsPLW ? (
                     ""
                   ) : (
                     <>
                       {islogin && (
-                        <li className="nav_li_smining nav_li_smining_Mobile" style={{ cursor: "pointer" }} onClick={() => navigate("/account")}>
-                          {/* <a href="/account" className="smr_A_link"> */}
+                        <Link href="/account" className="nav_li_smining nav_li_smining_Mobile" style={{ cursor: "pointer" }} >
                           ACCOUNT
-                          {/* </a> */}
-                        </li>
+                        </Link>
                       )}
                     </>
                   )
@@ -777,29 +799,31 @@ const Header = ({ storeinit, logos }) => {
                 ) : (
                   <>
                     {islogin === true && (
-                      <li className="nav_li_smining nav_li_smining_Mobile" style={{ cursor: "pointer" }} onClick={() => navigate("/account")}>
-                        {/* <a href="/account" className="smr_A_link"> */}
+                      <Link href={"/account"} className="nav_li_smining nav_li_smining_Mobile" style={{ cursor: "pointer" }}>
                         ACCOUNT
-                        {/* </a> */}
-                      </li>
+                      </Link>
                     )}
                   </>
                 )}
                 {islogin ? (
-                  <li className="nav_li_smining nav_li_smining_Mobile" style={{ cursor: "pointer" }} onClick={handleLogout}>
-                    LOG OUT
-                  </li>
+                  <Link href="/" className="nav_li_smining nav_li_smining_Mobile" style={{ cursor: "pointer" }}>
+                    <span onClick={handleLogout}>
+                      LOG OUT
+                    </span>
+                  </Link>
                 ) : (
-                  <li className="nav_li_smining" style={{ cursor: "pointer" }} onClick={() => navigate("/LoginOption")}>
-                    LOG IN
-                  </li>
+                  <Link href={"/LoginOption"} className="nav_li_smining" style={{ cursor: "pointer" }} >
+                    <span onClick={() => navigate("/LoginOption")}>
+                      LOG IN
+                    </span>
+                  </Link>
                 )}
 
                 {IsB2BWebsiteChek == 0 ? (
                   <>
                     <Badge badgeContent={wishCountNum} max={1000} overlap={"rectangular"} color="secondary" className="badgeColorFix smr_mobileHideIcone">
                       <Tooltip title="WishList">
-                        <li className="nav_li_smining_Icone" onClick={() => navigate("/myWishList")}>
+                        <Link href="/myWishList" className="nav_li_smining_Icone">
                           <StarBorderRoundedIcon
                             style={{
                               height: "20px",
@@ -807,7 +831,7 @@ const Header = ({ storeinit, logos }) => {
                               width: "20px",
                             }}
                           />
-                        </li>
+                        </Link>
                       </Tooltip>
                     </Badge>
                     <li className="nav_li_smining_Icone smr_mobileHideIcone" onClick={toggleOverlay} style={{}}>
@@ -821,9 +845,15 @@ const Header = ({ storeinit, logos }) => {
                     </li>
                     <Badge badgeContent={cartCountNum} max={1000} overlap={"rectangular"} color="secondary" className="badgeColorFix">
                       <Tooltip title="Cart">
-                        <li onClick={IsCartNo == 2 ? toggleCartDrawer : () => navigate("/cartPage")} className="nav_li_smining_Icone">
-                          <ShoppingCartOutlinedIcon sx={{ height: "30px", width: "30px" }} />
-                        </li>
+                        {IsCartNo == 2 ? (
+                          <div className="nav_li_smining_Icone" onClick={toggleCartDrawer} style={{ cursor: "pointer" }}>
+                            <ShoppingCartOutlinedIcon sx={{ height: "30px", width: "30px" }} />
+                          </div>
+                        ) : (
+                          <Link href="/cartPage" className="nav_li_smining_Icone">
+                            <ShoppingCartOutlinedIcon sx={{ height: "30px", width: "30px" }} />
+                          </Link>
+                        )}
                       </Tooltip>
                     </Badge>
                   </>
@@ -854,9 +884,15 @@ const Header = ({ storeinit, logos }) => {
                       </li>
                       <Badge badgeContent={cartCountNum} max={1000} overlap={"rectangular"} color="secondary" className="badgeColorFix">
                         <Tooltip title="Cart">
-                          <li onClick={IsCartNo == 2 ? toggleCartDrawer : () => navigate("/cartPage")} className="nav_li_smining_Icone">
-                            <ShoppingCartOutlinedIcon sx={{ height: "30px", width: "30px" }} />
-                          </li>
+                          {IsCartNo == 2 ? (
+                            <div className="nav_li_smining_Icone" onClick={toggleCartDrawer} style={{ cursor: "pointer" }}>
+                              <ShoppingCartOutlinedIcon sx={{ height: "30px", width: "30px" }} />
+                            </div>
+                          ) : (
+                            <Link href="/cartPage" className="nav_li_smining_Icone">
+                              <ShoppingCartOutlinedIcon sx={{ height: "30px", width: "30px" }} />
+                            </Link>
+                          )}
                         </Tooltip>
                       </Badge>
                     </>
@@ -873,7 +909,7 @@ const Header = ({ storeinit, logos }) => {
                     islogin === true ? (
                       <>
                         {storeinit?.IsDesignSetInMenu == 1 && (
-                          <li className="nav_li_smining_Fixed nav_li_smining_Mobile" style={{ cursor: "pointer" }} onClick={(event) => hanldeStaticPageNavigation(event, "/Lookbook")}>
+                          <li className="nav_li_smining_Fixed nav_li_smining_Mobile" style={{ cursor: "pointer" }}>
                             <Link href="/Lookbook" className="smr_A_linkFixed">
                               {storeinit?.DesignSetInMenu}
                               {/* LOOKBOOK */}
@@ -887,7 +923,7 @@ const Header = ({ storeinit, logos }) => {
                   ) : (
                     <>
                       {storeinit?.IsDesignSetInMenu == 1 && (
-                        <li className="nav_li_smining_Fixed nav_li_smining_Mobile" style={{ cursor: "pointer" }} onClick={(event) => hanldeStaticPageNavigation(event, "/Lookbook")}>
+                        <li className="nav_li_smining_Fixed nav_li_smining_Mobile" style={{ cursor: "pointer" }} >
                           <Link href="/Lookbook" className="smr_A_linkFixed">
                             {storeinit?.DesignSetInMenu}
                             {/* LOOKBOOK */}
@@ -916,7 +952,7 @@ const Header = ({ storeinit, logos }) => {
               </div>
               <div className="smiling_Top_header_div3">
                 <ul className="nav_ul_shop">
-                  <li className="nav_li_smining_Fixed nav_li_smining_Mobile" style={{ cursor: "pointer" }} onClick={(event) => hanldeStaticPageNavigation(event, "/aboutUs")}>
+                  <li className="nav_li_smining_Fixed nav_li_smining_Mobile" style={{ cursor: "pointer" }}>
                     <Link href="/aboutUs" className="smr_A_linkFixed">
                       ABOUT US
                     </Link>
@@ -925,7 +961,8 @@ const Header = ({ storeinit, logos }) => {
                   {storeinit?.IsPLW == 0 && IsB2BWebsiteChek == 0 ? (
                     <>
                       {islogin === true && (
-                        <li
+                        <Link
+                          href="/account"
                           className="nav_li_smining_Fixed nav_li_smining_Mobile"
                           style={{ cursor: "pointer" }}
                           // onClick={() => navigate("/LoginOption")}
@@ -934,12 +971,13 @@ const Header = ({ storeinit, logos }) => {
                           {/* <a href="/account" className="smr_A_linkFixed"> */}
                           ACCOUNT
                           {/* </a> */}
-                        </li>
+                        </Link>
                       )}
                     </>
                   ) : (
                     islogin && (
-                      <li
+                      <Link
+                        href="/account"
                         className="nav_li_smining_Fixed nav_li_smining_Mobile"
                         style={{ cursor: "pointer" }}
                         // onClick={() => navigate("/LoginOption")}
@@ -948,25 +986,25 @@ const Header = ({ storeinit, logos }) => {
                         {/* <a href="/account" className="smr_A_linkFixed"> */}
                         ACCOUNT
                         {/* </a> */}
-                      </li>
+                      </Link>
                     )
                   )}
 
                   {islogin ? (
-                    <li className="nav_li_smining_Fixed nav_li_smining_Mobile" style={{ cursor: "pointer" }} onClick={handleLogout}>
-                      LOG OUT
-                    </li>
+                    <Link href="/" className="nav_li_smining nav_li_smining_Mobile" style={{ cursor: "pointer" }}>
+                      <span onClick={handleLogout}>LOG OUT</span>
+                    </Link>
                   ) : (
-                    <li className="nav_li_smining_Fixed" style={{ cursor: "pointer" }} onClick={() => navigate("/LoginOption")}>
+                    <Link href={"/LoginOption"} className="nav_li_smining_Fixed" style={{ cursor: "pointer" }} onClick={() => navigate("/LoginOption")}>
                       LOG IN
-                    </li>
+                    </Link>
                   )}
 
                   {IsB2BWebsiteChek == 0 ? (
                     <>
                       <Badge badgeContent={wishCountNum} max={1000} overlap={"rectangular"} color="secondary" className="badgeColor smr_mobileHideIcone">
                         <Tooltip title="WishList">
-                          <li className="nav_li_smining_Fixed_Icone smr_mobileHideIcone" onClick={() => navigate("/myWishList")}>
+                          <Link href="/myWishList" className="nav_li_smining_Fixed_Icone smr_mobileHideIcone">
                             <StarBorderRoundedIcon
                               style={{
                                 height: "20px",
@@ -974,7 +1012,7 @@ const Header = ({ storeinit, logos }) => {
                                 width: "20px",
                               }}
                             />
-                          </li>
+                          </Link>
                         </Tooltip>
                       </Badge>
                       <li className="nav_li_smining_Fixed_Icone smr_mobileHideIcone" onClick={toggleOverlay} style={{}}>
@@ -988,9 +1026,15 @@ const Header = ({ storeinit, logos }) => {
                       </li>
                       <Badge badgeContent={cartCountNum} max={1000} overlap={"rectangular"} color="secondary" className="badgeColor">
                         <Tooltip title="Cart">
-                          <li onClick={IsCartNo == 2 ? toggleCartDrawer : () => navigate("/cartPage")} className="nav_li_smining_Fixed_Icone">
-                            <ShoppingCartOutlinedIcon sx={{ height: "30px", width: "30px" }} />
-                          </li>
+                          {IsCartNo == 2 ? (
+                            <div className="nav_li_smining_Icone" onClick={toggleCartDrawer} style={{ cursor: "pointer" }}>
+                              <ShoppingCartOutlinedIcon sx={{ height: "30px", width: "30px" }} />
+                            </div>
+                          ) : (
+                            <Link href="/cartPage" className="nav_li_smining_Icone">
+                              <ShoppingCartOutlinedIcon sx={{ height: "30px", width: "30px" }} />
+                            </Link>
+                          )}
                         </Tooltip>
                       </Badge>
                     </>
@@ -999,7 +1043,7 @@ const Header = ({ storeinit, logos }) => {
                       <>
                         <Badge badgeContent={wishCountNum} max={1000} overlap={"rectangular"} color="secondary" className="badgeColor smr_mobileHideIcone">
                           <Tooltip title="WishList">
-                            <li className="nav_li_smining_Fixed_Icone smr_mobileHideIcone" onClick={() => navigate("/myWishList")}>
+                            <Link href="/myWishList" className="nav_li_smining_Fixed_Icone smr_mobileHideIcone">
                               <StarBorderRoundedIcon
                                 style={{
                                   height: "20px",
@@ -1007,7 +1051,7 @@ const Header = ({ storeinit, logos }) => {
                                   width: "20px",
                                 }}
                               />
-                            </li>
+                            </Link>
                           </Tooltip>
                         </Badge>
                         <li className="nav_li_smining_Fixed_Icone smr_mobileHideIcone" onClick={toggleOverlay} style={{}}>
@@ -1021,9 +1065,15 @@ const Header = ({ storeinit, logos }) => {
                         </li>
                         <Badge badgeContent={cartCountNum} max={1000} overlap={"rectangular"} color="secondary" className="badgeColor">
                           <Tooltip title="Cart">
-                            <li onClick={IsCartNo == 2 ? toggleCartDrawer : () => navigate("/cartPage")} className="nav_li_smining_Fixed_Icone">
-                              <ShoppingCartOutlinedIcon sx={{ height: "30px", width: "30px" }} />
-                            </li>
+                            {IsCartNo == 2 ? (
+                              <div className="nav_li_smining_Icone" onClick={toggleCartDrawer} style={{ cursor: "pointer" }}>
+                                <ShoppingCartOutlinedIcon sx={{ height: "30px", width: "30px" }} />
+                              </div>
+                            ) : (
+                              <Link href="/cartPage" className="nav_li_smining_Icone">
+                                <ShoppingCartOutlinedIcon sx={{ height: "30px", width: "30px" }} />
+                              </Link>
+                            )}
                           </Tooltip>
                         </Badge>
                       </>
@@ -1335,7 +1385,7 @@ const HoverMenu = ({ selectedData, handelMenu, expandedMenu, hoveredIndex, handl
           {SliderbannerImages?.map((image, index) => {
             return (
               <div className="image_box_s" key={index}>
-                <img src={image} alt="image" className="image_s" draggable={true} onContextMenu={(e) => e.preventDefault()} />
+                <img src={image} alt="image" className="image_s" />
               </div>
             );
           })}

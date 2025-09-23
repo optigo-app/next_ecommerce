@@ -20,7 +20,7 @@ import Cookies from 'js-cookie'
 import Product_Card from '@/app/theme/fgstore.web/product/_prodComponents/Product_Card'
 import EditablePagination from "@/app/components/EditablePagination/EditablePagination";
 import ProductListApi from "@/app/(core)/utils/API/ProductListAPI/ProductListApi";
-import { useRouter } from "next/navigation";
+import { useNextRouterLikeRR } from '@/app/(core)/hooks/useLocationRd';
 import { FilterListAPI } from '@/app/(core)/utils/API/FilterAPI/FilterListAPI';
 import { useDynamicImage } from './useProductHook';
 import { useProductFilter } from './useProdFilterHook';
@@ -48,7 +48,7 @@ const Product = ({ params, searchParams, storeinit }) => {
     }, [])
 
 
-    let navigate = useRouter();
+    let navigate = useNextRouterLikeRR();
     let minwidth1201px = useMediaQuery('(min-width:1201px)')
     let maxwidth590px = useMediaQuery('(max-width:590px)')
     let maxwidth464px = useMediaQuery('(max-width:464px)')

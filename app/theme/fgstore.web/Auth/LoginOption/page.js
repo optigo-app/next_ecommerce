@@ -8,7 +8,7 @@ const LoginOption = ({ params, searchParams }) => {
   const search = searchParams?.search ?? "";
   const redirectEmailUrl = `/ContinueWithEmail${search ? `?search=${encodeURIComponent(search)}` : ""}`;
   const redirectMobileUrl = `/ContinueWithMobile${search ? `?search=${encodeURIComponent(search)}` : ""}`;
-  
+
 
   return (
     <div className="smr_Loginoption">

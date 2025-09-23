@@ -1,11 +1,12 @@
 "use client";
 
 import React from 'react';
-import { Box, Typography, Button, Container } from '@mui/material';
-import { useRouter } from 'next/navigation';
+import { Typography, Button, Container } from '@mui/material';
+import { useNextRouterLikeRR } from '@/app/(core)/hooks/useLocationRd';
 
 export default function PageNotFound() {
-    const router = useRouter();
+    const navigate = useNextRouterLikeRR();
+
 
     return (
         <Container
@@ -32,7 +33,7 @@ export default function PageNotFound() {
             <Button
                 variant="contained"
                 size="large"
-                onClick={() => router.push('/')}
+                onClick={() => navigate.push('/')}
                 sx={{ mt: 2 }}
             >
                 Go to Homepage
