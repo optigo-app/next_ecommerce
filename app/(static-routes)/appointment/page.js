@@ -1,9 +1,20 @@
 import { getActiveTheme } from "@/app/(core)/lib/getActiveTheme";
 import { assetBase } from "@/app/(core)/lib/ServerHelper";
 
+export const themeMap = {
+  "fgstore.web": {
+    page: "fgstore.web",
+  },
+  "astore.orail.co.in": {
+    page: "fgstore.web",
+  },
+  // Add more themes as needed
+};
+
 export default async function Page() {
   const theme = await getActiveTheme();
+  const themeData = themeMap[theme];
   
-  const Appointment = (await import(`@/app/theme/${theme}/appointment/page.js`)).default;
+  const Appointment = (await import(`@/app/theme/${themeData.page}/appointment/page.js`)).default;
   return <Appointment assetBase={assetBase} />;
 }
