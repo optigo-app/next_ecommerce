@@ -29,17 +29,18 @@ export async function fetchStoreInitData() {
             const devHost = process.env.HOST || "localhost";
             const devPort = process.env.PORT || "3000"; // can be overridden
             const protocol =
-                process.env.NODE_ENV === "development" ? "http:" : "https:";
+                process.env.NODE_ENV === "development" ? "http:" : "http:";
 
             if (process.env.NODE_ENV === "development") {
                 // baseUrl = `${protocol}//${NEXT_APP_WEB}:${devPort}`;
                 baseUrl = `${protocol}//${NEXT_APP_WEB}`;
             } else {
-                baseUrl = NEXT_APP_WEB;
+                baseUrl = `${protocol}//${NEXT_APP_WEB}`;
             }
         }
 
         const staticPath = `${baseUrl}/Website_Store/WebSiteStaticImage/${NEXT_APP_WEB}`;
+        console.log("TCL: fetchStoreInitData -> staticPath", staticPath)
         const response = await fetch(`${staticPath}/StoreInit.json`);
 
         if (!response.ok) {

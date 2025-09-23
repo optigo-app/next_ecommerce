@@ -5,9 +5,9 @@ import { NEXT_APP_WEB } from "../utils/env";
 /**
  * Safe host getter (server only).
  */
-export function getHost() {
+export async function getHost() {
   try {
-    const headersList = headers(); // only works in server request scope
+    const headersList = await headers(); // only works in server request scope
     return headersList.get("host") || "localhost:3000";
   } catch {
     // fallback for client side or when headers() is not available
@@ -33,16 +33,16 @@ export function storImagePath(host) {
  * ✅ Keep assetBase export, but compute lazily
  * so it never breaks on module load.
  */
-export function getAssetBase() {
-  const host = getHost();
+export async function getAssetBase() {
+  const host = await getHost();
   return storImagePath(host);
 }
 
 // alias for backward compatibility
-export const assetBase = getAssetBase();
+export const assetBase = await getAssetBase();
 
-export function getLogos() {
-  const base = getAssetBase();
+export async function getLogos() {
+  const base = await getAssetBase();
   return {
     web: `${base}/logoIcon/webLogo.png`,
     mobile: `${base}/logoIcon/mobileLogo.png`,

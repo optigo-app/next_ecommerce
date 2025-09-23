@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "build:dev": "cross-env NEXT_PUBLIC_APP_ENV=development next build",
+    "auto": "next build && next start",
     "start:dev": "cross-env NEXT_PUBLIC_APP_ENV=development NODE_ENV=development next start"
   },
   "dependencies": {
