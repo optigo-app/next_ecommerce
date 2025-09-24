@@ -34,13 +34,13 @@ export const usePageHook = (
     const calculated = Math.ceil(count / pageSize);
     const result = Math.max(calculated, 1); // Ensure at least 1 page
 
-    // Debug logging - remove this in production
-    console.log('Pagination Debug:', {
-      afterFilterCount,
-      pageSize,
-      calculated,
-      result
-    });
+    // // Debug logging - remove this in production
+    // console.log('Pagination Debug:', {
+    //   afterFilterCount,
+    //   pageSize,
+    //   calculated,
+    //   result
+    // });
 
     return result;
   }, [afterFilterCount, storeInit?.PageSize]);

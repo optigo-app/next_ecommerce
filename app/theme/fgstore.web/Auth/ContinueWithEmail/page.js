@@ -6,12 +6,13 @@ import { toast } from 'react-toastify';
 import { ContinueWithEmailAPI } from '@/app/(core)/utils/API/Auth/ContinueWithEmailAPI';
 import OTPContainer from '@/app/(core)/utils/Glob_Functions/Otpflow/App';
 import { useNextRouterLikeRR } from '@/app/(core)/hooks/useLocationRd';
+import { useRouter } from 'next/navigation';
 
 export default function ContinueWithEmail({ params, searchParams }) {
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const navigation = useNextRouterLikeRR();
+    const navigation = useRouter();
     const search = JSON.parse(searchParams?.value)?.LoginRedirect ?? "";
     const redirectEmailUrl = `/LoginWithEmail/?LoginRedirect=${search}`;
     const redirectSignUpUrl = `/register/?LoginRedirect=${search}`;
@@ -65,13 +66,16 @@ export default function ContinueWithEmail({ params, searchParams }) {
             console.log(response, "email")
 
             if (response.Data.rd[0].stat == 1 && response.Data.rd[0].islead == 1) {
+                alert("You are not a customer, contact to admin");
                 toast.error('You are not a customer, contact to admin')
             } else if (response.Data.rd[0].stat == 1 && response.Data.rd[0].islead == 0) {
+                alert("OTP send Sucssessfully");
                 navigation.push(redirectEmailUrl);
                 if (trimmedEmail) {
-                    sessionStorage.setItem("registerEmail", trimmedEmail);
+                    sessionStorage?.setItem("registerEmail", trimmedEmail);
                 }
             } else {
+                alert("You are not a customer, contact to admin");
                 // setIsOpen(true)
                 // WebSignUpOTPVerify(email).then((res) => {
                 //     console.log(res, "res")
@@ -79,7 +83,7 @@ export default function ContinueWithEmail({ params, searchParams }) {
                 // })
                 navigation.push(redirectSignUpUrl);
                 if (trimmedEmail) {
-                    sessionStorage.setItem("registerEmail", trimmedEmail);
+                    sessionStorage?.setItem("registerEmail", trimmedEmail);
                 }
             }
         }).catch((err) => console.log(err))
