@@ -6,7 +6,11 @@ export const SingleProdListAPI = async (singprod, size = "", obj = {}, visiterId
   let loginInfo = JSON.parse(sessionStorage.getItem("loginUserDetail"));
   const islogin = JSON.parse(sessionStorage.getItem("LoginUser")) ?? false;
 
+<<<<<<< HEAD
   const customerId = storeinit?.IsB2BWebsite == 0 && islogin == false || islogin == null ? visiterId : loginInfo?.id ?? 0;
+=======
+  const customerId = storeinit?.IsB2BWebsite == 0 && islogin == false || islogin == null ? visiterId : loginInfo.id ?? 0;
+>>>>>>> ea07f93730859a23fc1049e23e79e0ce0b8f4332
   const customerEmail = storeinit?.IsB2BWebsite == 0 && islogin == false || islogin == null ? visiterId : loginInfo?.userid ?? "";
 
   // const data = {

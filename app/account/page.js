@@ -5,7 +5,11 @@ import Account from "../components/(dynamic)/Account/Account";
 //   "fgstore.web": {
 //     page: "fgstore.web",
 //   },
+<<<<<<< HEAD
 //   "sonasons.optigoapps.com": {
+=======
+//   "astore.orail.co.in": {
+>>>>>>> ea07f93730859a23fc1049e23e79e0ce0b8f4332
 //     page: "fgstore.web",
 //   },
 //   // Add more themes as needed

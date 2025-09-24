@@ -20,7 +20,11 @@ export async function getHost() {
 
 export function getProtocol(host) {
   if (!host) return "http";
+<<<<<<< HEAD
   return host.includes("localhost") ? "https" : "https";
+=======
+  return host.includes("localhost") ? "http" : "https";
+>>>>>>> ea07f93730859a23fc1049e23e79e0ce0b8f4332
 }
 
 export function storImagePath(host) {
