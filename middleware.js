@@ -101,6 +101,7 @@ export default async function middleware(req) {
 
 export const config = {
   matcher: ["/((?!_next|api|favicon.ico).*)"],
+  runtime: "nodejs",
 };
 
 
