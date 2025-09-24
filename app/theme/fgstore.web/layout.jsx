@@ -8,7 +8,11 @@ import { Box } from "@mui/material";
 const layout = async ({ children }) => {
   const storeData = await getStoreInit();
   const companyInfoData = await getCompanyInfoData();
+<<<<<<< HEAD
+  const logos = await getLogos();
+=======
   const logos = getLogos();
+>>>>>>> ea07f93730859a23fc1049e23e79e0ce0b8f4332
   let extraFlag = null;
 
   try {
