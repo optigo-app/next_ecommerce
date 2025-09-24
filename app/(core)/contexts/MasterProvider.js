@@ -130,11 +130,7 @@ export const MasterProvider = ({ children, getCompanyInfoData, getStoreInit }) =
         apiFunction(finalID)
             .then((response) => {
                 if (response?.Data?.rd) {
-<<<<<<< HEAD
                     sessionStorage.setItem(storageKey, JSON.stringify(response.Data.rd));
-=======
-                    sessiontorage.setItem(storageKey, JSON.stringify(response.Data.rd));
->>>>>>> ea07f93730859a23fc1049e23e79e0ce0b8f4332
                 }
             })
             .catch((err) => console.log(err));
