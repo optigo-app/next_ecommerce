@@ -25,7 +25,7 @@ export function getProtocol(host) {
 
 export function storImagePath(host) {
   const protocol = getProtocol(host);
-  const base = host.includes("localhost") || host.includes("zen") ? NEXT_APP_WEB : host;
+  const base = host.includes("localhost") || host.includes("zen") ? NEXT_APP_WEB : NEXT_APP_WEB;
   return `${protocol}://${base}/WebSiteStaticImage`;
 }
 
