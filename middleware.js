@@ -42,6 +42,11 @@ export default async function middleware(req) {
     (page) => pathname === page.toLowerCase()
   );
 
+  if (pathname.startsWith("loginoption") || isAuthPage) {
+    return NextResponse.next();
+  }
+
+  
   const isB2BPage = B2BPages.some((page) => {
     if (page.includes("/*")) {
       const prefix = page.replace("/*", "").toLowerCase();
@@ -55,9 +60,7 @@ export default async function middleware(req) {
     if (!isAuthenticated && isB2BPage) {
       return NextResponse.redirect(
         new URL(
-          `/LoginOption/?LoginRedirect=${encodeURIComponent(
-            Next_URL.pathname + Next_URL.search
-          )}`,
+          `/loginoption?LoginRedirect=${encodeURIComponent(Next_URL.pathname + Next_URL.search)}`,
           req.url
         )
       );
@@ -67,16 +70,14 @@ export default async function middleware(req) {
     if (!isAuthenticated && isRestrictPage) {
       return NextResponse.redirect(
         new URL(
-          `/LoginOption/?LoginRedirect=${encodeURIComponent(
-            Next_URL.pathname + Next_URL.search
-          )}`,
+          `/loginoption?LoginRedirect=${encodeURIComponent(Next_URL.pathname + Next_URL.search)}`,
           req.url
         )
       );
     }
   }
 
-  if (isAuthPage && isAuthenticated) {
+  if (isAuthPage && isAuthenticated && pathname !== "" ) {
     return NextResponse.redirect(new URL("/", req.url));
   }
 

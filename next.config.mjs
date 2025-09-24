@@ -17,7 +17,8 @@ const nextConfig = {
       return config;
     },
     eslint: {
-      ignoreDuringBuilds: true, // Skip ESLint errors/warnings on build
+      ignoreDuringBuilds: true,
+      
     },
   };
   

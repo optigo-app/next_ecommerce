@@ -34,7 +34,7 @@ export const GetUserLoginCookie = async () => {
 
 export const getAboutUsContent = async () => {
   try {
-    const res = await fetch(`${assetBase}/html/sonasonsAbout.html`, { cache: "no-store" });
+    const res = await fetch(`${assetBase}/html/sonasonsAbout.html`);
     const htmlContent = await res.text();
     return htmlContent;
   } catch (error) {
@@ -45,9 +45,7 @@ export const getAboutUsContent = async () => {
 
 export const getContactUsContent = async () => {
   try {
-    const res = await fetch(`${assetBase}/html/SonasonsContactPage.html`, {
-      cache: "no-store",
-    });
+    const res = await fetch(`${assetBase}/html/SonasonsContactPage.html`);
     const htmlContent = await res.text();
     return htmlContent;
   } catch (error) {

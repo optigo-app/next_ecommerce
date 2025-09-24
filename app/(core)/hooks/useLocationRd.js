@@ -20,8 +20,8 @@ export function useNextRouterLikeRR() {
   };
 
   return {
-    push: (url) => PrefetchLink(url),
-    replace: (url) => PrefetchLink(url),
+    push: (url) => router.push(url),
+    replace: (url) => router.replace(url),
     back: () => router.back(),
     pathname,
     search: searchParams.toString() ? `?${searchParams.toString()}` : "",

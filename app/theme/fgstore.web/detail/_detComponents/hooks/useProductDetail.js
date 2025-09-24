@@ -43,7 +43,6 @@ export const useProductDetail = (searchParams, storeInit) => {
     const [designSetList, setDesignSetList] = useState();
     const [saveLastView, setSaveLastView] = useState();
     const [decodeUrl, setDecodeUrl] = useState({});
-    console.log("TCL: useProductDetail -> decodeUrl", decodeUrl)
     const [loginInfo, setLoginInfo] = useState();
 
     const cookie = Cookies.get("visiterId");

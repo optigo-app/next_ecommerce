@@ -40,7 +40,6 @@ export async function fetchStoreInitData() {
         }
 
         const staticPath = `${baseUrl}/Website_Store/WebSiteStaticImage/${NEXT_APP_WEB}`;
-        console.log("TCL: fetchStoreInitData -> staticPath", staticPath)
         const response = await fetch(`${staticPath}/StoreInit.json`);
 
         if (!response.ok) {
