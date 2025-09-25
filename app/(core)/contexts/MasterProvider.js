@@ -9,7 +9,6 @@ import { DiamondQualityColorComboAPI } from "@/app/(core)/utils/API/Combo/Diamon
 import { CountryCodeListApi } from "@/app/(core)/utils/API/Auth/CountryCodeListApi";
 import { MetalTypeComboAPI } from "@/app/(core)//utils/API/Combo/MetalTypeComboAPI";
 import { fetchPayMaster } from "@/app/(core)/utils/API/OrderFlow/Paymaster";
-import { storImagePath, storInitDataPath } from "@/app/(core)/utils/Glob_Functions/GlobalFunction";
 import Cookies from 'js-cookie'
 
 import { NEXT_APP_WEB } from "@/app/(core)/utils/env";
