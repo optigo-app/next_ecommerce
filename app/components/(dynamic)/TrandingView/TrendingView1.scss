@@ -1,4 +1,4 @@
-@import '../../../theme/fgstore.web/style/variable.scss';
+@use '../../../theme/fgstore.web/style/variable.scss' as *;
 
 .smr_mainTrending1Div {
     .smr1_trending1TitleDiv {
@@ -14,7 +14,7 @@
             font-family: $Pratafonts;
             font-weight: 500 !important;
         }
-        
+
     }
 
     @media (max-width: 1200px) {
@@ -27,6 +27,7 @@
             }
         }
     }
+
     .smr_trendingProduct-grid {
         display: flex;
         justify-content: space-between;
@@ -46,9 +47,11 @@
             .smr_lookbookImageRightDT {
                 position: absolute;
                 // top: 50%;    kayra default
-                top: 87%;  /* maiora chnages*/
+                top: 87%;
+                /* maiora chnages*/
                 // left: 40%; kayra default
-                left: 45%;  /* maiora chnages*/
+                left: 45%;
+                /* maiora chnages*/
                 transform: translate(-30%, -70%);
                 transform: translate(-30%, -70%);
                 font-size: $fontSize6;
@@ -229,11 +232,13 @@
                     h3 {
                         font-size: $fontSize1 !important;
                     }
+
                     p {
                         span {
                             font-size: $fontSize2 !important;
                         }
                     }
+
                     span {
                         font-size: $fontSize0 !important;
                         letter-spacing: .1px !important;

@@ -1,4 +1,4 @@
-@import '../../../scss/variable.scss';
+@use '../../../scss/variable.scss' as *;
 
 .smrMo_cart-modal {
     display: flex;
@@ -168,7 +168,7 @@
     .smrMo_UpdateCartBtn {
         margin-top: 20px;
         display: flex;
-        justify-content: end;
+        justify-content: flex-end;
         align-items: center;
         font-family: $primaryFontFamily;
 

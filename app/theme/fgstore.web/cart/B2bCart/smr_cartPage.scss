@@ -1,4 +1,4 @@
-@import '/app/theme/fgstore.web/style/variable.scss';
+@use '../../style/variable.scss' as *;
 
 $cartUpdateBtncolor: #b1b1b1;
 
@@ -175,8 +175,8 @@ $cartUpdateBtncolor: #b1b1b1;
       max-width: 75%;
       width: 75%;
       display: flex;
-      justify-content: start;
-      align-items: start;
+      justify-content: flex-start;
+      align-items: flex-start;
 
       .smr_RightCartList {
         width: 100%;
@@ -192,8 +192,8 @@ $cartUpdateBtncolor: #b1b1b1;
       max-width: 25%;
       width: 25%;
       display: flex;
-      justify-content: start;
-      align-items: start;
+      justify-content: flex-start;
+      align-items: flex-start;
       margin-top: 6px;
       position: sticky;
       height: 80vh;
@@ -509,13 +509,13 @@ $cartUpdateBtncolor: #b1b1b1;
       margin-bottom: 20px;
       width: 100%;
       display: flex;
-      justify-content: end;
+      justify-content: flex-end;
     }
 
     .smr_UpdateCartBtn {
       display: flex;
       justify-content: flex-end;
-      align-items: end;
+      align-items: flex-end;
     }
 
     .smr_cartUpdate-button {
@@ -559,7 +559,7 @@ $cartUpdateBtncolor: #b1b1b1;
       font-size: $fontSize1;
       font-family: $primaryFontFamily;
       display: flex !important;
-      justify-content: start I !important;
+      justify-content: flex-start !important;
       margin-right: 5px !important;
     }
   }
@@ -733,7 +733,7 @@ $cartUpdateBtncolor: #b1b1b1;
 
   .smr_AddReamrkBtn {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     align-items: center;
 
     button {
@@ -773,9 +773,9 @@ $cartUpdateBtncolor: #b1b1b1;
 
   .smr_projectUpdateCartBtn-group {
     display: flex !important;
-    justify-content: end !important;
+    justify-content: flex-end !important;
     gap: 10px;
-    align-items: end;
+    align-items: flex-end;
 
     button {
       padding: 10px 20px;

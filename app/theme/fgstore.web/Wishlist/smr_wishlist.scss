@@ -1,4 +1,4 @@
-@import '../../fgstore.web/style/variable.scss';
+@use '../../fgstore.web/style/variable.scss' as *;
 
 .smr_WlListCard {
     display: flex;
@@ -265,7 +265,7 @@
 
     .smr_wlToggleButtonDiv {
         display: flex;
-        justify-content: end;
+        justify-content: flex-end;
         padding-bottom: 20px;
     }
 }

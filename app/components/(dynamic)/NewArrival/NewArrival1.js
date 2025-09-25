@@ -145,7 +145,6 @@ const NewArrival = ({ data, storeInit }) => {
     setRing2ImageChange(false);
   };
 
-  console.log("🚀 ~  islogin ? loginUserDetail?.CurrencyCode : storeInit?.CurrencyCode:", islogin ? loginUserDetail?.CurrencyCode : storeInit?.CurrencyCode);
 
   return (
     <div

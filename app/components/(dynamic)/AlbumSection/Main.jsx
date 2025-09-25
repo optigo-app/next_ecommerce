@@ -8,7 +8,7 @@ import { useStore } from "@/app/(core)/contexts/StoreProvider";
 
 const Main = ({ storeData }) => {
   const [albumData, setAlbumData] = useState([]);
-  const {islogin} = useStore()
+  const { islogin } = useStore()
   const [loading, setLoading] = useState(true);
   let data = storeData;
   const imageUrl = data?.AlbumImageFol;
@@ -17,7 +17,7 @@ const Main = ({ storeData }) => {
   const visiterID = visiterCookie ?? "0";
   const [loginUserDetail, setLoginUserDetail] = useState({});
 
-  
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       try {
@@ -46,7 +46,7 @@ const Main = ({ storeData }) => {
           }
         })
         .catch((err) => console.log(err));
-    } catch (error) {}
+    } catch (error) { }
   };
   useEffect(() => {
     FetchAlbum();
@@ -73,33 +73,33 @@ const Main = ({ storeData }) => {
       {loading
         ? skeletons
         : albumData.slice(0, 5).map((album, index) => (
-            <Grid item size={{ xs: 12, sm: 6, md: 4, lg: 2 }} key={index}>
-              <Card
-                sx={{
-                  overflow: "hidden",
-                  "&:hover": { boxShadow: "0 4px 12px rgba(0,0,0,0.12)" },
-                }}
-                component={Link}
-                href={`/p/${album?.AlbumName}/?A=${btoa(`AlbumName=${album?.AlbumName}`)}`}
-              >
-                <CardActionArea>
-                  <CardMedia
-                    component="img"
-                    image={imageUrl + album?.AlbumImageFol + "/" + album?.AlbumImageName || "/fallback.jpg"}
-                    alt={album?.AlbumName}
-                    onError={(e) => {
-                      e.target.src = "/fallback.jpg";
-                    }}
-                  />
-                  <CardContent>
-                    <Typography variant="body1" noWrap fontWeight={600} color="text.primary">
-                      {album?.AlbumName}
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </Grid>
-          ))}
+          <Grid item size={{ xs: 12, sm: 6, md: 4, lg: 2 }} key={index}>
+            <Card
+              sx={{
+                overflow: "hidden",
+                "&:hover": { boxShadow: "0 4px 12px rgba(0,0,0,0.12)" },
+              }}
+              component={Link}
+              href={`/p/${album?.AlbumName}/?A=${btoa(`AlbumName=${album?.AlbumName}`)}`}
+            >
+              <CardActionArea>
+                <CardMedia
+                  component="img"
+                  image={imageUrl + album?.AlbumImageFol + "/" + album?.AlbumImageName || "/image-not-found.jpg"}
+                  alt={album?.AlbumName}
+                  onError={(e) => {
+                    e.target.src = "/image-not-found.jpg";
+                  }}
+                />
+                <CardContent>
+                  <Typography variant="body1" noWrap fontWeight={600} color="text.primary">
+                    {album?.AlbumName}
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </Grid>
+        ))}
     </Grid>
   );
 };

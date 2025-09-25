@@ -1,4 +1,4 @@
-@import '/app/theme/fgstore.web/style/variable.scss';
+@use '../../style/variable.scss' as *;
 
 $borderColor: rgba(232, 232, 232, 1);
 
@@ -349,10 +349,10 @@ $borderColor: rgba(232, 232, 232, 1);
 
       .smr3_cart-right-side {
         width: 30%;
-        align-items: start;
+        align-items: flex-start;
         display: flex;
         height: 80vh;
-        justify-content: start;
+        justify-content: flex-start;
         margin-bottom: 190px;
         position: sticky;
         top: 125px;
@@ -463,7 +463,7 @@ $borderColor: rgba(232, 232, 232, 1);
                   font-size: $fontSize6;
                   width: 100%;
                   display: flex;
-                  justify-content: end;
+                  justify-content: flex-end;
 
                   span {
                     color: $titleColor;
@@ -545,7 +545,7 @@ $borderColor: rgba(232, 232, 232, 1);
               .smr3_UpdateCartBtn {
                 display: flex;
                 justify-content: flex-end;
-                align-items: end;
+                align-items: flex-end;
 
                 button {
                   font-family: $primaryFontFamily !important;
