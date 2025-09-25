@@ -1,4 +1,4 @@
-@import '../../fgstore.web/style/variable.scss';
+@use '../../fgstore.web/style/variable.scss' as *;
 
 .form-container {
   margin: 20px auto;
@@ -59,7 +59,7 @@
   form {
     display: flex;
     justify-content: space-around;
-    align-items: start;
+    align-items: flex-start;
     //   flex-direction: column;
 
     .for_input-group {
@@ -76,7 +76,7 @@
         }
 
         label {
-          text-align: start;
+          text-align: flex-start;
           display: block;
           margin-bottom: 5px;
           font-weight: 600;
@@ -96,7 +96,7 @@
         }
         .for_error-message{
           color: red;
-          text-align: start;
+          text-align: flex-start;
         }
       }
     }

@@ -1,4 +1,4 @@
-@import '@/app/theme/fgstore.web/style/variable.scss';
+@use '../style/variable.scss' as *;
 
 .smr_prodDetail_bodyContain {
     background-color: $bgColor;
@@ -118,7 +118,7 @@
 }
 
 .smr_prod_titleLine {
-    text-align: start !important;
+    text-align: flex-start !important;
     font-size: 27px;
     // font-size: 35px;
     font-family: $homePageFontFamily;

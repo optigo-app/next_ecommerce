@@ -1,4 +1,4 @@
-@import '@/app/theme/fgstore.web/style/variable.scss';
+@use '../style/variable.scss' as *;
 
 
 .smr_lookSubCtSaveBtn {
@@ -47,13 +47,15 @@
     min-height: 800px;
     padding-top: 60px;
     position: relative;
-    .smr_lookBookMobileTopLine{
+
+    .smr_lookBookMobileTopLine {
       display: flex;
       justify-content: space-between;
       gap: 20px;
       padding: 0 8px;
+
       @media screen and (max-width: 420px) {
-      padding: 0 2px;
+        padding: 0 2px;
       }
     }
 
@@ -84,7 +86,8 @@
     align-items: center;
     font-weight: 500;
   }
-  .smr_filetr_right_menu{
+
+  .smr_filetr_right_menu {
     display: flex;
     margin-right: 8px;
   }
@@ -816,7 +819,7 @@
 
     .smr_lb3cartIconBtnDiv {
       display: flex;
-      justify-content: end;
+      justify-content: flex-end;
       align-items: center;
       margin-bottom: 5px;
       position: absolute;
@@ -868,7 +871,7 @@
   .smr_lookBookImgDeatil {
     display: flex;
     flex-direction: column !important;
-    align-items: start !important;
+    align-items: flex-start !important;
   }
 
   .smr_lookBookImgDeatilSub {

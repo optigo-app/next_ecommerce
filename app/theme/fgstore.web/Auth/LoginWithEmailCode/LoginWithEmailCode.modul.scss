@@ -1,36 +1,38 @@
-@import "../../../scss/variable.scss";
+@use "../../../scss/variable.scss" as *;
 
 .smr_loginwithemailCode {
-   background-color: $bgColor;
-   height: 70vh;
-   display: grid;
-   align-content: center;
-   font-family: $Pfonts;
+  background-color: $bgColor;
+  height: 70vh;
+  display: grid;
+  align-content: center;
+  font-family: $Pfonts;
 
-   .AuthScreenMainTitle {
+  .AuthScreenMainTitle {
     font-family: $Pratafonts;
   }
 
-    .fg_opt_div{
-        .MuiBox-root{ 
-            @media screen and (max-width:500px) {
-                gap: 3px;
-            }
-            @media screen and (max-width:338px) {
-                gap: 1px;
-                .css-1cb4u56{
-                    width : 32px;
-                }
-            }
+  .fg_opt_div {
+    .MuiBox-root {
+      @media screen and (max-width:500px) {
+        gap: 3px;
+      }
+
+      @media screen and (max-width:338px) {
+        gap: 1px;
+
+        .css-1cb4u56 {
+          width: 32px;
         }
+      }
     }
-    
-    .css-1wc848c-MuiFormHelperText-root {
-        margin-right: 0px !important;
+  }
+
+  .css-1wc848c-MuiFormHelperText-root {
+    margin-right: 0px !important;
     margin-left: 0px !important;
   }
 
- 
+
   .smling-register-main {
     margin-inline: 6%;
     background-color: white;
@@ -45,7 +47,7 @@
     height: 60px;
     width: 420px;
     background-color: $authbtnbg;
-      color: $authbtncolor;
+    color: $authbtncolor;
     border: 0;
     margin-top: 10px;
     font-size: 13px;
@@ -63,7 +65,7 @@
     height: 60px;
     width: 420px;
     background-color: $authbtnbg;
-      color: $authbtncolor;
+    color: $authbtncolor;
     border: 0;
     margin-top: 30px;
     font-size: 13px;
@@ -111,6 +113,7 @@
   .SmilingSignInHere:hover::before {
     width: 100%;
   }
+
   @media screen and (max-width: 950px) {
     .AuthScreenMainTitle {
       font-size: 25px !important;
@@ -123,7 +126,7 @@
   }
 
   @media screen and (max-width: 700px) {
-  
+
     .labgrowRegister {
       width: 90%;
       margin: 10px;
@@ -144,10 +147,11 @@
       width: 90%;
       height: 40px !important;
     }
-   @media screen and (max-width:340px) {
-    .fg_resnd_msg{
+
+    @media screen and (max-width:340px) {
+      .fg_resnd_msg {
         font-size: 13px !important;
+      }
     }
-   }
   }
 }

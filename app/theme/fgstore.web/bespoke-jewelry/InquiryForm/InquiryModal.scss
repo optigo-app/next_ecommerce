@@ -20,7 +20,7 @@ $secondary-color: #fff;
     border-radius: 5px;
 
     &:hover {
-      background-color: darken($primary-color, 10%);
+      background-color: $primary-color;
     }
   }
 
@@ -78,8 +78,9 @@ $secondary-color: #fff;
           justify-content: space-between;
           width: 100%;
           gap: 1rem;
+
           @media screen and (max-width: 468px) {
-          flex-direction: column !important;
+            flex-direction: column !important;
           }
 
           div {
@@ -137,7 +138,7 @@ $secondary-color: #fff;
         }
 
         .smr-submit-button {
-          background-color:#e9d7b3;
+          background-color: #e9d7b3;
           color: $secondary-color;
           padding: 10px;
           border: none;

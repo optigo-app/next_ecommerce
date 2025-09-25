@@ -1,4 +1,4 @@
-@import '../../../scss/variable.scss';
+@use '../../../scss/variable.scss' as *;
 
 $cartUpdateBtncolor: #b1b1b1;
 
@@ -21,7 +21,7 @@ $cartUpdateBtncolor: #b1b1b1;
     }
 
     .smr_remarksave-btn {
-        background: $btnBg  !important;
+        background: $btnBg !important;
         color: $btncolor !important;
 
         &:hover {
@@ -59,8 +59,9 @@ $cartUpdateBtncolor: #b1b1b1;
                 padding: 5px 10px !important;
             }
         }
-        .smr_RemarkMoalInput textarea{
+
+        .smr_RemarkMoalInput textarea {
             font-size: $fontSize1 !important;
-          }
+        }
     }
 }

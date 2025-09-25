@@ -1,4 +1,4 @@
-@import "../../../scss/variable.scss";
+@use "../../../scss/variable.scss" as *;
 
 input:-webkit-autofill {
     background-color: #f1f1f1 !important;
@@ -34,7 +34,7 @@ input:-webkit-autofill {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        align-items: start !important;
+        align-items: flex-start !important;
         position: relative;
         gap: 10px;
            @media screen and (max-width:700px){

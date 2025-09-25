@@ -1,4 +1,4 @@
-@import '/app/theme/fgstore.web/style/variable.scss';
+@use '../../style/variable.scss' as *;
 
 .smr_B2cCart {
   display: flex;
@@ -49,7 +49,7 @@
 
 .smr_b2cCartQTRm {
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
   gap: 10px;
 

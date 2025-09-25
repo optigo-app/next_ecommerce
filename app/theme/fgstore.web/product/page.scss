@@ -1,5 +1,4 @@
-@import '@/app/theme/fgstore.web/style/variable.scss';
-
+@use '../style/variable.scss' as *;
 
 @mixin metal-type-style($border-color) {
     // background-color: #f1f0ee;
@@ -8,21 +7,21 @@
     @if $border-color ==#B76E79 {
         background: #f9aab0 !important;
         // background: linear-gradient(30deg, #ec8a55 0, #fcede2 55%, #fcede2 60%, #ec8a55 100%) !important;
-        border: 1px solid darken($border-color, 20%) !important;
+        border: 1px solid $border-color !important;
         box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     }
 
     @else if $border-color ==#C0C0C0 {
         background: #C0C0C0 !important;
         // background: linear-gradient(30deg, #b3b2af 0, #f7f7f7 55%, #f7f7f7 60%, #b3b2af 100%) !important;
-        border: 1px solid darken(#838383, 20%) !important;
+        border: 1px solid $border-color !important;
         box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     }
 
     @else if $border-color ==#c9a63a {
         background: #ffda6c !important;
         // background: linear-gradient(30deg, #e1b94f 0, #fcf1d5 55%, #fcf1d5 60%, #e1b94f 100%) !important;
-        border: 1px solid darken($border-color, 20%) !important;
+        border: 1px solid $border-color !important;
         box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     }
 
@@ -86,7 +85,7 @@
 
 .empty_sorting_div {
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     align-items: center;
     padding: 0 18%;
 
@@ -778,7 +777,7 @@
     .empty_sorting_div {
         padding: 0 12%;
         display: flex;
-        align-items: start;
+        align-items: flex-start;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
