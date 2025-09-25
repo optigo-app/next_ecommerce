@@ -1,21 +1,30 @@
 import { cookies } from "next/headers";
 import { assetBase } from "../../lib/ServerHelper";
 
+function safeParse(value) {
+  if (!value) return {};
+  try {
+    return JSON.parse(value);
+  } catch {
+    return {};
+  }
+}
+
 export const getStoreInit = async () => {
   const cookieStore = await cookies();
-  const storeData = JSON.parse(cookieStore?.get("x-store-data").value);
-  return storeData;
+  const storeData = safeParse(cookieStore?.get("x-store-data")?.value);
+  return storeData; 
 };
 
 export const getMyAccountFlags = async () => {
   const cookieStore = await cookies();
-  const storeData = JSON.parse(cookieStore?.get("x-myAccountFlags-data").value);
+  const storeData = safeParse(cookieStore?.get("x-myAccountFlags-data")?.value);
   return storeData;
 };
 
 export const getCompanyInfoData = async () => {
   const cookieStore = await cookies();
-  const storeData = JSON.parse(cookieStore?.get("x-CompanyInfoData-data").value);
+  const storeData = safeParse(cookieStore?.get("x-CompanyInfoData-data")?.value);
   return storeData;
 };
 
