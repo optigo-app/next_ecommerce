@@ -1,6 +1,5 @@
 import { cookies } from "next/headers";
 import { assetBase } from "../../lib/ServerHelper";
-import { fetchAddresses } from "@/app/(core)/utils/API/OrderFlow/DeliveryAPI";
 
 export const getStoreInit = async () => {
   const cookieStore = await cookies();

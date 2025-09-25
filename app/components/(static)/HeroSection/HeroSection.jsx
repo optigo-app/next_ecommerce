@@ -1,34 +1,43 @@
 import { Box } from "@mui/material";
-import getHomeBannerImages from "@/app/(core)/utils/Glob_Functions/ThemesBanner/ThemesBanner"; // make sure this is not a hook
+import getHomeBannerImages from "@/app/(core)/utils/Glob_Functions/ThemesBanner/ThemesBanner";
 import { assetBase } from "@/app/(core)/lib/ServerHelper";
 
 export default async function TopSection() {
   const banners = await getHomeBannerImages({ host: assetBase });
   const videoUrl = banners?.mainBanner?.video?.[0] ? banners.mainBanner.video[0].replace(".mp4", ".webm") : null;
+
   return (
     <Box
       component="section"
       sx={{
+        position: "relative",
         width: "100%",
+        aspectRatio: "16/9",
         minHeight: "550px",
         overflow: "hidden",
-        "@media screen and (max-width:1200px)": {
-          minHeight: "auto !important",
+        "@media (max-width:1200px)": {
+          minHeight: "auto",
         },
       }}
     >
-      <video    
-        width="500"
-        style={{ height: "auto", width: "100%" }}
+      <Box
+        component="video"
         autoPlay
         muted
         loop
         playsInline
         controls={false}
         poster={`${assetBase}/Banner/homepageVideoPoster.webp`}
+        sx={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+        }}
       >
         {videoUrl && <source src={videoUrl} type="video/webm" />}
-      </video>
+      </Box>
     </Box>
   );
 }

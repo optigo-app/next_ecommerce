@@ -29,7 +29,7 @@ export async function fetchStoreInitData() {
             const devHost = process.env.HOST || "localhost";
             const devPort = process.env.PORT || "3000"; // can be overridden
             const protocol =
-                process.env.NODE_ENV === "development" ? "http:" : "http:";
+                process.env.NODE_ENV === "development" ? "http:" : "https:";
 
             if (process.env.NODE_ENV === "development") {
                 // baseUrl = `${protocol}//${NEXT_APP_WEB}:${devPort}`;

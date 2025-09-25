@@ -20,12 +20,12 @@ export async function getHost() {
 
 export function getProtocol(host) {
   if (!host) return "http";
-  return host.includes("localhost") ? "http" : "https";
+  return host.includes("localhost") ? "https" : "https";
 }
 
 export function storImagePath(host) {
   const protocol = getProtocol(host);
-  const base = host.includes("localhost") || host.includes("zen") ? NEXT_APP_WEB : host;
+  const base = host.includes("localhost") || host.includes("zen") ? NEXT_APP_WEB : NEXT_APP_WEB;
   return `${protocol}://${base}/WebSiteStaticImage`;
 }
 

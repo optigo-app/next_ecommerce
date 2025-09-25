@@ -21,6 +21,7 @@ const RestrictPages = ["delivery", "confirmation", "payment","account"];
 const B2BPages = ["payment", "myWishList", "Lookbook", "delivery", "confirmation", "cartPage", "p/*", "d/*"];
 
 export default async function middleware(req) {
+  try {
   const { cookies, nextUrl } = req;
   const host = req.headers.get("host");
 
@@ -31,7 +32,12 @@ export default async function middleware(req) {
   const pathname = nextUrl.pathname.replace(/^\/+/, "").toLowerCase();
 
   const storeName = domainMap[host] || NEXT_APP_WEB;
-  const storeData = await fetchStoreInitData(storeName);
+  let storeData = {};
+  try {
+    storeData = await fetchStoreInitData(storeName);
+  } catch {
+    storeData = { rd: [{}], rd1: [], rd2: [{}] };
+  }
   const IsB2BWebsite = storeData?.rd[0]?.IsB2BWebsite;
 
   const isAuthenticated = !!loginUser && !!userLoginCookie;
@@ -81,25 +87,21 @@ export default async function middleware(req) {
     return NextResponse.redirect(new URL("/", req.url));
   }
 
-  const response = NextResponse.next();
-  response.cookies.set("x-store-data", JSON.stringify(storeData?.rd[0]), {
-    httpOnly: false,
-    path: "/",
-  });
-  response.cookies.set("x-myAccountFlags-data", JSON.stringify(storeData?.rd1), {
-    httpOnly: false,
-    path: "/",
-  });
-  response.cookies.set("x-CompanyInfoData-data", JSON.stringify(storeData?.rd2[0]), {
-    httpOnly: false,
-    path: "/",
-  });
 
+  const response = NextResponse.next();
+  response.cookies.set("x-store-data", JSON.stringify(storeData?.rd?.[0] || {}), { httpOnly: false, path: "/" });
+  response.cookies.set("x-myAccountFlags-data", JSON.stringify(storeData?.rd1 || []), { httpOnly: false, path: "/" });
+  response.cookies.set("x-CompanyInfoData-data", JSON.stringify(storeData?.rd2?.[0] || {}), { httpOnly: false, path: "/" });
   return response;
+} catch (err) {
+  console.error("Middleware fatal error:", err);
+  return NextResponse.next();
+}
 }
 
 export const config = {
   matcher: ["/((?!_next|api|favicon.ico).*)"],
+  runtime: "nodejs",
 };
 
 
