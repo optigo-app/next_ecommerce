@@ -20,7 +20,7 @@ const Index = ({ storeData }) => {
         Infinitely Inspiring
       </Typography>
 
-      <Main storeData={storeData} />
+      <Main key={storeData?.IsHomeAlbum} storeData={storeData} />
     </Box>
   );
 };

@@ -48,7 +48,7 @@ export default async function middleware(req) {
     (page) => pathname === page.toLowerCase()
   );
 
-  if (pathname.startsWith("loginoption") || isAuthPage) {
+  if (pathname.startsWith("LoginOption") || isAuthPage) {
     return NextResponse.next();
   }
 
@@ -66,7 +66,7 @@ export default async function middleware(req) {
     if (!isAuthenticated && isB2BPage) {
       return NextResponse.redirect(
         new URL(
-          `/loginoption?LoginRedirect=${encodeURIComponent(Next_URL.pathname + Next_URL.search)}`,
+          `/LoginOption?LoginRedirect=${encodeURIComponent(Next_URL.pathname + Next_URL.search)}`,
           req.url
         )
       );
@@ -76,7 +76,7 @@ export default async function middleware(req) {
     if (!isAuthenticated && isRestrictPage) {
       return NextResponse.redirect(
         new URL(
-          `/loginoption?LoginRedirect=${encodeURIComponent(Next_URL.pathname + Next_URL.search)}`,
+          `/LoginOption?LoginRedirect=${encodeURIComponent(Next_URL.pathname + Next_URL.search)}`,
           req.url
         )
       );
@@ -128,7 +128,7 @@ export const config = {
 
 //   const Next_URL = new URL(req.url);
 
-//   const RedirectUrl = `/loginOption/?LoginRedirect=${encodeURIComponent(Next_URL?.pathname)}${Next_URL?.search}`;
+//   const RedirectUrl = `/LoginOption/?LoginRedirect=${encodeURIComponent(Next_URL?.pathname)}${Next_URL?.search}`;
 
 //   const storeName = domainMap[host] || NEXT_APP_WEB;
 //   const storeData = await fetchStoreInitData(storeName);

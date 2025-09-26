@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import "./TrendingView1.scss";
 import { formatRedirectTitleLine, formatter, formatTitleLine, storImagePath } from "@/app/(core)/utils/Glob_Functions/GlobalFunction";
 import { Get_Tren_BestS_NewAr_DesigSet_Album } from "@/app/(core)/utils/API/Home/Get_Tren_BestS_NewAr_DesigSet_Album/Get_Tren_BestS_NewAr_DesigSet_Album";
@@ -7,9 +7,10 @@ import pako from "pako";
 import Cookies from "js-cookie";
 import { useNextRouterLikeRR } from "@/app/(core)/hooks/useLocationRd";
 import { useStore } from "@/app/(core)/contexts/StoreProvider";
+import cookies from "js-cookie";
 
 const TrendingView1 = ({ data, storeInit }) => {
-    const { loginUserDetail, islogin } = useStore();
+    const {  islogin } = useStore();
     const { push } = useNextRouterLikeRR();
     const trendingRef = useRef(null);
     const [trandingViewData, setTrandingViewData] = useState([]);
@@ -23,8 +24,12 @@ const TrendingView1 = ({ data, storeInit }) => {
     const [loadingHome, setLoadingHome] = useState(false);
     const [validatedData, setValidatedData] = useState([]);
     const productRefs = useRef({});
+    const [loginUserDetail, setLoginUserDetail] = useState({});
+    const [mounted, setMounted] = useState(false);
 
     const isOdd = (num) => num % 2 !== 0;
+
+    
 
     const settings = {
         dots: true,
@@ -37,38 +42,65 @@ const TrendingView1 = ({ data, storeInit }) => {
         // nextArrow: false,
     };
 
-
-    useEffect(() => {
-        // setTimeout(() => {
-        callAPI();
-        // }, 1200)
-    }, []);
-
-    const callAPI = () => {
-        // setImageUrl(data?.CDNDesignImageFol);
+    
+      useEffect(() => {
         setImageUrl(storeInit?.CDNDesignImageFolThumb);
-        const visiterID = Cookies.get("visiterId");
-        let finalID;
-        if (storeInit?.IsB2BWebsite == 0) {
-            finalID = islogin === false ? visiterID : loginUserDetail?.id || "0";
-        } else {
-            finalID = loginUserDetail?.id || "0";
+        setMounted(true);
+        if (typeof window !== "undefined") {
+          try {
+            const stored = sessionStorage.getItem("loginUserDetail");
+            setLoginUserDetail(stored ? JSON.parse(stored) : null);
+          } catch (err) {
+            console.error("Failed to parse loginUserDetail:", err);
+            setLoginUserDetail(null);
+          }
         }
+      }, []);
+    
+      const finalID = useMemo(() => {
+        if (!mounted) return null;
+        const visitorId = cookies.get("visitorId") ?? "0";
+        const IsB2BWebsite = storeInit?.IsB2BWebsite ?? 0;
+        const uid = loginUserDetail?.id || "0";
+        if (IsB2BWebsite == 0) {
+          return islogin === false ? visitorId : uid;
+        }
+        return uid;
+      }, [mounted, loginUserDetail, islogin, storeInit?.IsB2BWebsite]);
 
-        Get_Tren_BestS_NewAr_DesigSet_Album(storeInit   , "GETTrending", finalID)
-            .then((response) => {
-                setLoadingHome(false);
-                if (response?.Data?.rd) {
-                    setTrandingViewData(response?.Data?.rd);
-                    const oddNumbers = response.Data.rd.filter((obj) => isOdd(obj.SrNo));
-                    const evenNumbers = response.Data.rd.filter((obj) => !isOdd(obj.SrNo));
 
-                    setOddNumberObjects(oddNumbers);
-                    setEvenNumberObjects(evenNumbers);
-                }
-            })
-            .catch((err) => console.log(err));
-    };
+   useEffect(() => {
+     if (!mounted) return;
+     const storeInit = typeof window !== "undefined" ? sessionStorage.getItem("StoreInit") : null;
+     if (!finalID) return; 
+     callAPI(finalID);
+   }, [mounted, finalID]);
+
+
+   const callAPI = async (id) => {
+    setLoadingHome(true);
+    try {
+      const response = await Get_Tren_BestS_NewAr_DesigSet_Album(storeInit, "GETTrending", id);
+      if (response?.Data?.rd) {
+        const records = response.Data.rd;
+  
+        const oddNumbers = records.filter((obj) => isOdd(obj.SrNo));
+        const evenNumbers = records.filter((obj) => !isOdd(obj.SrNo));
+        setTrandingViewData(records);
+        setOddNumberObjects(oddNumbers);
+        setEvenNumberObjects(evenNumbers);
+      } else {
+        setTrandingViewData([]);
+        setOddNumberObjects([]);
+        setEvenNumberObjects([]);
+      }
+    } catch (error) {
+      console.error("callAPI error:", error);
+    } finally {
+      setLoadingHome(false);
+    }
+  };
+  
 
     const ProdCardImageFunc = (pd) => {
         let finalprodListimg;
