@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import "./NewArrival1.scss";
 import { Grid, Typography, Card, CardContent, CardMedia, Link } from "@mui/material";
 import { Get_Tren_BestS_NewAr_DesigSet_Album } from "@/app/(core)/utils/API/Home/Get_Tren_BestS_NewAr_DesigSet_Album/Get_Tren_BestS_NewAr_DesigSet_Album";
@@ -8,9 +8,10 @@ import Cookies from "js-cookie";
 import { formatRedirectTitleLine, formatter, formatTitleLine, storImagePath } from "@/app/(core)/utils/Glob_Functions/GlobalFunction";
 import { useStore } from "@/app/(core)/contexts/StoreProvider";
 import { useNextRouterLikeRR } from "@/app/(core)/hooks/useLocationRd";
+import cookies from "js-cookie";
 
 const NewArrival = ({ data, storeInit }) => {
-  const { loginUserDetail, islogin } = useStore();
+  const { islogin } = useStore();
   const { push } = useNextRouterLikeRR();
   const newArrivalRef = useRef(null);
   const [newArrivalData, setNewArrivalData] = useState("");
@@ -22,31 +23,58 @@ const NewArrival = ({ data, storeInit }) => {
   const [validatedData, setValidatedData] = useState([]);
   const productRefs = useRef({});
   const imageNotFound = `./image-not-found.jpg`;
+  const [loginUserDetail, setLoginUserDetail] = useState({});
+  const [mounted, setMounted] = useState(false);
 
-  const callAPI = () => {
-    const visiterID = Cookies.get("visiterId");
-    let finalID;
-    if (storeInit?.IsB2BWebsite == 0) {
-      finalID = islogin === false ? visiterID : loginUserDetail?.id || "0";
-    } else {
-      finalID = loginUserDetail?.id || "0";
-    }
-
+  useEffect(() => {
     setImageUrl(storeInit?.CDNDesignImageFolThumb);
+    setMounted(true);
+    if (typeof window !== "undefined") {
+      try {
+        const stored = sessionStorage.getItem("loginUserDetail");
+        setLoginUserDetail(stored ? JSON.parse(stored) : null);
+      } catch (err) {
+        console.error("Failed to parse loginUserDetail:", err);
+        setLoginUserDetail(null);
+      }
+    }
+  }, []);
 
-    Get_Tren_BestS_NewAr_DesigSet_Album(storeInit, "GETNewArrival", finalID)
-      .then((response) => {
+  const finalID = useMemo(() => {
+    if (!mounted) return null;
+    const visitorId = cookies.get("visitorId") ?? "0";
+    const IsB2BWebsite = storeInit?.IsB2BWebsite ?? 0;
+    const uid = loginUserDetail?.id || "0";
+    if (IsB2BWebsite == 0) {
+      return islogin === false ? visitorId : uid;
+    }
+    return uid;
+  }, [mounted, loginUserDetail, islogin, storeInit?.IsB2BWebsite]);
+
+  const callAPI = async (id) => {
+    try {
+      const res = await Get_Tren_BestS_NewAr_DesigSet_Album(storeInit, "GETNewArrival", id);
+      const rows = res?.Data?.rd || [];
+      console.log("🚀 ~ callAPI ~ rows:", rows)
+      if (Array.isArray(rows) && rows.length > 0) {
+        setNewArrivalData(rows);
         setLoadingHome(false);
-        if (response?.Data?.rd) {
-          setNewArrivalData(response?.Data?.rd);
-        }
-      })
-      .catch((err) => console.log(err));
+      } else {
+        setNewArrivalData([]);
+        setLoadingHome(false);
+      }
+    } catch (error) {
+      console.log(error);
+      setLoadingHome(false);
+    }
   };
 
   useEffect(() => {
-    callAPI();
-  }, []);
+    if (!mounted) return;
+    const storeInit = typeof window !== "undefined" ? sessionStorage.getItem("StoreInit") : null;
+    if (!finalID) return;
+    callAPI(finalID);
+  }, [mounted, finalID]);
 
   const checkImageAvailability = (url) => {
     return new Promise((resolve) => {
@@ -144,7 +172,6 @@ const NewArrival = ({ data, storeInit }) => {
   const handleMouseLeaveRing2 = () => {
     setRing2ImageChange(false);
   };
-
 
   return (
     <div

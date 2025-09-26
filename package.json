@@ -7,9 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "build:dev": "cross-env NEXT_PUBLIC_APP_ENV=development next build",
-    "auto": "next build && next start",
-    "start:dev": "cross-env NEXT_PUBLIC_APP_ENV=development NODE_ENV=development next start"
+    "ng": "next build && next start"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -41,6 +39,7 @@
     "slick-carousel": "^1.8.1",
     "sweetalert2": "^11.23.0",
     "swiper": "^12.0.1",
+    "swr": "^2.3.6",
     "zustand": "^5.0.8"
   },
   "devDependencies": {

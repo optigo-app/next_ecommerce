@@ -39,7 +39,7 @@ export const CommonAPI = async (body) => {
             sp: "1",
             sv: sv,
         };
-        const response = await axios.post(APIURL, body, { headers: header });
+        const response = await axios.post(APIURL, body, { headers: header ,});
         return response?.data;
 
     } catch (error) {
