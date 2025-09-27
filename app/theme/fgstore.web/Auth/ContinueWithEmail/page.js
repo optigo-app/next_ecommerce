@@ -66,16 +66,13 @@ export default function ContinueWithEmail({ params, searchParams }) {
             console.log(response, "email")
 
             if (response.Data.rd[0].stat == 1 && response.Data.rd[0].islead == 1) {
-                alert("You are not a customer, contact to admin");
                 toast.error('You are not a customer, contact to admin')
             } else if (response.Data.rd[0].stat == 1 && response.Data.rd[0].islead == 0) {
-                alert("OTP send Sucssessfully");
                 navigation.push(redirectEmailUrl);
                 if (trimmedEmail) {
                     sessionStorage?.setItem("registerEmail", trimmedEmail);
                 }
             } else {
-                alert("You are not a customer, contact to admin");
                 // setIsOpen(true)
                 // WebSignUpOTPVerify(email).then((res) => {
                 //     console.log(res, "res")

@@ -31,7 +31,7 @@ const Usewishlist = () => {
   const [filterDia, setFilterDia] = useState([])
   const [finalWishData, setFinalWishData] = useState([]);
   const [loadingIndex, setLoadingIndex] = useState(0)
-  const imageNotFound = '/assets/image-not-found.jpg'
+  const imageNotFound = '/Assets/image-not-found.jpg'
 
   const validThemenos = [3, 4, 11, 12, 10, 7, 1, 2];
 
