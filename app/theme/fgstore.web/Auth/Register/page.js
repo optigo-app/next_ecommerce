@@ -56,8 +56,8 @@ export default function Register({searchParams }) {
   };
 
   useEffect(() => {
-    const storedEmail = location?.searchParams?.email;
-    const routeMobileNo = location?.searchParams?.mobileNo;
+    const storedEmail = sessionStorage.getItem("registerEmail");
+    const routeMobileNo = sessionStorage.getItem("registerMobileNo");
 
     if (routeMobileNo) {
       setMobileNo(routeMobileNo);
