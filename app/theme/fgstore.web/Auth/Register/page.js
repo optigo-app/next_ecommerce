@@ -57,12 +57,12 @@ export default function Register({searchParams }) {
 
   useEffect(() => {
     const storedEmail = sessionStorage.getItem("registerEmail");
-    const routeMobileNo = sessionStorage.getItem("registerMobileNo");
+    const routeMobileNo = sessionStorage.getItem("registerMobile");
 
     if (routeMobileNo) {
       setMobileNo(routeMobileNo);
       mobileNoRef.current.disabled = true;
-      sessionStorage.removeItem("registerMobileNo");
+      sessionStorage.removeItem("registerMobile");
     }
 
     if (storedEmail) {
