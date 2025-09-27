@@ -62,11 +62,13 @@ export default function Register({searchParams }) {
     if (routeMobileNo) {
       setMobileNo(routeMobileNo);
       mobileNoRef.current.disabled = true;
+      sessionStorage.removeItem("registerMobileNo");
     }
 
     if (storedEmail) {
       setEmail(storedEmail);
       emailRef.current.disabled = true;
+      sessionStorage.removeItem("registerEmail");
     }
   }, [location.searchParams]);
 
