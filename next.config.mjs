@@ -20,6 +20,9 @@ const nextConfig = {
       ignoreDuringBuilds: true,
       
     },
+    experimental :{
+      viewTransition: true,
+    }
   };
   
   export default nextConfig;

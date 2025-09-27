@@ -18,7 +18,6 @@ const WishlistData = ({
   handleMoveToDetail,
   handelMenu
 }) => {
-
   const [alignment, setAlignment] = React.useState('1');
 
 
