@@ -17,8 +17,8 @@ const authPages = [
   "register",
 ];
 
-const RestrictPages = ["delivery", "confirmation", "payment","account"];
-const B2BPages = ["payment", "myWishList", "Lookbook", "delivery", "confirmation", "cartPage", "p/*", "d/*"];
+const RestrictPages = ["delivery", "confirmation", "payment"];
+const B2BPages = ["payment", "myWishList", "Lookbook", "delivery", "confirmation", "cartPage", "p/*", "d/*","account"];
 
 export default async function middleware(req) {
   try {
@@ -44,9 +44,11 @@ export default async function middleware(req) {
 
   const isAuthPage = authPages.some((page) => pathname === page.toLowerCase());
 
-  const isRestrictPage = RestrictPages.some(
-    (page) => pathname === page.toLowerCase()
-  );
+  // const isRestrictPage = RestrictPages.some(
+  //   (page) => pathname === page.toLowerCase()
+  // );
+  const isRestrictPage = RestrictPages.some((page) => pathname.startsWith(page.toLowerCase()));
+
 
   if (pathname.startsWith("LoginOption") || isAuthPage) {
     return NextResponse.next();

@@ -37,12 +37,12 @@ export async function getAssetBase() {
   const host = await getHost();
   return storImagePath(host);
 }
+
 export const assetBase = await getAssetBase();
 
-export async function getLogos() {
-  const base = await getAssetBase();
+export function getLogos() {
   return {
-    web: `${base}/logoIcon/webLogo.png`,
-    mobile: `${base}/logoIcon/mobileLogo.png`,
+    web: "/WebSiteStaticImage/logoIcon/webLogo.png",
+    mobile: "/WebSiteStaticImage/logoIcon/mobileLogo.png",
   };
 }

@@ -63,3 +63,15 @@ export const getContactUsContent = async () => {
     return null;
   }
 };
+
+
+export const getExtraFlag = async () => {
+  try {
+    const filePath = path.join(process.cwd(), "public", "WebSiteStaticImage", "ExtraFlag.txt");
+    const htmlContent = await fs.promises.readFile(filePath, "utf-8");
+    return htmlContent;
+  } catch (error) {
+    console.error("Error fetching contact HTML:", error);
+    return null;
+  }
+};
