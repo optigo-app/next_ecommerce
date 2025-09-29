@@ -120,8 +120,7 @@ export default function Account({ Storeinit }) {
     Cookies.remove("userLoginCookie");
     Cookies.remove("userLoginCookie");
     Cookies.remove("LoginUser");
-    navigation("/");
-    window.location.reload();
+    window.location.href = "/"
   };
 
   return (
