@@ -290,6 +290,9 @@ const Product = ({ params, searchParams, storeinit }) => {
     }, [params, productListData, filterChecked])
 
     let result = [];
+    
+    const lastSearchParamsRef = useRef(null);
+    const isApiCallInProgressRef = useRef(false);
 
     try {
         if (searchParams?.value) {
@@ -308,6 +311,17 @@ const Product = ({ params, searchParams, storeinit }) => {
     }
 
     useEffect(() => {
+        // Create a unique key for current searchParams to avoid duplicate calls
+        const currentSearchKey = JSON.stringify(searchParams);
+        
+        // Skip if same searchParams or API call already in progress
+        if (lastSearchParamsRef.current === currentSearchKey || isApiCallInProgressRef.current) {
+            return;
+        }
+        
+        lastSearchParamsRef.current = currentSearchKey;
+        isApiCallInProgressRef.current = true;
+
         const fetchData = async () => {
             let obj = { mt: selectedMetalId, dia: selectedDiaId, cs: selectedCsId };
             // let UrlVal = location?.search?.slice(1).split("/")
@@ -458,17 +472,21 @@ const Product = ({ params, searchParams, storeinit }) => {
                 }).finally(() => {
                     setIsProdLoading(false)
                     setIsOnlyProdLoading(false)
+                    isApiCallInProgressRef.current = false; // Reset the flag when API call completes
 
 
                 })
-                .catch((err) => console.log("err", err))
+                .catch((err) => {
+                    console.log("err", err);
+                    isApiCallInProgressRef.current = false; // Reset the flag on error too
+                })
 
             // }
 
         }
 
         fetchData();
-    }, [params, searchParams])
+    }, [searchParams])
 
     const prevFilterChecked = useRef();
 
