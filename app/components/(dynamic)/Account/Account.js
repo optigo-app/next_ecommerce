@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import "./Account.scss";
 import { Box, Tab, Tabs, Typography } from "@mui/material";
-
 import YourProfile from "./YourProfile/YourProfile";
 import ChangePassword from "./changePassword/ChangePassword";
 import ManageAddress from "./address/ManageAddress";
@@ -44,12 +43,6 @@ function CustomTabPanel(props) {
   );
 }
 
-//   CustomTabPanel.propTypes = {
-//     children: PropTypes.node,
-//     index: PropTypes.number.isRequired,
-//     value: PropTypes.number.isRequired,
-//   };
-
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
@@ -85,24 +78,8 @@ export default function Account({ Storeinit }) {
 
   useGlobalPreventSave();
 
-  // const handleLogout = () => {
-  //     set('false')
-  //     sessionStorage.setItem('LoginUser', 'false');
-  //     sessionStorage.removeItem('storeInit');
-  //     sessionStorage.removeItem('loginUserDetail');
-  //     sessionStorage.removeItem('remarks');
-  //     sessionStorage.removeItem('selectedAddressId');
-  //     sessionStorage.removeItem('orderNumber');
-  //     sessionStorage.removeItem('registerEmail');
-  //     sessionStorage.removeItem('UploadLogicalPath');
-  //     sessionStorage.removeItem('remarks');
-  //     sessionStorage.removeItem('registerMobile');
-  //     sessionStorage.removeItem('allproductlist');
-  //     naviagation('/')
-  //     window.location.reload();
-  // }
+
   const handleLogout = () => {
-    // console.log(loginState);
     setislogin(false);
     Cookies.remove("userLoginCookie");
     sessionStorage.setItem("LoginUser", false);
@@ -120,8 +97,7 @@ export default function Account({ Storeinit }) {
     Cookies.remove("userLoginCookie");
     Cookies.remove("userLoginCookie");
     Cookies.remove("LoginUser");
-    navigation("/");
-    window.location.reload();
+    window.location.href = "/"
   };
 
   return (
@@ -144,7 +120,9 @@ export default function Account({ Storeinit }) {
                     <Tab label="Your Profile" {...a11yProps(0)} />
                     <Tab label="ORDER HISTORY" {...a11yProps(1)} />
                     <Tab label="MANAGE ADDRESSES" {...a11yProps(2)} />
-                    {accountValidation() && <Tab label="ACCOUNT" {...a11yProps(3)} />}
+                    {accountValidation() &&
+                     <Tab label="ACCOUNT" {...a11yProps(3)} />
+                    }
                     <Tab label="CHANGE PASSWORD" {...a11yProps(accountValidation() ? 4 : 3)} />
                     <Tab label="TICKET SYSTEM" {...a11yProps(5)} />
                     <Tab label="CALL LOG" {...a11yProps(6)} />
@@ -291,35 +269,3 @@ export default function Account({ Storeinit }) {
     </div>
   );
 }
-
-// {<div className='smlingAccountTabWebView  '>
-//                         <Box sx={{ display: 'flex', justifyContent: 'center', borderBottom: 1, borderColor: 'divider' }}>
-//                             <Tabs value={value} onChange={handleChange} aria-label="basic tabs example"  >   {/*  orientation="vertical" indicatorColor="#7d7f85" */}
-//                                 <Tab label="Your Profile" {...a11yProps(0)} />
-//                                 <Tab label="ORDER HISTORY" {...a11yProps(1)} />
-//                                 <Tab label="MANAGE ADDRESSES" {...a11yProps(2)} />
-//                                 {accountValidation() && <Tab label="ACCOUNT" {...a11yProps(3)} />}
-//                                 <Tab label="CHANGE PASSWORD" {...a11yProps(accountValidation() ? 4 : 3)} />
-//                                 {/* <Tab label="PLM" {...a11yProps(5)} /> */}
-//                                 {loginUserDetail?.IsPLWOn && <Tab label="PLM" {...a11yProps(1)} />}
-//                                 <Tab label="Log Out" onClick={handleLogout} />
-//                             </Tabs>
-//                             {/* <p className='smilingAccountLogout' onClick={handleLogout}>LOG OUT</p> */}
-//                         </Box>
-//                     </div>
-//                     <div className='smlingAccountTabMobileView YourAccountPageTabs'>
-//                         <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
-//                             <Tabs value={value} orientation="vertical" onChange={handleChange} sx={{ width: '100%' }} >   {/*  indicatorColor="#7d7f85" */}
-//                                 <Tab label="Your Profile" {...a11yProps(0)} sx={{ textAlign: 'start', width: '90%', borderColor: 'divider' }} />
-//                                 <Tab label="ORDER HISTORY" {...a11yProps(1)} />
-//                                 <Tab label="MANAGE ADDRESSES" {...a11yProps(2)} />
-//                                 {accountValidation() && <Tab label="ACCOUNT" {...a11yProps(3)} />}
-//                                 <Tab label="CHANGE PASSWORD" {...a11yProps(accountValidation() ? 4 : 3)} />
-//                                 {/* <Tab label="PLM" {...a11yProps(5)} /> */}
-//                                 {loginUserDetail?.IsPLWOn && <Tab label="PLM" {...a11yProps(1)} />}
-//                                 <Tab label="Log Out" onClick={handleLogout} />
-//                             </Tabs>
-//                             {/* <p className='smilingAccountLogout' onClick={handleLogout}>LOG OUT</p> */}
-//                         </Box>
-
-//                     </div>}

@@ -56,17 +56,19 @@ export default function Register({searchParams }) {
   };
 
   useEffect(() => {
-    const storedEmail = location?.searchParams?.email;
-    const routeMobileNo = location?.searchParams?.mobileNo;
+    const storedEmail = sessionStorage.getItem("registerEmail");
+    const routeMobileNo = sessionStorage.getItem("registerMobile");
 
     if (routeMobileNo) {
       setMobileNo(routeMobileNo);
       mobileNoRef.current.disabled = true;
+      sessionStorage.removeItem("registerMobile");
     }
 
     if (storedEmail) {
       setEmail(storedEmail);
       emailRef.current.disabled = true;
+      sessionStorage.removeItem("registerEmail");
     }
   }, [location.searchParams]);
 

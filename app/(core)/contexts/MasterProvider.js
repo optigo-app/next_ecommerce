@@ -32,7 +32,7 @@ const detectThemeNumber = () => {
 
 const masterContext = createContext(null);
 
-export const MasterProvider = ({ children, getCompanyInfoData, getStoreInit }) => {
+export const MasterProvider = ({ children, getCompanyInfoData, getStoreInit, getMyAccountFlags }) => {
     const [title, setTitle] = useState("Loading...");
     const [htmlContent, setHtmlContent] = useState(null);
     const [storeInitData, setStoreInitData] = useState(null);
@@ -103,6 +103,7 @@ export const MasterProvider = ({ children, getCompanyInfoData, getStoreInit }) =
 
     useEffect(() => {
         sessionStorage.setItem("storeInit", JSON.stringify(getStoreInit));
+        sessionStorage.setItem("myAccountFlags", JSON.stringify(getMyAccountFlags));
         fetchVisitorId();
     }, [])
 

@@ -191,7 +191,6 @@ const Header = ({ storeinit, logos }) => {
   };
 
   const handleLogout = () => {
-    navigate("/");
     setislogin(false);
     Cookies.remove("userLoginCookie");
     Cookies.remove("userLoginCookie");
@@ -208,6 +207,7 @@ const Header = ({ storeinit, logos }) => {
     sessionStorage.removeItem("registerMobile");
     sessionStorage.removeItem("allproductlist");
     sessionStorage.clear();
+    window.location.href = "/"
   };
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -835,7 +835,7 @@ const Header = ({ storeinit, logos }) => {
                         </Link>
                       </Tooltip>
                     </Badge>
-                    <li className="nav_li_smining_Icone smr_mobileHideIcone" onClick={toggleOverlay} style={{}}>
+                    <li className="nav_li_smining_Icone smr_mobileHideIcone" onClick={toggleOverlay} >
                       <SearchRoundedIcon
                         style={{
                           height: "20px",
@@ -874,7 +874,7 @@ const Header = ({ storeinit, logos }) => {
                           </li>
                         </Tooltip>
                       </Badge>
-                      <li className="nav_li_smining_Icone smr_mobileHideIcone" onClick={toggleOverlay} style={{}}>
+                      <li className="nav_li_smining_Icone smr_mobileHideIcone" onClick={toggleOverlay} >
                         <SearchRoundedIcon
                           style={{
                             height: "20px",
@@ -1016,7 +1016,7 @@ const Header = ({ storeinit, logos }) => {
                           </Link>
                         </Tooltip>
                       </Badge>
-                      <li className="nav_li_smining_Fixed_Icone smr_mobileHideIcone" onClick={toggleOverlay} style={{}}>
+                      <li className="nav_li_smining_Fixed_Icone smr_mobileHideIcone" onClick={toggleOverlay} >
                         <SearchRoundedIcon
                           style={{
                             height: "20px",
@@ -1055,7 +1055,7 @@ const Header = ({ storeinit, logos }) => {
                             </Link>
                           </Tooltip>
                         </Badge>
-                        <li className="nav_li_smining_Fixed_Icone smr_mobileHideIcone" onClick={toggleOverlay} style={{}}>
+                        <li className="nav_li_smining_Fixed_Icone smr_mobileHideIcone" onClick={toggleOverlay} >
                           <SearchRoundedIcon
                             style={{
                               height: "20px",

@@ -1,5 +1,5 @@
 "use client";
-
+import dynamic from 'next/dynamic';
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import '@/app/theme/fgstore.web/product/page.scss'
 import { formatRedirectTitleLine, getDomainName } from "@/app/(core)/utils/Glob_Functions/GlobalFunction";
@@ -25,9 +25,12 @@ import { FilterListAPI } from '@/app/(core)/utils/API/FilterAPI/FilterListAPI';
 import { useDynamicImage } from './useProductHook';
 import { useProductFilter } from './useProdFilterHook';
 import FilterSection from './FilterSection';
-import MobileFilter from './MobileFilter';
+// import MobileFilter from './MobileFilter';
+
 import BreadCrumbs from './BreadCrums';
 import { useStore } from '@/app/(core)/contexts/StoreProvider';
+
+const MobileFilter = dynamic(() => import('./MobileFilter'), { ssr: false });
 
 const Product = ({ params, searchParams, storeinit }) => {
 

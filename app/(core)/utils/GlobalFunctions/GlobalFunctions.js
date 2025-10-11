@@ -1,5 +1,7 @@
 import { cookies } from "next/headers";
 import { assetBase } from "../../lib/ServerHelper";
+import fs from "fs";
+import path from "path";
 
 function safeParse(value) {
   if (!value) return {};
@@ -13,7 +15,7 @@ function safeParse(value) {
 export const getStoreInit = async () => {
   const cookieStore = await cookies();
   const storeData = safeParse(cookieStore?.get("x-store-data")?.value);
-  return storeData; 
+  return storeData;
 };
 
 export const getMyAccountFlags = async () => {
@@ -42,21 +44,34 @@ export const GetUserLoginCookie = async () => {
 
 export const getAboutUsContent = async () => {
   try {
-    const res = await fetch(`${assetBase}/html/sonasonsAbout.html`);
-    const htmlContent = await res.text();
+    const filePath = path.join(process.cwd(), "public", "WebSiteStaticImage", "html", "sonasonsAbout.html");
+    const htmlContent = await fs.promises.readFile(filePath, "utf-8");
     return htmlContent;
   } catch (error) {
     console.error("Error loading AboutUs HTML file:", error);
     return null;
   }
-}
+};
 
 export const getContactUsContent = async () => {
   try {
-    const res = await fetch(`${assetBase}/html/SonasonsContactPage.html`);
-    const htmlContent = await res.text();
+    const filePath = path.join(process.cwd(), "public", "WebSiteStaticImage", "html", "SonasonsContactPage.html");
+    const htmlContent = await fs.promises.readFile(filePath, "utf-8");
     return htmlContent;
   } catch (error) {
     console.error("Error fetching contact HTML:", error);
+    return null;
   }
-}
+};
+
+
+export const getExtraFlag = async () => {
+  try {
+    const filePath = path.join(process.cwd(), "public", "WebSiteStaticImage", "ExtraFlag.txt");
+    const htmlContent = await fs.promises.readFile(filePath, "utf-8");
+    return htmlContent;
+  } catch (error) {
+    console.error("Error fetching contact HTML:", error);
+    return null;
+  }
+};

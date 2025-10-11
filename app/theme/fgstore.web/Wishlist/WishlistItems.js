@@ -36,7 +36,7 @@ const {setCartCountNum ,  setWishCountNum} = useStore()
   const visiterId = Cookies.get("visiterId");
   const CDNDesignImageFolThumb = storeInit?.CDNDesignImageFolThumb;
   const fullImagePath = `${CDNDesignImageFolThumb}${item?.designno}~1.jpg`;
-  const noImageFound = '/assets/image-not-found.jpg'
+  const noImageFound = '/Assets/image-not-found.jpg'
 
   // const isLoading = item?.loading;
 

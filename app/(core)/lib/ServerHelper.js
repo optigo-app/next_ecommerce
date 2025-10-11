@@ -29,19 +29,20 @@ export function getProtocol(host) {
 export function storImagePath(host) {
   const protocol = getProtocol(host);
   const base = host.includes("localhost") || host.includes("zen") ? NEXT_APP_WEB : NEXT_APP_WEB;
-  return `${protocol}://${base}/WebSiteStaticImage`;
+  // return `${protocol}://${base}/WebSiteStaticImage`;
+  return `WebSiteStaticImage`;
 }
 
 export async function getAssetBase() {
   const host = await getHost();
   return storImagePath(host);
 }
+
 export const assetBase = await getAssetBase();
 
-export async function getLogos() {
-  const base = await getAssetBase();
+export function getLogos() {
   return {
-    web: `${base}/logoIcon/webLogo.png`,
-    mobile: `${base}/logoIcon/mobileLogo.png`,
+    web: "/WebSiteStaticImage/logoIcon/webLogo.png",
+    mobile: "/WebSiteStaticImage/logoIcon/mobileLogo.png",
   };
 }

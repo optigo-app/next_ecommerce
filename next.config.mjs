@@ -20,6 +20,11 @@ const nextConfig = {
       ignoreDuringBuilds: true,
       
     },
+    experimental :{
+      viewTransition: true,
+      // esmExternals: 'loose', // faster dev builds
+      turbo: true,            // experimental build speed improvements
+    }
   };
   
   export default nextConfig;

@@ -12,7 +12,7 @@ import { useNextRouterLikeRR } from '@/app/(core)/hooks/useLocationRd';
 
 const Usewishlist = () => {
   const navigate = useNextRouterLikeRR().push;
-  const [isWLLoading, setIsWlLoading] = useState(false);
+  const [isWLLoading, setIsWlLoading] = useState(true);
   const [updateCount, setUpdateCount] = useState();
   const [itemInCart, setItemInCart] = useState();
   const [storeInit, setStoreInit] = useState();
@@ -31,7 +31,7 @@ const Usewishlist = () => {
   const [filterDia, setFilterDia] = useState([])
   const [finalWishData, setFinalWishData] = useState([]);
   const [loadingIndex, setLoadingIndex] = useState(0)
-  const imageNotFound = '/assets/image-not-found.jpg'
+  const imageNotFound = '/Assets/image-not-found.jpg'
 
   const validThemenos = [3, 4, 11, 12, 10, 7, 1, 2];
 
@@ -66,8 +66,6 @@ const Usewishlist = () => {
       if (response?.Data?.rd[0]?.stat != 0) {
         let diamondData = response?.Data?.rd1;
         setWishlistData(response?.Data?.rd);
-        setIsWlLoading(false);
-
         if (diamondData?.length != 0) {
           const solStockNos = diamondData?.map(item => item?.Sol_StockNo);
           const commaSeparatedString = solStockNos?.join(',');
@@ -75,9 +73,15 @@ const Usewishlist = () => {
             getDiamondData(commaSeparatedString)
           }
         }
+      }else{
+        setIsWlLoading(false);
+        setWishlistData([]);
+        setDiamondWishData([]);
       }
     } catch (error) {
       console.error("Error:", error);
+    }finally{
+      setIsWlLoading(false);
     }
   };
 

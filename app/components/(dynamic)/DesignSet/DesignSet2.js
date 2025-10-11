@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import "./DesignSet2.scss";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -7,7 +7,6 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Get_Tren_BestS_NewAr_DesigSet_Album } from "@/app/(core)/utils/API/Home/Get_Tren_BestS_NewAr_DesigSet_Album/Get_Tren_BestS_NewAr_DesigSet_Album";
 import Pako from "pako";
-import Cookies from "js-cookie";
 import gradientColors from "./color.json";
 import {
   formatRedirectTitleLine,
@@ -15,10 +14,11 @@ import {
 } from "@/app/(core)/utils/Glob_Functions/GlobalFunction";
 import { useNextRouterLikeRR } from "@/app/(core)/hooks/useLocationRd";
 import { useStore } from "@/app/(core)/contexts/StoreProvider";
+import cookies from "js-cookie";
 
 const DesignSet2 = ({ data, storeInit }) => {
   const location = useNextRouterLikeRR();
-  const { islogin, loginUserDetail } = useStore()
+  const { islogin } = useStore()
   const designSetRef = useRef(null);
   const navigate = location.push;
   const [imageUrl, setImageUrl] = useState();
@@ -30,33 +30,58 @@ const DesignSet2 = ({ data, storeInit }) => {
   const scrollRetries = useRef(0);
   const maxRetries = 10;
   const imageNotFound = `./Assets/image-not-found.jpg`
+  const [loginUserDetail, setLoginUserDetail] = useState({});
+  const [mounted, setMounted] = useState(false);
 
 
-  const callAPI = () => {
-    const visiterID = Cookies.get("visiterId");
-    let finalID;
-    if (storeInit?.IsB2BWebsite == 0) {
-      finalID = islogin === false ? visiterID : loginUserDetail?.id || "0";
-    } else {
-      finalID = loginUserDetail?.id || "0";
-    }
-
+  useEffect(() => {
     setImageUrl(storeInit?.CDNDesignImageFol);
     setImageUrlDesignSet(storeInit?.CDNDesignImageFolThumb);
+    setMounted(true);
+    if (typeof window !== "undefined") {
+      try {
+        const stored = sessionStorage.getItem("loginUserDetail");
+        setLoginUserDetail(stored ? JSON.parse(stored) : null);
+      } catch (err) {
+        console.error("Failed to parse loginUserDetail:", err);
+        setLoginUserDetail(null);
+      }
+    }
+  }, []);
 
-    Get_Tren_BestS_NewAr_DesigSet_Album(storeInit, "GETDesignSet_List", finalID)
-      .then((response) => {
-        setLoadingHome(false);
-        if (response?.Data?.rd) {
-          setDesignSetList(response?.Data?.rd);
-        }
-      })
-      .catch((err) => console.log(err));
+  const finalID = useMemo(() => {
+    if (!mounted) return null;
+    const visitorId = cookies.get("visitorId") ?? "0";
+    const IsB2BWebsite = storeInit?.IsB2BWebsite ?? 0;
+    const uid = loginUserDetail?.id || "0";
+    if (IsB2BWebsite == 0) {
+      return islogin === false ? visitorId : uid;
+    }
+    return uid;
+  }, [mounted, loginUserDetail, islogin, storeInit?.IsB2BWebsite]);
+
+
+
+  const callAPI = async (id) => {
+    try {
+      const res = await Get_Tren_BestS_NewAr_DesigSet_Album(storeInit, "GETDesignSet_List", id)
+      const rows = res?.Data?.rd || [];
+      if (Array.isArray(rows) && rows.length > 0) {
+        setDesignSetList(rows);
+      } else {
+        setDesignSetList([]);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
-    callAPI();
-  }, [])
+    if (!mounted) return;
+    const storeInit = typeof window !== "undefined" ? sessionStorage.getItem("StoreInit") : null;
+    if (!finalID) return;
+    callAPI(finalID);
+  }, [mounted, finalID]);
 
   const ProdCardImageFunc = (pd) => {
     let finalprodListimg;

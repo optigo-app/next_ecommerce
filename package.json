@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "node --max-old-space-size=4096 server.js",
-    "build": "next build",
-    "start": "node --max-old-space-size=4096 server.js",
+    "dev": "next dev -p 4000 --turbo",
+    "build": "next build --turbo",
+    "start": "next start",
     "lint": "eslint",
+    "ng": "next build && next start"
     "ng": "next build && next start"
   },
   "dependencies": {
@@ -15,6 +16,7 @@
     "@mui/icons-material": "^7.3.2",
     "@mui/material": "^7.3.2",
     "@mui/x-date-pickers": "^8.11.3",
+    "@next/bundle-analyzer": "^15.5.4",
     "axios": "^1.12.2",
     "cors": "^2.8.5",
     "cross-env": "^10.0.0",
@@ -42,10 +44,12 @@
     "slick-carousel": "^1.8.1",
     "sweetalert2": "^11.23.0",
     "swiper": "^12.0.1",
+    "swr": "^2.3.6",
     "zustand": "^5.0.8"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "critters": "^0.0.23",
     "eslint": "^9",
     "eslint-config-next": "15.5.2"
   }

@@ -17,8 +17,14 @@ const authPages = [
   "register",
 ];
 
-const RestrictPages = ["delivery", "confirmation", "payment","account"];
-const B2BPages = ["payment", "myWishList", "Lookbook", "delivery", "confirmation", "cartPage", "p/*", "d/*"];
+const RestrictPages = ["delivery", "confirmation", "payment"];
+const B2BPages = ["payment", "myWishList", "Lookbook", "delivery", "confirmation", "cartPage", "p/*", "d/*","account"];
+const WhiteList = ["privacypolicy", "privacypolicy"];
+
+
+const storeCache = {};
+const CACHE_TTL = 300 * 1000; 
+
 
 export default async function middleware(req) {
   try {
@@ -33,10 +39,17 @@ export default async function middleware(req) {
 
   const storeName = domainMap[host] || NEXT_APP_WEB;
   let storeData = {};
-  try {
-    storeData = await fetchStoreInitData(storeName);
-  } catch {
-    storeData = { rd: [{}], rd1: [], rd2: [{}] };
+  const cacheEntry = storeCache[storeName];
+  const now = Date.now();
+  if (cacheEntry && now - cacheEntry.ts < CACHE_TTL) {
+    storeData = cacheEntry.data;
+  } else {
+    try {
+      storeData = await fetchStoreInitData(storeName);
+    } catch {
+      storeData = { rd: [{}], rd1: [], rd2: [{}] };
+    }
+    storeCache[storeName] = { data: storeData, ts: now };
   }
   const IsB2BWebsite = storeData?.rd[0]?.IsB2BWebsite;
 
@@ -44,11 +57,17 @@ export default async function middleware(req) {
 
   const isAuthPage = authPages.some((page) => pathname === page.toLowerCase());
 
-  const isRestrictPage = RestrictPages.some(
-    (page) => pathname === page.toLowerCase()
-  );
 
-  if (pathname.startsWith("loginoption") || isAuthPage) {
+  const isPublicPage = WhiteList.some((page) => pathname === page.toLowerCase());
+
+if (isPublicPage) {
+  return NextResponse.next();
+}
+
+  const isRestrictPage = RestrictPages.some((page) => pathname.startsWith(page.toLowerCase()));
+
+
+  if (pathname.startsWith("LoginOption") || isAuthPage) {
     return NextResponse.next();
   }
 
@@ -66,7 +85,7 @@ export default async function middleware(req) {
     if (!isAuthenticated && isB2BPage) {
       return NextResponse.redirect(
         new URL(
-          `/loginoption?LoginRedirect=${encodeURIComponent(Next_URL.pathname + Next_URL.search)}`,
+          `/LoginOption?LoginRedirect=${encodeURIComponent(Next_URL.pathname + Next_URL.search)}`,
           req.url
         )
       );
@@ -76,7 +95,7 @@ export default async function middleware(req) {
     if (!isAuthenticated && isRestrictPage) {
       return NextResponse.redirect(
         new URL(
-          `/loginoption?LoginRedirect=${encodeURIComponent(Next_URL.pathname + Next_URL.search)}`,
+          `/LoginOption?LoginRedirect=${encodeURIComponent(Next_URL.pathname + Next_URL.search)}`,
           req.url
         )
       );
@@ -92,6 +111,7 @@ export default async function middleware(req) {
   response.cookies.set("x-store-data", JSON.stringify(storeData?.rd?.[0] || {}), { httpOnly: false, path: "/" });
   response.cookies.set("x-myAccountFlags-data", JSON.stringify(storeData?.rd1 || []), { httpOnly: false, path: "/" });
   response.cookies.set("x-CompanyInfoData-data", JSON.stringify(storeData?.rd2?.[0] || {}), { httpOnly: false, path: "/" });
+  response.headers.set("Cache-Control", "public, max-age=3600, immutable"); 
   return response;
 } catch (err) {
   console.error("Middleware fatal error:", err);
@@ -103,65 +123,3 @@ export const config = {
   matcher: ["/((?!_next|api|favicon.ico).*)"],
   runtime: "nodejs",
 };
-
-
-// import { NextResponse } from "next/server";
-// import { fetchStoreInitData } from "@/app/(core)/utils/fetchStoreInit";
-// import { NEXT_APP_WEB } from "@/app/(core)/utils/env";
-
-// const domainMap = {
-//   localhost: NEXT_APP_WEB,
-// };
-
-// const authPages = ["ContinueWithEmail", "ContinueWithMobile", "ForgotPass", "LoginOption", "LoginWithEmail", "LoginWithEmailCode", "LoginWithMobileCode", "register"];
-
-// const B2BPages = ["payment", "myWishList", "Lookbook", "delivery", "confirmation", "cartPage", "p/*", "d/*"];
-
-// const RestrictPages = ["delivery", "confirmation", "payment"];
-
-// export default async function middleware(req) {
-//   const { cookies, nextUrl } = req;
-//   const host = req.headers.get("host");
-
-//   const loginUser = cookies.get("LoginUser")?.value;
-//   const userLoginCookie = cookies.get("userLoginCookie")?.value;
-
-//   const Next_URL = new URL(req.url);
-
-//   const RedirectUrl = `/loginOption/?LoginRedirect=${encodeURIComponent(Next_URL?.pathname)}${Next_URL?.search}`;
-
-//   const storeName = domainMap[host] || NEXT_APP_WEB;
-//   const storeData = await fetchStoreInitData(storeName);
-
-//   const IsB2BWebsite = storeData?.rd[0].IsB2BWebsite;
-
-//   const isAuthenticated = !!loginUser && !!userLoginCookie;
-
-//   const pathname = nextUrl.pathname.replace(/^\/+/, "");
-//   const isAuthPage = authPages.some((page) => pathname.toLowerCase() === page.toLowerCase());
-
-//   if (isAuthPage && isAuthenticated) {
-//     return NextResponse.redirect(new URL("/", req.url));
-//   }
-  
-
-//   const response = NextResponse.next();
-//   response.cookies.set("x-store-data", JSON.stringify(storeData?.rd[0]), {
-//     httpOnly: false,
-//     path: "/",
-//   });
-//   response.cookies.set("x-myAccountFlags-data", JSON.stringify(storeData?.rd1), {
-//     httpOnly: false,
-//     path: "/",
-//   });
-//   response.cookies.set("x-CompanyInfoData-data", JSON.stringify(storeData?.rd2[0]), {
-//     httpOnly: false,
-//     path: "/",
-//   });
-
-//   return response;
-// }
-
-// export const config = {
-//   matcher: ["/((?!_next|api|favicon.ico).*)"],
-// };
