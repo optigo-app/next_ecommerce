@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "ng": "next build && next start"
+    "ng": "next build && next start"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -17,10 +18,13 @@
     "@mui/x-date-pickers": "^8.11.3",
     "@next/bundle-analyzer": "^15.5.4",
     "axios": "^1.12.2",
+    "cors": "^2.8.5",
     "cross-env": "^10.0.0",
     "crypto-js": "^4.2.0",
     "date-fns": "^4.1.0",
     "dayjs": "^1.11.18",
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
     "js-cookie": "^3.0.5",
     "lodash.debounce": "^4.0.8",
     "moment": "^2.30.1",
